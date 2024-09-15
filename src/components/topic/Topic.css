@@ -1,0 +1,122 @@
+/* Estilos para TopicList.tsx */
+
+.topic-list {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+.topic-list h2 {
+  margin-bottom: 20px;
+}
+
+.create-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.create-button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-button,
+.delete-button {
+  border: none;
+  background: none;
+  color: #007bff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  text-decoration: underline;
+}
+
+.delete-button {
+  color: #dc3545;
+}
+
+.delete-button:hover {
+  color: #c82333;
+}
+
+/* Estilos para TopicForm.tsx */
+
+.topic-form {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.topic-form h2 {
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+/* Estilos para TopicDetail.tsx */
+
+.topic-detail {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.topic-detail h2 {
+  margin-bottom: 20px;
+}
+
+.topic-detail p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.topic-detail strong {
+  font-weight: bold;
+}
+
