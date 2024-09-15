@@ -1,18 +1,19 @@
 import { useState } from 'react'
-import { TopicList, FindOneTopic } from './components/topic/TopicList'
 import './App.css'
 
-function App() {
+export function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
       <div>
-        <TopicList/>
-        <FindOneTopic />
+        <h1>React App</h1>
+        <button onClick={() => setCount(count + 1)}>Increment</button>
+        <p>{count}</p>
+
       </div>
     </>
   )
 }
 
-export default App
+

@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { porturl } from './route.tsx'
 
-export function usePut<T>(baseUrl: string) {
+
+export function usePost<T>(baseUrl: string) {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     baseUrl = porturl + baseUrl;
-    
-    const update = async (id: number, item: T) => {
+    const create = async (item: T) => {
         setLoading(true);
         try {
-        const response = await fetch(`${baseUrl}/${id}`, {
-            method: "PUT",
+        const response = await fetch(baseUrl, {
+            method: "POST",
             headers: {
             "Content-Type": "application/json",
             },
@@ -26,6 +26,5 @@ export function usePut<T>(baseUrl: string) {
         }
     };
 
-    return { loading, error, update };
+    return { loading, error, create };
 }
-

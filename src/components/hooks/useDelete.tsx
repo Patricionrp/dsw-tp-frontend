@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { porturl } from './route.tsx';
 
+/* 
 export function useDelete(baseUrl: string) {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -24,3 +25,18 @@ export function useDelete(baseUrl: string) {
 
     return { loading, error, remove };
 }
+ */
+
+
+
+export const remove = async (baseUrl: string) => {
+    baseUrl = porturl + baseUrl;
+
+    const response = await fetch(`${baseUrl}`, {
+        method: "DELETE",
+    });
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+};

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGet } from "./../hooks/useGet";
 import { Topic } from "./Topic";
 import "./topic.css";
@@ -21,14 +21,15 @@ export const TopicList = () => {
     <div className="topic-list">
       <h2>Topics</h2>
       <button className="add-button">
-        Add Topic
+        <Link to="/topic/create">Add Topic</Link>
       </button>
       <ul>
         {Array.isArray(topics) ? (
           topics.map((topic) => (
             <li key={topic.id}>
-                {topic.id} - {topic.description}
-                <button className="delete-button">Delete</button>
+                <button >
+                    <Link to={`/topic/${topic.id}`}>{topic.id} - {topic.description}</Link>
+                </button>
             </li>
           ))
         ) : (
@@ -38,20 +39,4 @@ export const TopicList = () => {
     </div>
   );
 };
-export const FindOneTopic = () => {
-  const { data: topic, loading, error, fetchData } = useGet<Topic>(`/api/topics/3`);
 
-  useEffect(() => {
-    fetchData(`/api/topics/3`);
-  }, [fetchData]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-
-  return (
-    <div>
-      <h2>Topic</h2>
-      <p>{topic?.description}</p>
-    </div>
-  );
-}
