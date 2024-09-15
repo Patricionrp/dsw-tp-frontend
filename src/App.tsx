@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { Link } from 'react-router-dom'
 
 export function App() {
   const [count, setCount] = useState(0)
@@ -8,9 +9,7 @@ export function App() {
     <>
       <div>
         <h1>React App</h1>
-        <button onClick={() => setCount(count + 1)}>Increment</button>
-        <p>{count}</p>
-
+        <Link to="/topic">Go to Topics</Link>
       </div>
     </>
   )

@@ -38,6 +38,7 @@ export const TopicFindOne = () => {
             <Link to="/topic">Back to Topics</Link>
         </button> 
         <button className="delete-button" onClick={handleRemove}>Delete</button>
+        <button className="submit-button"><Link to="/topic/update">Edit</Link></button> 
       </div>
     );
   }
