@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate  } from "react-router-dom";
 import { usePost} from "./../hooks/usePost";
-import { Topic } from "./Topic";
-import "./topic.css";
+import { Unity } from "./unity";
+import "./unity.css";
 
 
-export const TopicCreate = () => {
-    const { loading, error, create } = usePost<Topic>("/api/topics");
-    const [description, setDescription] = React.useState<string>("");
+export const UnityCreate = () => {
+    const { loading, error, create } = usePost<Unity>("/api/unities");
+    const [name, setDescription] = React.useState<string>("");
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
@@ -28,15 +28,15 @@ export const TopicCreate = () => {
     }, [loading, error]);
 
     const handleClick = () => {
-        const confirmed = window.confirm(`¿Desea crear el topic: "${description}"?`);
+        const confirmed = window.confirm(`¿Desea crear el unity: "${name}"?`);
         if (confirmed) {
-            const newTopic: Topic = {description: description};
-            create(newTopic);
-            console.log(`El topic ${description} fue creado.`);
-            navigate('/topic');
-          // Aquí puedes agregar la lógica para crear el topic
+            const newUnity: Unity = {name: name};
+            create(newUnity);
+            console.log(`El unity ${name} fue creado.`);
+            navigate('/unity');
+          // Aquí puedes agregar la lógica para crear el unity
         } else {
-            console.log(`Creación del topic ${description} cancelada.`);
+            console.log(`Creación del unity ${name} cancelada.`);
         }
       };
 
@@ -46,24 +46,21 @@ export const TopicCreate = () => {
         }
     }
     return (
-        <div className="topic">
-        <h2>Create a Topic</h2>
+        <div className="unity">
+        <h2>Create a Unity</h2>
         <input
             ref={inputRef}
             type="text"
-            placeholder="description"
-            value={description}
+            placeholder="name"
+            value={name}
             onChange={(e) => setDescription(e.target.value)}
             onKeyDown={handleKeyPress}
         />
         <button onClick={handleClick}>Create</button>
         <p></p>
         <button>
-            <Link to="/topic">Back to Topics</Link>
+            <Link to="/unity">Back to Unitys</Link>
         </button>
         </div>    
     );
     }
-
-
-

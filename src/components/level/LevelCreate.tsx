@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate  } from "react-router-dom";
 import { usePost} from "./../hooks/usePost";
-import { Topic } from "./Topic";
-import "./topic.css";
+import { Level } from "./Level";
+import "./level.css";
 
 
-export const TopicCreate = () => {
-    const { loading, error, create } = usePost<Topic>("/api/topics");
-    const [description, setDescription] = React.useState<string>("");
+export const LevelCreate = () => {
+    const { loading, error, create } = usePost<Level>("/api/levels");
+    const [name, setDescription] = React.useState<string>("");
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
@@ -28,15 +28,15 @@ export const TopicCreate = () => {
     }, [loading, error]);
 
     const handleClick = () => {
-        const confirmed = window.confirm(`¿Desea crear el topic: "${description}"?`);
+        const confirmed = window.confirm(`¿Desea crear el level: "${name}"?`);
         if (confirmed) {
-            const newTopic: Topic = {description: description};
-            create(newTopic);
-            console.log(`El topic ${description} fue creado.`);
-            navigate('/topic');
-          // Aquí puedes agregar la lógica para crear el topic
+            const newLevel: Level = {name: name};
+            create(newLevel);
+            console.log(`El level ${name} fue creado.`);
+            navigate('/level');
+          // Aquí puedes agregar la lógica para crear el level
         } else {
-            console.log(`Creación del topic ${description} cancelada.`);
+            console.log(`Creación del level ${name} cancelada.`);
         }
       };
 
@@ -46,24 +46,21 @@ export const TopicCreate = () => {
         }
     }
     return (
-        <div className="topic">
-        <h2>Create a Topic</h2>
+        <div className="level">
+        <h2>Create a Level</h2>
         <input
             ref={inputRef}
             type="text"
-            placeholder="description"
-            value={description}
+            placeholder="name"
+            value={name}
             onChange={(e) => setDescription(e.target.value)}
             onKeyDown={handleKeyPress}
         />
         <button onClick={handleClick}>Create</button>
         <p></p>
         <button>
-            <Link to="/topic">Back to Topics</Link>
+            <Link to="/level">Back to Levels</Link>
         </button>
         </div>    
     );
     }
-
-
-

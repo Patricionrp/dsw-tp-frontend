@@ -1,5 +1,5 @@
 export interface Topic {
     id?: number;
-    description: string;
+    description?: string;
     courses?: number[]; 
   }
