@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGet } from "./../hooks/useGet";
-import { Topic } from "./Topic";
+import { Topic } from  "./../types";
 import "./topic.css";
 import { remove } from "./../hooks/useDelete";
 
@@ -24,8 +24,8 @@ export const TopicFindOne = () => {
         }
     };
     useEffect(() => {
-      fetchData(`/api/topics/${id}`);
-    }, [fetchData]);
+      fetchData();
+    }, [fetchData, id]);
   
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -40,6 +40,8 @@ export const TopicFindOne = () => {
         <button >
             <Link to="/topic">Back to Topics</Link>
         </button> 
+        <button className="delete-button" onClick={handleRemove}>Delete</button>
+        <button className="submit-button"><Link to="/topic/update">Edit</Link></button> 
       </div>
     );
   }

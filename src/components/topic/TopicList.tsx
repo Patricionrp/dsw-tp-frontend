@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useGet } from "./../hooks/useGet";
-import { Topic } from "./Topic";
+import { Topic } from  "./../types";
 import "./topic.css";
 
 
 export const TopicList = () => {
   
-  const { data: topics, loading, error, fetchData } = useGet<Topic>(`/api/topics`);
+  const { data: topics, error, fetchData } = useGet<Topic>(`/api/topics`);
 
   useEffect(() => {
-    fetchData(`/api/topics`);
+    fetchData();
   }, [fetchData]);
 
 

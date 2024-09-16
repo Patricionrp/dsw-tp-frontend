@@ -1,0 +1,144 @@
+/* Estilos para LevelList.tsx */
+
+.level-list {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.level-list h2 {
+  margin-bottom: 20px;
+}
+
+.create-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.create-button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-button,
+.delete-button {
+  border: none;
+  background: none;
+  color: #007bff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  text-decoration: underline;
+}
+
+.delete-button {
+  color: #dc3545;
+}
+
+.delete-button:hover {
+  color: #c82333;
+}
+
+/* Estilos para LevelForm.tsx */
+
+.level-form {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.level-form h2 {
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para LevelDetail.tsx */
+
+.level-detail {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.level-detail h2 {
+  margin-bottom: 20px;
+}
+
+.level-detail p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.level-detail strong {
+  font-weight: bold;
+}
+
+.create-level-button {
+  background-color: #4CAF50;
+  /* Verde */
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 8px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border-radius: 8px;
+}
+
+.create-level-button:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
+}
