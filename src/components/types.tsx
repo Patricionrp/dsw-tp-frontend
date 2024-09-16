@@ -10,13 +10,12 @@ export interface Level {
     unities?: number[];
 }
 export interface File {
-    nameFile?: string;
+    id?: number;
+    nameFile: string;
     typeFile?: string;
-    unity?: number;
-    level?: number;
-    course?: number;
+    unit?: number;
 }
-export interface Unity {
+export interface Unit {
     id?: number;
     name?: string;
     level: number;

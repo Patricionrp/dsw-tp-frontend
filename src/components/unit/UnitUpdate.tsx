@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate  } from "react-router-dom";
-import { usePut} from "./../hooks/usePut";
-import { Unity } from  "./../types";
-import "./unity.css";
+import { usePut} from "../hooks/usePut";
+import { Unit } from  "../types";
+import "./unit.css";
 
 
-export const UnityUpdate = () => {
-    const { loading, error, update } = usePut<Unity>("/api/unitys/${id}");
+export const UnitUpdate = () => {
+    const { loading, error, update } = usePut<Unit>("/api/units/${id}");
     const [name, setName] = React.useState<string>("");
     
     const navigate = useNavigate();
@@ -22,26 +22,26 @@ export const UnityUpdate = () => {
     }, [loading, error]);
 
     const handleClick = () => {
-        const confirmed = window.confirm(`¿Desea crear el unity: ${name}?`);
+        const confirmed = window.confirm(`¿Desea crear el unit: ${name}?`);
         if (confirmed) {
             handleCreate();
-            console.log(`El unity ${name} fue creado.`);
-            navigate('/unity');
-          // Aquí puedes agregar la lógica para crear el unity
+            console.log(`El unit ${name} fue creado.`);
+            navigate('/unit');
+          // Aquí puedes agregar la lógica para crear el unit
         } else {
-            console.log(`Creación del unity ${name} cancelada.`);
+            console.log(`Creación del unit ${name} cancelada.`);
         }
       };
     const handleCreate = async () => {
-        const newUnity: Unity = {
+        const newUnit: Unit = {
         name: name,
         };
-        update(id, newUnity);
+        update(id, newUnit);
     };
     
     return (
-        <div className="unity">
-        <h2>Create a Unity</h2>
+        <div className="unit">
+        <h2>Create a Unit</h2>
         <input
             type="text"
             placeholder="name"
@@ -51,7 +51,7 @@ export const UnityUpdate = () => {
         <button onClick={handleClick}>Create</button>
         <p></p>
         <button>
-            <Link to="/unity">Back to Unitys</Link>
+            <Link to="/unit">Back to Units</Link>
         </button>
         </div>    
     );
