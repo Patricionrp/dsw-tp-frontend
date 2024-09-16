@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     element: <TopicFindOne />,
   },
   {
-    path: "/topic/update",
+    path: "/topic/update/:id",
     element: <TopicUpdate />,
   }
 

@@ -33,12 +33,13 @@ export const TopicFindOne = () => {
     return (
       <div>
         <h2>Topic</h2>
-        <p>{topic?.description}</p>
+        <p>{topic?.description}
+          <button className="delete-button" onClick={handleRemove}>Delete</button>
+          <button className="edit-button"><Link to={`/topic/update/${topic?.id}?description=${topic?.description}`}>Edit</Link></button>
+        </p>
         <button >
             <Link to="/topic">Back to Topics</Link>
         </button> 
-        <button className="delete-button" onClick={handleRemove}>Delete</button>
-        <button className="submit-button"><Link to="/topic/update">Edit</Link></button> 
       </div>
     );
   }
