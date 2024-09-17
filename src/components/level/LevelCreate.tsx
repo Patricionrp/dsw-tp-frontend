@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate, useParams  } from "react-router-dom";
 import { usePost} from "./../hooks/usePost";
 import { Level } from  "./../types";
 import "./level.css";
@@ -11,7 +11,9 @@ export const LevelCreate = () => {
     const [units, setUnits] = useState<string[]>([""]);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
-    let level: Level | null = null;
+    const { id } = useParams();
+    const courseId = parseInt(id!, 10);
+    
 
     //para poner el cursor sobre el imput
     useEffect(() => {
@@ -32,10 +34,10 @@ export const LevelCreate = () => {
     const handleClick = () => {
         const confirmed = window.confirm(`¿Desea crear el level: "${name}"?`);
         if (confirmed) {
-            const newLevel: Level = {name: name};
+            const newLevel: Level = {name: name, course: courseId};
             create(newLevel);
             console.log(`El level ${name} fue creado.`);
-            navigate('/level');
+            navigate(`/course/${courseId}`);
             // Aquí puedes agregar la lógica para crear el level
             } else {
                 console.log(`Creación del level ${name} cancelada.`);
@@ -63,7 +65,9 @@ export const LevelCreate = () => {
             setUnits(newUnits); // Actualiza la lista de inputs
           };
     return (
+        
         <div className="level">
+        <h1>Course: {courseId}</h1>
         <h2>Create a Level</h2>
         <input
             ref={inputRef}
@@ -79,6 +83,7 @@ export const LevelCreate = () => {
         {units.map((unit, index) => (
             
             <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+            <p></p>
             <input
               type="number"
               placeholder={`Unit ${index + 1}`}

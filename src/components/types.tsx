@@ -1,3 +1,4 @@
+
 export interface Topic {
     id?: number;
     description?: string;
@@ -6,7 +7,7 @@ export interface Topic {
 export interface Level {
     id?: number;
     name?: string;
-    course?: number;
+    course?: number|Course;
     units?: number[];
 }
 export interface File {
@@ -21,4 +22,13 @@ export interface Unit {
     level: number;
     number?: number;
     files?: number[]; 
+}
+export interface Course {
+    id?: number;
+    title?: string;
+    cratedAt?: Date;
+    price?: number;
+    coursePurchaseRecords?: number[];
+    topics?: number[] | Topic[];
+    levels?: number[] | Level[];
 }

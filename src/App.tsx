@@ -3,7 +3,6 @@ import './App.css'
 import { Link } from 'react-router-dom'
 
 export function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -15,7 +14,9 @@ export function App() {
         <p></p>
         <Link to="/unit">Go to Unit</Link>
         <p></p>
-        <Link to="/topic">Go to Topics</Link>
+        <Link to="/course">Go to Courses</Link>
+        <p></p>
+
       </div>
     </>
   )

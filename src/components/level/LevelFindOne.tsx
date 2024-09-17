@@ -41,4 +41,46 @@ export const LevelFindOne = () => {
         <button className="submit-button"><Link to={`/level/update/${id}`}>Edit</Link></button> 
       </div>
     );
+  }/* 
+  export const LevelGetOne = (id:number) => {
+    const { data: level, loading, error, fetchData } = useGet<Level>(`/api/levels/${id}`);
+    useEffect(() => {
+      fetchData();
+    }, [fetchData, id]);
+  
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+  
+    return (
+      <div>
+        <h2>Level</h2>
+        <p>{level?.name}</p>
+        <button >
+            <Link to="/level">Back to Levels</Link>
+        </button> 
+      </div>
+    );
+  } */
+  interface LevelGetOneProps {
+    id: number;
   }
+  
+  export const LevelGetOne: React.FC<LevelGetOneProps> = ({ id }) => {
+    const { data: level, loading, error, fetchData } = useGet<Level>(`/api/levels/${id}`);
+  
+    useEffect(() => {
+      fetchData();
+    }, [fetchData, id]);
+  
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+  
+    return (
+      <div>
+        <h2>Level</h2>
+        <button>
+          <Link to="/level">{level?.name}</Link>
+        </button>
+      </div>
+    );
+  };

@@ -20,6 +20,11 @@ import { UnitList } from './components/unit/UnitList.tsx';
 import { UnitFindOne } from './components/unit/UnitFindOne.tsx';
 import { UnitUpdate } from './components/unit/UnitUpdate.tsx';
 
+import { CourseCreate } from './components/course/CourseCreate.tsx';
+import { CourseList } from './components/course/CourseList.tsx';
+import { CourseFindOne } from './components/course/CourseFindOne.tsx';
+import { CourseUpdate } from './components/course/CourseUpdate.tsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,7 +52,7 @@ const router = createBrowserRouter([
     element: <LevelList />,
   },
   {
-    path: "/level/create",
+    path: "/level/create/:id",
     element: <LevelCreate />,
   },
   
@@ -75,6 +80,23 @@ const router = createBrowserRouter([
   {
     path: "/unit/update/:id",
     element: <UnitUpdate />,
+  },
+  {
+    path: "/course",
+    element: <CourseList />,
+  },
+  {
+    path: "/course/create",
+    element: <CourseCreate />,
+  },
+  
+  {
+    path: "/course/:id",
+    element: <CourseFindOne />,
+  },
+  {
+    path: "/course/update/:id",
+    element: <CourseUpdate />,
   }
 
 
