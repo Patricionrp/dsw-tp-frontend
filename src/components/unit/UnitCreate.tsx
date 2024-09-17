@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate, useParams  } from "react-router-dom";
 import { usePost} from "../hooks/usePost";
 import { Unit } from  "../types";
 import "./unit.css";
@@ -11,6 +11,7 @@ export const UnitCreate = () => {
     const [number, setNumber] = React.useState<string>("");
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
+    const { idLevel } = useParams(); 
 
     //para poner el cursor sobre el imput
     useEffect(() => {
@@ -59,8 +60,8 @@ export const UnitCreate = () => {
         />
         <p></p>
         <input
-            type="text"
-            placeholder="number"
+            type="number"
+            placeholder="unit number"
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             onKeyDown={handleKeyPress}

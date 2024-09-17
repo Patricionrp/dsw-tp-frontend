@@ -7,7 +7,7 @@ export interface Level {
     id?: number;
     name?: string;
     course?: number;
-    unities?: number[];
+    units?: number[];
 }
 export interface File {
     id?: number;

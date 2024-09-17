@@ -19,7 +19,7 @@ export const UnitList = () => {
 
     return (
       <div className="unit-list">
-        <h2>Unities</h2>
+        <h2>Units</h2>
         <button className="add-button">
           <Link to="/unit/create">Add Unit</Link>
         </button>
@@ -28,7 +28,7 @@ export const UnitList = () => {
             unities.map((unit) => (
               <li key={unit.id}>
                   <button >
-                      <Link to={`/unit/${unit.id}`}>{unit.number} - {unit.name}</Link>
+                      <Link to={`/unit/${unit.id}`}>{unit.id} - {unit.name}</Link>
                   </button>
               </li>
             ))
