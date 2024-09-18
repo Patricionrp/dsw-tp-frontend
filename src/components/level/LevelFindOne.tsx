@@ -2,9 +2,10 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGet } from "./../hooks/useGet";
-import { Level } from  "./../types";
+import { Level, Unit } from  "./../types";
 import "./level.css";
 import { remove } from "./../hooks/useDelete";
+import { UnitGetOne } from "./../unit/UnitFindOne";
 
 
 export const LevelFindOne = () => {
@@ -77,9 +78,22 @@ export const LevelFindOne = () => {
   
     return (
       <div>
-        <button>
           <Link to={`/level/${level?.id}`}>{level?.name}</Link>
-        </button>
+          <ul>
+          {Array.isArray(level?.units) && level?.units.length > 0 ? (
+                    level?.units.map((unit: Unit, index: number) => (
+                        <li key={level.id}>
+                          <div>
+                            <h3>Level: {index}</h3>
+                            <UnitGetOne id={unit.id}/> 
+                          </div>
+                        </li>
+                    ))
+                ) : (
+              <p>No units available</p>
+            )}
+          </ul>
       </div>
     );
   };
+  

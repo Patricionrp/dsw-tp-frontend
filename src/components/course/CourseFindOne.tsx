@@ -62,7 +62,7 @@ export const CourseFindOne = () => {
                     course?.levels.map((level: Level, index: number) => (
                         <li key={level.id}>
                           <div>
-                            <h3>Level: {index}</h3>
+                            <h3>Level {index+1}</h3>
                             <LevelGetOne id={level.id}/> 
                           </div>
                         </li>
@@ -81,3 +81,5 @@ export const CourseFindOne = () => {
       </div>
     );
   }
+  //el add topic y add level por ahi lo tendriamos que poner solo en el edit
+  

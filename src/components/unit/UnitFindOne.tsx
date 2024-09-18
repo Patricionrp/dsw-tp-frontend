@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import  { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGet } from "../hooks/useGet";
-// import { Unit } from  "./../types"; // Removed unused import
+import { Unit } from  "./../types"; // Removed unused import
 
 interface UnitData {
   id: number;
@@ -48,3 +48,25 @@ export const UnitFindOne = () => {
       </div>
     );
   }
+  interface UnitGetOneProps {
+    id: number;
+  }
+  
+  export const UnitGetOne: React.FC<UnitGetOneProps> = ({ id }) => {
+    const { data: unit, loading, error, fetchData } = useGet<Unit>(`/api/units/${id}`);
+  
+    useEffect(() => {
+      fetchData();
+    }, [fetchData, id]);
+  
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+  
+    return (
+      <div>
+
+          <Link to={`/unit/${unit?.id}`}>{unit?.name}</Link>
+
+      </div>
+    );
+  };
