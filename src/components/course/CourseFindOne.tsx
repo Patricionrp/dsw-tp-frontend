@@ -12,6 +12,7 @@ export const CourseFindOne = () => {
     const { id } = useParams(); 
     const { data: course, loading, error, fetchData } = useGet<Course>(`/api/courses/${id}`);
     const navigate = useNavigate();
+    
 
     const handleRemove = () => {
         const confirmed = window.confirm(`¿Desea eliminar el course: ${course?.title}?`);
@@ -34,6 +35,7 @@ export const CourseFindOne = () => {
     return (
       <div>
         <h2>Course</h2>
+        <hr></hr>
         <p>Id: {course?.id}</p>
         <p>Title: {course?.title} </p>
         <p>Created at: {course?.createdAt}</p>
@@ -82,4 +84,3 @@ export const CourseFindOne = () => {
     );
   }
   //el add topic y add level por ahi lo tendriamos que poner solo en el edit
-  
