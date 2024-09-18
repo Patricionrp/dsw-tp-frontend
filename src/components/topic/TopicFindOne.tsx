@@ -45,3 +45,26 @@ export const TopicFindOne = () => {
       </div>
     );
   }
+
+  interface TopicGetOneProps {
+    id: number;
+  }
+  
+  export const TopicGetOne: React.FC<TopicGetOneProps> = ({ id }) => {
+    const { data: topic, loading, error, fetchData } = useGet<Topic>(`/api/topics/${id}`);
+  
+    useEffect(() => {
+      fetchData();
+    }, [fetchData, id]);
+  
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+  
+    return (
+      <div>
+        <button>
+          <Link to={`/topic/${topic?.id}`}>{topic?.name}</Link>
+        </button>
+      </div>
+    );
+  };

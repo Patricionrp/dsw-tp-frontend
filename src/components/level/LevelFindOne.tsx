@@ -77,9 +77,8 @@ export const LevelFindOne = () => {
   
     return (
       <div>
-        <h2>Level</h2>
         <button>
-          <Link to="/level">{level?.name}</Link>
+          <Link to={`/level/${level?.id}`}>{level?.name}</Link>
         </button>
       </div>
     );
