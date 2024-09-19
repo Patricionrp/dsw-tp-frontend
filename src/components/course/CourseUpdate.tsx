@@ -38,9 +38,11 @@ export const CourseUpdate = () => {
             console.log(`The course ${title} was updated to: ${newTitle}`);
             navigate('/course');
           // Aquí puedes agregar la lógica para crear el course
+         
         } else {
             console.log(`Course update ${newTitle} cancelled.`);
         }
+        
       };
     const handleUpdate = async (id: number, newTitle: string) => {
         const newCourse: Course = {

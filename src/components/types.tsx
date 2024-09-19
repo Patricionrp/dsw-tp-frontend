@@ -1,6 +1,6 @@
 
 export interface Topic {
-    id?: number;
+    id: number;
     description?: string;
     courses?: number[]; 
 }
@@ -24,10 +24,10 @@ export interface Unit {
     files?: number[]; 
 }
 export interface Course {
-    id?: number;
-    title?: string;
-    cratedAt?: Date;
-    price?: number;
+    id: number;
+    title: string;
+    createAt: Date;
+    price: number;
     coursePurchaseRecords?: number[];
     topics?: number[] | Topic[];
     levels?: number[] | Level[];

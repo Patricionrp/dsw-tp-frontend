@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import  { useEffect } from "react";
+import { useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useGet } from "../hooks/useGet";
 import { Course, Level, Topic } from  "../types";
@@ -7,7 +7,7 @@ import "./../topic/topic.css";
 import { remove } from "../hooks/useDelete";
 import { LevelGetOne } from "../level/LevelFindOne";
 import { TopicGetOne } from "../topic/TopicFindOne";
-
+import { DateComponent } from "../date";
 export const CourseFindOne = () => {
     const { id } = useParams(); 
     const { data: course, loading, error, fetchData } = useGet<Course>(`/api/courses/${id}`);
@@ -31,14 +31,14 @@ export const CourseFindOne = () => {
   
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-  
+    console.log(course?.createAt);
     return (
       <div>
         <h2>Course</h2>
         <hr></hr>
         <p>Id: {course?.id}</p>
         <p>Title: {course?.title} </p>
-        <p>Created at: {course?.createdAt}</p>
+        <p>Created at: <DateComponent date={course?.createAt} /></p>
         <div>
           Topics: 
           <ul>
@@ -54,8 +54,6 @@ export const CourseFindOne = () => {
               <p>No topics available</p>
             )}
           </ul>
-          <p> Habria que hacer algun tipo de interfaz para seleccionar los Topics </p>
-          <Link >Add Topic</Link>
         </div>
         <p>Price: {course?.price}</p>
         <div>

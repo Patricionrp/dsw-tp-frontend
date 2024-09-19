@@ -7,7 +7,7 @@ import { TopicList } from "../topic/TopicList";
 
 
 export const CourseCreate = () => {
-    const { loading, error, create } = usePost<Course>("/api/courses");
+    const { loading, error, create } = usePost<Course>("/api/courses/");
     const [title, setTitle] = React.useState<string>("");
     const [price, setPrice] = React.useState<string>("");
     const inputRef = useRef<HTMLInputElement>(null);
@@ -25,36 +25,42 @@ export const CourseCreate = () => {
         console.log("loading...");
         }
         if (error) {
-        console.log("error...");
+        console.log(`error ${error}`);
         }
     }, [loading, error]);
 
     const handleClick = () => {
         const confirmed = window.confirm(`¿Desea crear el course: "${title}"?`);
         if (confirmed) {
-            const newCourse: Course = {title: title};
+            const newCourse: Course = {title: title,price: parseFloat(price), topics: selectedTopicsIds};
             create(newCourse);
-            console.log(`El course ${title} fue creado.`);
-            navigate('/course');
-          // Aquí puedes agregar la lógica para crear el course
+            //console.log(`El course ${title} fue creado.`);
+            console.log(selectedTopics);
+
         } else {
             console.log(`Creación del course ${title} cancelada.`);
         }
+       // navigate('/course');
       };
 
+    /*
+    para mi esto no va
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             handleClick();
         }
     }
+    */
     //manejo de topics
     const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]); 
+    const [selectedTopicsIds, setSelectedTopicsIds] = useState<number[]>([]); 
     const handleSelectTopic = (topic: Topic) => {
         if (selectedTopics.some(t => t.id === topic.id)) {
-            setSelectedTopics(selectedTopics.filter(t => t.id !== topic.id));
+            setSelectedTopics(selectedTopics.filter(t => t.id !== topic.id)); 
+            setSelectedTopicsIds(selectedTopicsIds.filter(id => id !== topic.id));
         } else {
-            // Si no está seleccionado, lo añadimos a la lista
             setSelectedTopics([...selectedTopics, topic]);
+            setSelectedTopicsIds([...selectedTopicsIds, topic.id]);
         }
     }
     
@@ -71,16 +77,15 @@ export const CourseCreate = () => {
                         placeholder='Course Title'
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        onKeyDown={handleKeyPress}
                     /><br/>
                     Price: &nbsp;  
                     <input   
                     ref={inputRef}
                     type="text"
-                    placeholder="0000,00"
+                    placeholder="0000.00"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    onKeyDown={handleKeyPress}
+
                     />
                 </div>  
                 <div>
@@ -93,6 +98,7 @@ export const CourseCreate = () => {
                     </ul>
                 </div>
                 <TopicList selectedTopics={selectedTopics} onSelectTopic={handleSelectTopic} />
+                <button onClick={handleClick}>Crear Curso</button>
             </div>   
         );
 }

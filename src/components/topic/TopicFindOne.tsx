@@ -62,9 +62,7 @@ export const TopicFindOne = () => {
   
     return (
       <div>
-        <button>
-          <Link to={`/topic/${topic?.id}`}>{topic?.name}</Link>
-        </button>
+          {topic?.description}
       </div>
     );
   };
