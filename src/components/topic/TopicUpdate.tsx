@@ -68,7 +68,7 @@ export const TopicUpdate = () => {
         <button onClick={handleClick}>Update</button>
         <p></p>
         <button>
-            <Link to={`/topic/${id}`}>Back to Topic</Link>
+            <Link to={`/`}>Back to Mainpage</Link>
         </button>
         </div>    
     );
