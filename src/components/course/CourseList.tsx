@@ -36,6 +36,7 @@ export const CourseList = () => {
           <p>No courses available</p>
         )}
       </ul>
+      <button><Link to={`/`}>Back to Mainpage</Link></button>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Link, useNavigate  } from "react-router-dom";
 import { usePost} from "../hooks/usePost";
 import { Course, Level, Topic } from "../types";
 import "./../topic/topic.css";
-import { TopicList } from "../topic/TopicList";
+import { Topics } from "../topic/Topics";
 
 
 export const CourseCreate = () => {
@@ -97,8 +97,10 @@ export const CourseCreate = () => {
                         ))}
                     </ul>
                 </div>
-                <TopicList selectedTopics={selectedTopics} onSelectTopic={handleSelectTopic} />
-                <button onClick={handleClick}>Crear Curso</button>
+                <Topics selectedTopics={selectedTopics} onSelectTopic={handleSelectTopic} />
+                <button onClick={handleClick}>Crear Curso</button><br/><br/>
+                <button><Link to={`/course`}>Back to CourseList</Link></button><br/><br/>
+                <button><Link to={`/`}>Back to Mainpage</Link></button>
             </div>   
         );
 }

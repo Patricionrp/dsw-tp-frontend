@@ -4,11 +4,17 @@ import { useGet } from "./../hooks/useGet";
 import { Topic } from  "./../types";
 import "./topic.css";
 
-
-export const TopicList = () =>  {
+interface TopicsProps {
+  selectedTopics: Topic[];
+  onSelectTopic: (topic: Topic) => void;
+}
+export const Topics : React.FC<TopicsProps> = ({ selectedTopics, onSelectTopic }) => {
   
   const { data: topics, error, fetchData } = useGet<Topic>(`/api/topics`);
   
+  const availableTopics  = topics?.filter(
+    (topic) => !selectedTopics.some((selected) => selected.id === topic.id)
+  );
 
   useEffect(() => {
     fetchData();
@@ -17,23 +23,21 @@ export const TopicList = () =>  {
   
   //if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  console.log(topics);
+
   return (
     <div className="topic-list">
       <ul >
-      {topics ? (
-          topics?.map((topic) => (
+      {availableTopics && availableTopics.length > 0 ? (
+          availableTopics?.map((topic) => (
             <li key={topic.id}>
-              <button >{topic.description}</button>
+              <button onClick={() => onSelectTopic(topic)}>{topic.description}</button>
             </li>
           ))
         ) : (
           <p>No topics available</p>
         )}
-        <Link to="/topic/create">Create Topic</Link>
+      <Link to="/topic/create">Create Topic</Link>
       </ul>
-      <Link to={`/`}>Back to Mainpage</Link>
     </div>
   );
 };
-
