@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate  } from "react-router-dom";
 import { usePut} from "./../hooks/usePut";
 import { Topic } from  "./../types";
-import "./topic.css";
+import "./../../index.css";
 import { useParams, useSearchParams } from 'react-router-dom';
 
 

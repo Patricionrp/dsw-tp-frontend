@@ -16,7 +16,7 @@ export function App() {
         <p></p>
         <Link to="/course">Go to Courses</Link>
         <p></p>
-
+        
       </div>
     </>
   )

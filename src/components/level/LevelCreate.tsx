@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams  } from "react-router-dom";
 import { usePost} from "./../hooks/usePost";
 import { Level } from  "./../types";
-import "./level.css";
+import "./../../index.css";
 
 
 export const LevelCreate = () => {

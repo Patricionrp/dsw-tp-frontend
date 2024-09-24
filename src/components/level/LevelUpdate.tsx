@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useNavigate  } from "react-router-dom";
 import { usePut} from "../hooks/usePut";
 import { Level } from  "./../types";
-import "./level.css";
+import "./../../index.css";
 
 
 export const LevelUpdate = () => {

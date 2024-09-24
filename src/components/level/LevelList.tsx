@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useGet } from "./../hooks/useGet";
 import { Level } from  "./../types";
-import "./level.css";
+import "./../../index.css";
 
 
 export const LevelList = () => {
