@@ -5,6 +5,12 @@ import { Course } from "../types";
 import "./../../index.css";
 import { CourseFindOne, CourseGetOne } from "./CourseFindOne.tsx";
 import Table from "react-bootstrap/Table";
+
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+
 export const CourseList = () => {
   const { data: courses, error, fetchData } = useGet<Course>(`/api/courses`);
 
@@ -55,22 +61,32 @@ export const CourseFindAll: React.FC = () => {
   //if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   return (
-    <div>
-      <ul>
-        {Array.isArray(courses) ? (
+    <div className="course-list">
+      <Row>
+        {Array.isArray(courses) && courses.length > 0 ? (
           courses.map((course) => (
-            <li key={course.id}>
-              <button>
-                <Link to={`/course/${course.id}`}>
-                  {course.id} - {course.title}
-                </Link>
-              </button>
-            </li>
+            <Col key={course.id} xs={12} sm={6} md={4} className="mb-4">
+              <Card style={{ borderRadius: "10px" }}>
+                <Card.Body>
+                  <Card.Title>{course.title}</Card.Title>
+                  <Card.Text>ID: {course.id}</Card.Text>
+                  <Button
+                    variant="primary"
+                    as={Link}
+                    to={`/course/${course.id}`}
+                  >
+                    Ver Curso
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
           ))
         ) : (
-          <p>No courses available</p>
+          <Col>
+            <p>No courses available</p>
+          </Col>
         )}
-      </ul>
+      </Row>
     </div>
   );
 };

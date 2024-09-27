@@ -1,25 +1,14 @@
-import { useState } from 'react'
-import './App.css'
-import { Link } from 'react-router-dom'
+import { useState } from "react";
+import "./App.css";
+/* import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { CourseCreate } from "./components/course/CourseCreate";
+import { CourseList } from "./components/course/CourseList";
+import { TopicCreate } from "./components/topic/TopicCreate";
+import { TopicList } from "./components/topic/TopicList";
+import { MainPage } from "./components/pages/MainPage"; */
+import { AdminMenu } from "./components/pages/AdminMenu.tsx";
 
 export function App() {
-
-  return (
-    <>
-      <div>
-        <h1>React App</h1>
-        <Link to="/topic">Go to Topics</Link>
-        <p></p>
-        <Link to="/level">Go to Levels</Link>
-        <p></p>
-        <Link to="/unit">Go to Unit</Link>
-        <p></p>
-        <Link to="/course">Go to Courses</Link>
-        <p></p>
-        
-      </div>
-    </>
-  )
+  return <AdminMenu />;
 }
-
-

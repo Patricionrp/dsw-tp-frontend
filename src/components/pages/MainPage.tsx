@@ -1,10 +1,10 @@
 import React from "react";
-import { CustomHead } from "../Layouts/Head";
+import { MemberHead } from "../Layouts/Member/Head";
 
 export const MainPage: React.FC = () => {
   return (
     <div className="layout">
-      <CustomHead />
+      <MemberHead />
 
       <footer></footer>
     </div>

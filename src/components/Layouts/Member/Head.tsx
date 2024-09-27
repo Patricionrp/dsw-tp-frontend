@@ -2,10 +2,10 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import { UserMenu } from "./UserMenu";
-import { SearchBox } from "./SearchBox";
+import { UserMenu } from "../UserMenu";
+import { SearchBox } from "../SearchBox";
 
-export const CustomHead: React.FC = () => {
+export const MemberHead: React.FC = () => {
   return (
     <Navbar bg="dark" variant="dark" fixed="top">
       <Container>
