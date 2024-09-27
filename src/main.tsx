@@ -22,7 +22,10 @@ import { UnitUpdate } from "./components/unit/UnitUpdate.tsx";
 
 import { CourseCreate } from "./components/course/CourseCreate.tsx";
 import { CourseList, CourseFindAll } from "./components/course/CourseList.tsx";
-import { CourseFindOne } from "./components/course/CourseFindOne.tsx";
+import {
+  CourseFindOne,
+  CourseGetOne,
+} from "./components/course/CourseFindOne.tsx";
 import { CourseUpdate } from "./components/course/CourseUpdate.tsx";
 
 import { MainPage } from "./components/pages/MainPage.tsx";
@@ -49,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "courses/create",
         element: <CourseCreate />,
+      },
+      {
+        path: "course/:id",
+        element: <CourseGetOne />,
       },
     ],
   },

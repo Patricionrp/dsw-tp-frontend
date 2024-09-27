@@ -1,0 +1,19 @@
+.search-box {
+    display: flex;
+  }
+  
+  .search-input {
+    background-color: #6c757d;
+    color: white;
+    border: 1px solid #6c757d;
+    margin-right: 0.5rem; /* Margen derecho para el espacio entre elementos */
+  }
+  
+  .search-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px; /* Tamaño del botón */
+    height: 50px; /* Alto y ancho iguales para hacer un cuadrado */
+    border-radius: 10px; /* Bordes redondeados */
+  }
