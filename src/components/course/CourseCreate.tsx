@@ -1,18 +1,26 @@
+//<button onClick={handleClick}>Create</button>
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { usePost } from "../hooks/usePost";
-import { Course, Level, Topic } from "../types";
-import "./../../index.css";
+import { Course, Topic } from "../types";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
+import Badge from "react-bootstrap/Badge";
+import { NavigationButton } from "../Buttons/NavigationButton.tsx";
 import { Topics } from "../topic/Topics";
 
 export const CourseCreate = () => {
   const { loading, error, create } = usePost<Course>("/api/courses/");
   const [title, setTitle] = React.useState<string>("");
   const [price, setPrice] = React.useState<string>("");
+  //const [courseId, setCourseId] = useState<number | null>(null); // Para manejar el ID del curso creado
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-
-  //para poner el cursor sobre el imput
+  let topics: Topic[];
+  // Para poner el cursor sobre el input
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -29,33 +37,36 @@ export const CourseCreate = () => {
   }, [loading, error]);
 
   const handleClick = () => {
-    const confirmed = window.confirm(`¿Desea crear el course: "${title}"?`);
+    const confirmed = window.confirm(`¿Desea crear el curso: "${title}"?`);
     if (confirmed) {
       const newCourse: Course = {
         title: title,
         price: parseFloat(price),
         topics: selectedTopicsIds,
       };
-      create(newCourse);
-      //console.log(`El course ${title} fue creado.`);
-      console.log(selectedTopics);
+      create(newCourse).then((courseCreated) => {
+        if (courseCreated.id) {
+          console.log(
+            `El curso ${title} fue creado con ID ${courseCreated.id}.`
+          );
+          navigate(`/course/${courseCreated.id}`);
+        } else {
+          console.log(courseCreated);
+          console.error("Error: No se recibió un ID del curso creado.");
+          alert("Hubo un error al crear el curso. Intente nuevamente.");
+        }
+        //console.log(`El curso ${title} fue creado con ID ${createdCourse?.id}.`);
+        //navigate(`/course/${createdCourse.id}`);
+      });
     } else {
-      console.log(`Creación del course ${title} cancelada.`);
+      console.log(`Creación del curso ${title} cancelada.`);
     }
-    // navigate('/course');
   };
 
-  /*
-    para mi esto no va
-    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            handleClick();
-        }
-    }
-    */
-  //manejo de topics
+  // Manejo de topics
   const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
   const [selectedTopicsIds, setSelectedTopicsIds] = useState<number[]>([]);
+
   const handleSelectTopic = (topic: Topic) => {
     if (selectedTopics.some((t) => t.id === topic.id)) {
       setSelectedTopics(selectedTopics.filter((t) => t.id !== topic.id));
@@ -67,57 +78,76 @@ export const CourseCreate = () => {
   };
 
   return (
-    <div className="course">
+    <Container className="course">
       <h2>Create a Course</h2>
       <hr></hr>
-      <div>
-        Title: &nbsp;
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Course Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <br />
-        Price: &nbsp;
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="0000.00"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-      </div>
-      <div>
-        <h3>Selected Topics:</h3>
-        <ul>
+      <Card body className="mb-4">
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              ref={inputRef}
+              type="text"
+              placeholder="Course Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="0000.00"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </Form.Group>
+        </Form>
+
+        <h5 className="mb-3" style={{ textAlign: "left" }}>
+          Selected Topics:
+        </h5>
+
+        {/* Topics seleccionados */}
+        <div className="d-flex flex-wrap mb-4">
           {selectedTopics.map((topic) => (
-            <li key={topic.id}>
-              <button onClick={() => handleSelectTopic(topic)}>
-                {topic.description}
-              </button>
-            </li>
+            <Badge
+              key={topic.id}
+              pill
+              bg="primary"
+              text="white"
+              className="me-2 mb-2"
+              style={{
+                cursor: "pointer",
+                borderRadius: "20px",
+                padding: "10px 15px",
+              }}
+              onClick={() => handleSelectTopic(topic)}
+            >
+              {topic.description}
+            </Badge>
           ))}
-        </ul>
-      </div>
-      <Topics
-        selectedTopics={selectedTopics}
-        onSelectTopic={handleSelectTopic}
-      />
-      <button onClick={handleClick}>Crear Curso</button>
+        </div>
+
+        <h5 className="mb-3" style={{ textAlign: "left" }}>
+          Available Topics:
+        </h5>
+        {/* Sección Topics */}
+        <Topics
+          selectedTopics={selectedTopics}
+          onSelectTopic={handleSelectTopic}
+        />
+      </Card>
+      <Button variant="primary" onClick={handleClick} className="mt-4">
+        Create Course
+      </Button>
+
       <br />
       <br />
-      <button>
-        <Link to={`/course`}>Back to CourseList</Link>
-      </button>
+      <NavigationButton to={`/course/list`} label={`Back to Courses`} />
+
       <br />
-      <br />
-      <button>
-        <Link to={`/`}>Back to Mainpage</Link>
-      </button>
-    </div>
+      <NavigationButton to={`/`} label={`Back to Mainpage`} />
+    </Container>
   );
 };
-
-//<button onClick={handleClick}>Create</button>

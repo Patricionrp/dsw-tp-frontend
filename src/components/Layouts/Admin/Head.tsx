@@ -20,8 +20,8 @@ export const AdminHead: React.FC = () => {
             </NavDropdown>
 
             <NavDropdown title="Courses" id="course-dropdown">
-              <NavDropdown.Item href="/courses/list">View All</NavDropdown.Item>
-              <NavDropdown.Item href="/courses/create">
+              <NavDropdown.Item href="/course/list">View All</NavDropdown.Item>
+              <NavDropdown.Item href="/course/create">
                 Add New
               </NavDropdown.Item>
             </NavDropdown>

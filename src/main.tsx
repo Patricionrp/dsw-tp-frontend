@@ -21,7 +21,7 @@ import { UnitFindOne } from "./components/unit/UnitFindOne.tsx";
 import { UnitUpdate } from "./components/unit/UnitUpdate.tsx";
 
 import { CourseCreate } from "./components/course/CourseCreate.tsx";
-import { CourseList, CourseFindAll } from "./components/course/CourseList.tsx";
+import { CourseList, CourseFind } from "./components/course/CourseList.tsx";
 import {
   CourseFindOne,
   CourseGetOne,
@@ -46,11 +46,11 @@ const router = createBrowserRouter([
         element: <TopicCreate />,
       },
       {
-        path: "courses/list",
-        element: <CourseFindAll />,
+        path: "course/list",
+        element: <CourseFind />,
       },
       {
-        path: "courses/create",
+        path: "course/create",
         element: <CourseCreate />,
       },
       {

@@ -26,6 +26,9 @@ importers:
       react-icons:
         specifier: ^5.3.0
         version: 5.3.0(react@18.3.1)
+      react-router-bootstrap:
+        specifier: ^0.26.3
+        version: 0.26.3(react-router-dom@6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       react-router-dom:
         specifier: ^6.26.2
         version: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -920,6 +923,12 @@ packages:
 
   react-lifecycles-compat@3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
+
+  react-router-bootstrap@0.26.3:
+    resolution: {integrity: sha512-cBgcWekti6lFRl/vXP8ZfKuA/0Qe7L5xBjQ6OwbGI30+NSAAH/YZGbO6whSeBWFILn6uTVOX939HDGhs+5WzOw==}
+    peerDependencies:
+      react: '>=16.13.1'
+      react-router-dom: '>=6.0.0'
 
   react-router-dom@6.26.2:
     resolution: {integrity: sha512-z7YkaEW0Dy35T3/QKPYB1LjMK2R1fxnHO8kWpUMTBdfVzZrWOiY9a7CtN8HqdWtDUWd5FY6Dl8HFsqVwH4uOtQ==}
@@ -1871,6 +1880,12 @@ snapshots:
   react-is@16.13.1: {}
 
   react-lifecycles-compat@3.0.4: {}
+
+  react-router-bootstrap@0.26.3(react-router-dom@6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-router-dom: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   react-router-dom@6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:

@@ -51,7 +51,7 @@ export const CourseList = () => {
   );
 };
 
-export const CourseFindAll: React.FC = () => {
+export const CourseFind: React.FC = () => {
   const { data: courses, error, fetchData } = useGet<Course>(`/api/courses`);
 
   useEffect(() => {

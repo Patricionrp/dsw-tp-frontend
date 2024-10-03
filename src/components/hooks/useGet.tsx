@@ -1,16 +1,18 @@
-import { useState, useEffect, useCallback } from 'react'
-import { porturl } from './route.tsx'
+import { useState, useEffect, useCallback } from "react";
+import { porturl } from "./route.tsx";
 
 export function useGet<T>(baseUrl: string) {
-    const [data, setData] = useState<T[] | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
-    baseUrl = porturl + baseUrl;
+  const [data, setData] = useState<T[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  baseUrl = porturl + baseUrl;
 
-    const fetchData = useCallback(async () => {
+  const fetchData = useCallback(
+    async (queryString: string | undefined) => {
       setLoading(true);
       try {
-        const response = await fetch(baseUrl);
+        const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -21,7 +23,9 @@ export function useGet<T>(baseUrl: string) {
       } finally {
         setLoading(false);
       }
-  }, [baseUrl]);
+    },
+    [baseUrl]
+  );
 
   useEffect(() => {
     fetchData();

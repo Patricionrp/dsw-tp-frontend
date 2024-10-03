@@ -1,32 +1,34 @@
-import { useState } from 'react'
-import { porturl} from '../route'
+import { useState } from "react";
+import { porturl } from "../route";
 
 export function usePost<T>(baseUrl: string) {
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
-    baseUrl = porturl + baseUrl;
-    const create = async (item: T) => {
-        setLoading(true);
-        try {
-            const response = await fetch(baseUrl, {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify(item),
-            });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            console.log("Cuerpo de la solicitud:", JSON.stringify(item));
-            console.log(baseUrl)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  baseUrl = porturl + baseUrl;
+  const create = async (item: T): Promise<T | null | number> => {
+    setLoading(true);
+    try {
+      const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      const createdItem: T = result.data.courseCreated;
 
-        }catch (err: any) {
-        setError(err.message);
-        } finally {
-        setLoading(false);
-        }
-    };
+      return createdItem;
+    } catch (err: any) {
+      setError(err.message);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return { loading, error, create };
+  return { loading, error, create };
 }
