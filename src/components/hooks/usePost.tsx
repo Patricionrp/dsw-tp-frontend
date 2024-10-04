@@ -19,9 +19,10 @@ export function usePost<T>(baseUrl: string) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
-      const createdItem: T = result.data.courseCreated;
+      const returnedData = result.data;
 
-      return createdItem;
+      console.log(returnedData);
+      return returnedData;
     } catch (err: any) {
       setError(err.message);
       return null;

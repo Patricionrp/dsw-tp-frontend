@@ -1,77 +1,106 @@
-import React, { useEffect, useRef } from "react";
-import { Link, useNavigate, useParams  } from "react-router-dom";
-import { usePost} from "../hooks/usePost";
-import { Unit } from  "../types";
-import "./unit.css";
-
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { usePost } from "../hooks/usePost";
+import { Unit } from "../types";
+import { NavigationButton } from "../Buttons/NavigationButton.tsx";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import ListGroup from "react-bootstrap/ListGroup";
 
 export const UnitCreate = () => {
-    const { loading, error, create } = usePost<Unit>("/api/unities");
-    const [name, setName] = React.useState<string>("");
-    const [number, setNumber] = React.useState<string>("");
-    const inputRef = useRef<HTMLInputElement>(null);
-    const navigate = useNavigate();
-    const { idLevel } = useParams(); 
+  const { loading, error, create } = usePost<Unit>("/api/levels");
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+  const { id, levelName } = useParams();
+  const levelId = parseInt(id!);
 
-    //para poner el cursor sobre el imput
-    useEffect(() => {
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
-      }, []); 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
-    useEffect(() => {
-        if (loading) {
-        console.log("loading...");
-        }
-        if (error) {
-        console.log("error...");
-        }
-    }, [loading, error]);
+  useEffect(() => {
+    if (loading) {
+      console.log("loading...");
+    }
+    if (error) {
+      console.log("error...");
+    }
+  }, [loading, error]);
 
-    const handleClick = () => {
-        const confirmed = window.confirm(`¿Do you want to create the unit: "${name}"?`);
-        if (confirmed) {
-            const newUnit: Unit = {name: name, number: number};
-            create(newUnit);
-            console.log(`The unit ${name} It was successfully created.`);
-            navigate('/Unit');
-          // Aquí puedes agregar la lógica para crear el Unit
-        } else {
-            console.log(`Creación del Unit ${name} cancelada.`);
-        }
+  const handleClick = () => {
+    const confirmed = window.confirm(`¿Desea crear el level: "${name}"?`);
+    if (confirmed) {
+      const newUnit: Unit = {
+        name: name,
+        //description: description,
+        level: levelId,
       };
-
-    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            handleClick();
+      create(newUnit).then((data) => {
+        if (data.createdUnit.id) {
+          console.log(
+            `Unit ${name} was created whit ID ${data.createdUnit.id}.`
+          );
+          navigate(`/unit/${data.createdUnit.id}`);
+        } else {
+          console.log(data.createdUnit);
+          console.error("Error: No ID was received for the created unit.");
+          alert("There was an error creating the course. Please try again.");
         }
+      });
     }
-    return (
-        <div className="Unit">
-        <h2>Create a Unit</h2>
-        <input
-            ref={inputRef}
-            type="text"
-            placeholder="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={handleKeyPress}
+  };
+
+  return (
+    <Container className="mt-4">
+      <h1>
+        Level {levelId}: {levelName}
+      </h1>
+      <h2>Create a Unit</h2>
+
+      <Form.Group className="mb-3" controlId="formUnitName">
+        <Form.Control
+          ref={inputRef}
+          type="text"
+          placeholder="Unit name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-        <p></p>
-        <input
-            type="number"
-            placeholder="unit number"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-            onKeyDown={handleKeyPress}
-        />
-        <p></p>
-        <button onClick={handleClick}>Create</button>
-        <p></p>
-        <button>
-            <Link to="/Unit">Back to Units</Link>
-        </button>
-        </div>    
-    );
-    }
+      </Form.Group>
+      {/* <Form.Control
+        as="textarea"
+        rows={3}
+        placeholder={`Description`}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        style={{
+          textAlign: "left",
+          paddingTop: "10px",
+          height: "auto",
+          width: "100%",
+          resize: "vertical",
+          minHeight: "120px",
+          overflow: "hidden",
+        }}
+      /> */}
+
+      <br />
+      <Button variant="success" onClick={handleClick}>
+        Create
+      </Button>
+      <br />
+      <br />
+      <NavigationButton
+        to={`/level/${id}`}
+        label="Back to Level"
+        variant="secondary"
+      />
+    </Container>
+  );
+};

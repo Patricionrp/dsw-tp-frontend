@@ -12,7 +12,7 @@ import { TopicUpdate } from "./components/topic/TopicUpdate.tsx";
 
 import { LevelCreate } from "./components/level/LevelCreate.tsx";
 import { LevelList } from "./components/level/LevelList.tsx";
-import { LevelFindOne } from "./components/level/LevelFindOne.tsx";
+import { LevelGetOne } from "./components/level/LevelFindOne.tsx";
 import { LevelUpdate } from "./components/level/LevelUpdate.tsx";
 
 import { UnitCreate } from "./components/unit/UnitCreate.tsx";
@@ -56,6 +56,30 @@ const router = createBrowserRouter([
       {
         path: "course/:id",
         element: <CourseGetOne />,
+      },
+      {
+        path: "level/create/:courseTitle/:id",
+        element: <LevelCreate />,
+      },
+      {
+        path: "level/:id",
+        element: <LevelGetOne />,
+      },
+      {
+        path: "level/list",
+        element: <LevelList />,
+      },
+      {
+        path: "unit/create/:levelName/:id",
+        element: <UnitCreate />,
+      },
+      {
+        path: "unit/:id",
+        element: <UnitFindOne />,
+      },
+      {
+        path: "unit/list",
+        element: <UnitList />,
       },
     ],
   },

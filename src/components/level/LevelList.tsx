@@ -1,41 +1,52 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useGet } from "./../hooks/useGet";
-import { Level } from  "./../types";
-import "./../../index.css";
 
+import { useGet } from "./../hooks/useGet";
+import { Level } from "./../types";
+import "./../../index.css";
+import Container from "react-bootstrap/Container";
+import ListGroup from "react-bootstrap/ListGroup";
+import { NavigationButton } from "../Buttons/NavigationButton.tsx";
 
 export const LevelList = () => {
-  
   const { data: levels, error, fetchData } = useGet<Level>(`/api/levels`);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-
   //if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="level-list">
+    <Container className="mt-3">
       <h2>Levels</h2>
-      <button className="add-button">
-        <Link to="/level/create">Add Level</Link>
-      </button>
-      <ul>
+
+      {/* Botón para agregar un nuevo nivel */}
+      <NavigationButton
+        to="/level/create"
+        label="Add Level"
+        style={{ marginBottom: "1rem" }}
+      />
+
+      <ListGroup>
         {Array.isArray(levels) ? (
           levels.map((level) => (
-            <li key={level.id}>
-                <button >
-                    <Link to={`/level/${level.id}`}>{level.id} - {level.name}</Link>
-                </button>
-            </li>
+            <ListGroup.Item key={level.id}>
+              <NavigationButton
+                to={`/level/${level.id}`}
+                style={{ width: "100%" }}
+              >
+                {`${level.id} - ${level.name}`} <br />
+                {level.description.length > 50
+                  ? `${level.description.substring(0, 50)}...`
+                  : level.description}
+              </NavigationButton>
+            </ListGroup.Item>
           ))
         ) : (
           <p>No levels available</p>
         )}
-      </ul>
-    </div>
+      </ListGroup>
+    </Container>
   );
 };

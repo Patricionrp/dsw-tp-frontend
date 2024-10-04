@@ -1,72 +1,77 @@
-import { useParams } from 'react-router-dom';
-import  { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useGet } from "../hooks/useGet";
-import { Unit } from  "./../types"; // Removed unused import
-
-interface UnitData {
-  id: number;
-  name: string;
-  // Add other properties if needed
-}
-import "./unit.css";
-import { remove } from "../hooks/useDelete";
+import { Unit } from "./../types";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import { NavigationButton } from "../Buttons/NavigationButton.tsx";
 
 
 export const UnitFindOne = () => {
-    const { id } = useParams(); 
-    const { data: unit, loading, error, fetchData } = useGet<UnitData>(`/api/unities/${id}`);
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const {
+    data: unit,
+    loading,
+    error,
+    fetchData,
+  } = useGet<UnitData>(`/api/unities/${id}`);
 
-    const handleRemove = () => {
-        const confirmed = window.confirm(`¿Desea eliminar el unit: ${unit?.name}?`);
-        if (confirmed) {
-            remove(`/api/unities/${id}`);
-            console.log(`El unit ${unit?.name ?? 'unknown'} fue eliminado.`);
-            navigate('/unit');
-          // Aquí puedes agregar la lógica para eliminar el unit
-        } else {
-            console.log(`Eliminación del unit ${unit?.name} cancelada.`);
-        }
-    };
-    useEffect(() => {
-      fetchData();
-    }, [fetchData, id]);
-  
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-  
-    return (
-      <div>
-        <h2>Unit</h2>
-        <p>{unit?.name}</p>
-        <button >
-            <Link to="/unit">Back to Unities</Link>
-        </button> 
-        <button className="delete-button" onClick={handleRemove}>Delete</button>
-        <button className="submit-button"><Link to="/unit/update">Edit</Link></button> 
-      </div>
-    );
-  }
-  interface UnitGetOneProps {
-    id: number;
-  }
-  
-  export const UnitGetOne: React.FC<UnitGetOneProps> = ({ id }) => {
-    const { data: unit, loading, error, fetchData } = useGet<Unit>(`/api/units/${id}`);
-  
-    useEffect(() => {
-      fetchData();
-    }, [fetchData, id]);
-  
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-  
-    return (
-      <div>
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, id]);
 
-          <Link to={`/unit/${unit?.id}`}>{unit?.name}</Link>
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
-      </div>
-    );
-  };
+  return (
+    <Container>
+      <Row>
+        <h1>
+          Unit {unit?.order}: {unit?.name}
+        </h1>
+      </Row>
+      <Row>
+        <NavigationButton
+          to="/unit/update"
+          label="Edit unit"
+          variant="success"
+        />
+        <NavigationButton
+          to={`/level/${unit?.level.id}`}
+          label="Back to Course"
+        />
+      </Row>
+    </Container>
+  );
+};
+interface UnitPreviewProps {
+  id: number;
+}
+
+export const UnitPreview: React.FC<UnitPreviewProps> = ({ id }) => {
+  const {
+    data: unit,
+    loading,
+    error,
+    fetchData,
+  } = useGet<Unit>(`/api/units/${id}`);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <NavigationButton
+      to={`/unit/${unit?.id}`}
+      style={{ color: "#000" }}
+      variant="Link"
+    >
+      Unit {unit?.order}: {unit?.name}
+    </NavigationButton>
+  );
+};

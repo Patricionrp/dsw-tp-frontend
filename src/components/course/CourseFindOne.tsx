@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useGet } from "../hooks/useGet";
 import { Course, Level, Topic } from "../types";
 import "./../../index.css";
-import { LevelGetOne } from "../level/LevelFindOne";
+import { LevelPreview } from "../level/LevelFindOne";
 import { DateComponent } from "../date";
 import { NavigationButton } from "../Buttons/NavigationButton.tsx";
 import Card from "react-bootstrap/Card";
@@ -29,7 +29,7 @@ export const CourseGetOne: React.FC = () => {
   if (loading)
     return (
       <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
+        <span className="sr-only"></span>
       </Spinner>
     );
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
@@ -46,24 +46,20 @@ export const CourseGetOne: React.FC = () => {
             date={course?.createdAt}
           />
         </Card.Text>
-
         <Card.Text>
           <strong>Price:</strong> ${course?.price}
         </Card.Text>
-
         <Card.Text>
           <strong>Topics:</strong>
           <Topics selectedTopics={course?.topics} />
         </Card.Text>
-
         <Card.Text>
           <strong>Levels:</strong>
           <ListGroup>
             {Array.isArray(course?.levels) && course?.levels.length > 0 ? (
               course?.levels.map((level: Level, index: number) => (
                 <ListGroup.Item key={level.id}>
-                  <h5>Level {index + 1}</h5>
-                  <LevelGetOne id={level.id} />
+                  <LevelPreview id={level.id} />
                 </ListGroup.Item>
               ))
             ) : (
@@ -71,14 +67,21 @@ export const CourseGetOne: React.FC = () => {
             )}
           </ListGroup>
           <NavigationButton
-            to={`/level/create/${course?.id}`}
+            to={`/level/create/${course?.title}/${course?.id}`}
             label="Add Level"
           />
         </Card.Text>
-
-        <div className="d-flex justify-content-between mt-4">
-          <NavigationButton to={`/course/update/${course?.id}`} label="Edit" />
-        </div>
+        <NavigationButton
+          style={{ backgroundColor: "#008000", color: "#fff" }}
+          to={`/course/update/${course?.id}`}
+          label="Edit"
+        />
+        <br />
+        <NavigationButton
+          style={{ backgroundColor: "#000", color: "#fff" }}
+          to={`/course/list`}
+          label="Back to courses"
+        />
       </Card.Body>
     </Card>
   );
