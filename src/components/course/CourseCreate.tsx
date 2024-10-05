@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Badge from "react-bootstrap/Badge";
 import { NavigationButton } from "../Buttons/NavigationButton.tsx";
 import { Topics } from "../topic/Topics";
@@ -137,17 +139,20 @@ export const CourseCreate = () => {
           selectedTopics={selectedTopics}
           onSelectTopic={handleSelectTopic}
         />
+
+        <Button variant="primary" onClick={handleClick} className="mt-4">
+          Create Course
+        </Button>
       </Card>
-      <Button variant="primary" onClick={handleClick} className="mt-4">
-        Create Course
-      </Button>
 
-      <br />
-      <br />
-      <NavigationButton to={`/course/list`} label={`Back to Courses`} />
-
-      <br />
-      <NavigationButton to={`/`} label={`Back to Mainpage`} />
+      <Row className="justify-content-center">
+        <Col xs="auto">
+          <NavigationButton to={`/course/list`} label={`Back to Courses`} />
+        </Col>
+        <Col xs="auto">
+          <NavigationButton to={`/`} label={`Back to Mainpage`} />
+        </Col>
+      </Row>
     </Container>
   );
 };

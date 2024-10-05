@@ -1,13 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useGet } from "../hooks/useGet";
 import { Unit } from "./../types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { NavigationButton } from "../Buttons/NavigationButton.tsx";
-
 
 export const UnitFindOne = () => {
   const { id } = useParams();
@@ -16,7 +14,7 @@ export const UnitFindOne = () => {
     loading,
     error,
     fetchData,
-  } = useGet<UnitData>(`/api/unities/${id}`);
+  } = useGet<Unit>(`/api/units/${id}`);
 
   useEffect(() => {
     fetchData();
@@ -32,16 +30,20 @@ export const UnitFindOne = () => {
           Unit {unit?.order}: {unit?.name}
         </h1>
       </Row>
-      <Row>
-        <NavigationButton
-          to="/unit/update"
-          label="Edit unit"
-          variant="success"
-        />
-        <NavigationButton
-          to={`/level/${unit?.level.id}`}
-          label="Back to Course"
-        />
+      <Row className="justify-content-center">
+        <Col xs="auto">
+          <NavigationButton
+            to="/unit/update"
+            label="Edit unit"
+            variant="success"
+          />
+        </Col>
+        <Col xs="auto">
+          <NavigationButton
+            to={`/level/${unit?.level.id}`}
+            label="Back to Course"
+          />
+        </Col>
       </Row>
     </Container>
   );

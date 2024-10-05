@@ -51,26 +51,37 @@ export const LevelGetOne = () => {
         <Col>
           <ListGroup>
             {Array.isArray(level?.units) && level?.units.length > 0 ? (
-              level?.units.map((unit: Unit) => (
-                  <UnitPreview id={unit.id}/>
-              ))
+              level?.units.map((unit: Unit) => <UnitPreview id={unit.id} />)
             ) : (
               <p>No units available</p>
             )}
           </ListGroup>
         </Col>
       </Row>
+
       <Row>
         <NavigationButton
           to={`/unit/create/${level?.name}/${level?.id}`}
           label="Add unit"
         />
-        <br />
-        <br />
-        <NavigationButton
-          to={`/course/${level?.course?.id}`}
-          label="Back to Course"
-        />
+      </Row>
+
+      <br />
+      <Row className="justify-content-center">
+        <Col md={2}>
+          <NavigationButton
+            to="/level/update"
+            label="Edit level"
+            variant="success"
+          />
+        </Col>
+        <Col md={2}>
+          <NavigationButton
+            to={`/course/${level?.course?.id}`}
+            label="Back to Course"
+            variant="secondary"
+          />
+        </Col>
       </Row>
     </Container>
   );
