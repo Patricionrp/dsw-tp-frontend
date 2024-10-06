@@ -31,6 +31,7 @@ import { CourseUpdate } from "./components/course/CourseUpdate.tsx";
 import { MainPage } from "./components/pages/MainPage.tsx";
 import { AdminMenu } from "./components/pages/AdminMenu.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { SubsCreate } from "./components/sunscription/SubsCreate.tsx";
 
 const router = createBrowserRouter([
   {
@@ -38,11 +39,11 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "topics/list",
+        path: "topic/list",
         element: <TopicList />,
       },
       {
-        path: "topics/create",
+        path: "topic/create",
         element: <TopicCreate />,
       },
       {
@@ -80,6 +81,18 @@ const router = createBrowserRouter([
       {
         path: "unit/list",
         element: <UnitList />,
+      },
+      {
+        path: "subscription/list",
+        //element: <SubscriptionList />,
+      },
+      {
+        path: "subscription/create",
+        element: <SubsCreate />,
+      },
+      {
+        path: "subscription/:id",
+        //element: <Subscription />,
       },
     ],
   },

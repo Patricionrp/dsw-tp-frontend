@@ -46,16 +46,16 @@ export const CourseCreate = () => {
         price: parseFloat(price),
         topics: selectedTopicsIds,
       };
-      create(newCourse).then((fetchData) => {
+      create(newCourse).then((data) => {
         if (data.courseCreated.id) {
           console.log(
-            `El curso ${title} fue creado con ID ${data.courseCreated.id}.`
+            `Course ${title} was created whit ID ${data.courseCreated.id}.`
           );
           navigate(`/course/${data.courseCreated.id}`);
         } else {
           console.log(data.courseCreated);
-          console.error("Error: No se recibió un ID del curso creado.");
-          alert("Hubo un error al crear el curso. Intente nuevamente.");
+          console.error("Error: No ID was received for the created course.");
+          alert("There was an error creating the course. Please try again.");
         }
         //console.log(`El curso ${title} fue creado con ID ${createdCourse?.id}.`);
         //navigate(`/course/${createdCourse.id}`);

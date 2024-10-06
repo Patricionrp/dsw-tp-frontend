@@ -15,31 +15,29 @@ export const AdminHead: React.FC = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title="Topics" id="topics-dropdown">
-              <NavDropdown.Item href="/topics/list">View All</NavDropdown.Item>
-              <NavDropdown.Item href="/topics/create">Add New</NavDropdown.Item>
+              <NavDropdown.Item href="/topic/list">View All</NavDropdown.Item>
+              <NavDropdown.Item href="/topic/create">Add New</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="Courses" id="course-dropdown">
               <NavDropdown.Item href="/course/list">View All</NavDropdown.Item>
-              <NavDropdown.Item href="/course/create">
-                Add New
+              <NavDropdown.Item href="/course/create">Add New</NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Pruchases" id="purchaces-dropdown">
+              <NavDropdown.Item href="/purchase/courses">
+                Purchase of Courses
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/purchase/subcriptions">
+                Purchase of Subscriptions
               </NavDropdown.Item>
             </NavDropdown>
 
-            <NavDropdown title="Pruchases" id="compras-dropdown">
-              <NavDropdown.Item href="/purchases/courses">
-                Purchase Records of Courses
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/purchases/subcriptions">
-                Purchase Records of Subscriptions
-              </NavDropdown.Item>
-            </NavDropdown>
-
-            <NavDropdown title="Subcriptions" id="subscripciones-dropdown">
-              <NavDropdown.Item href="/subcriptions/list">
+            <NavDropdown title="Subscriptions" id="subscriptions-dropdown">
+              <NavDropdown.Item href="/subscription/list">
                 View All
               </NavDropdown.Item>
-              <NavDropdown.Item href="/subcriptions/create">
+              <NavDropdown.Item href="/subscription/create">
                 Add New
               </NavDropdown.Item>
             </NavDropdown>

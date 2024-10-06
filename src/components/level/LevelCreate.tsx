@@ -45,14 +45,12 @@ export const LevelCreate = () => {
       };
       create(newLevel).then((data) => {
         if (data.createdLevel.id) {
-          console.log(
-            `El level ${name} fue creado con ID ${data.createdLevel.id}.`
-          );
+          console.log(`Level ${name} was created ${data.createdLevel.id}.`);
           navigate(`/level/${data.createdLevel.id}`);
         } else {
           console.log(data.createdLevel);
-          console.error("Error: No se recibió un ID del level creado.");
-          alert("Hubo un error al crear el curso. Intente nuevamente.");
+          console.error("Error: No ID was received for the created level.");
+          alert("There was an error creating the level. Please try again.");
         }
       });
     }
