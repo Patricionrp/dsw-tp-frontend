@@ -8,11 +8,12 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Badge from "react-bootstrap/Badge";
 import { NavigationButton } from "../Buttons/NavigationButton.tsx";
 
 export const SubsCreate = () => {
-  const { loading, error, create } = usePost<Subscription>("/api/courses/");
+  const { loading, error, create } = usePost<Subscription>(
+    "/api/subscriptions/"
+  );
   const [description, setDescription] = React.useState<string>("");
   const [price, setPrice] = React.useState<string>("");
   const [duration, setDuration] = React.useState<string>("");
@@ -35,7 +36,9 @@ export const SubsCreate = () => {
   }, [loading, error]);
 
   const handleClick = () => {
-    const confirmed = window.confirm(`¿Desea crear el curso: "${title}"?`);
+    const confirmed = window.confirm(
+      `¿Desea crear el curso: "${description}"?`
+    );
     if (confirmed) {
       const newSubscription: Subscription = {
         description: description,
@@ -107,7 +110,10 @@ export const SubsCreate = () => {
 
       <Row className="justify-content-center">
         <Col xs="auto">
-          <NavigationButton to={`/subscription/list`} label={`Back to Subscriptions`} />
+          <NavigationButton
+            to={`/subscription/list`}
+            label={`Back to Subscriptions`}
+          />
         </Col>
         <Col xs="auto">
           <NavigationButton to={`/`} label={`Back to Mainpage`} />

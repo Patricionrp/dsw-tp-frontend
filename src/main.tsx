@@ -32,6 +32,8 @@ import { MainPage } from "./components/pages/MainPage.tsx";
 import { AdminMenu } from "./components/pages/AdminMenu.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SubsCreate } from "./components/sunscription/SubsCreate.tsx";
+import { SubscriptionList } from "./components/sunscription/SubsList.tsx";
+import { InDevelopment } from "./components/inDevelopment.tsx";
 
 const router = createBrowserRouter([
   {
@@ -84,7 +86,7 @@ const router = createBrowserRouter([
       },
       {
         path: "subscription/list",
-        //element: <SubscriptionList />,
+        element: <SubscriptionList />,
       },
       {
         path: "subscription/create",
@@ -93,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: "subscription/:id",
         //element: <Subscription />,
+      },
+      {
+        path: "/inDevelopment/:title",
+        element: <InDevelopment />,
       },
     ],
   },
