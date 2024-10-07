@@ -5,7 +5,12 @@ import { FaUserCircle } from "react-icons/fa";
 import Nav from "react-bootstrap/Nav";
 export const UserMenu: React.FC = () => {
   const register = true;
-  const userType = "member";
+   
+  //***********************
+  // tipo de usuario harcodeado
+  let userType = true ? "admin" : "member";
+  //**********************************
+
   if (register) {
     return (
       <NavDropdown

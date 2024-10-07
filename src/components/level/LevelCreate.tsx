@@ -46,7 +46,9 @@ export const LevelCreate = () => {
       create(newLevel).then((data) => {
         if (data.createdLevel.id) {
           console.log(`Level ${name} was created ${data.createdLevel.id}.`);
-          navigate(`/level/${data.createdLevel.id}`);
+          navigate(
+            `/level/${data.createdLevel.course.id}/${data.createdLevel.id}`
+          );
         } else {
           console.log(data.createdLevel);
           console.error("Error: No ID was received for the created level.");

@@ -7,25 +7,22 @@ export function useGet<T>(baseUrl: string) {
   const [error, setError] = useState<string | null>(null);
   baseUrl = porturl + baseUrl;
 
-  const fetchData = useCallback(
-    async (queryString: string | undefined) => {
-      setLoading(true);
-      try {
-        const url = queryString ? `${baseUrl}?${queryString}` : baseUrl;
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const result = await response.json();
-        setData(result.data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const url = baseUrl;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    },
-    [baseUrl]
-  );
+      const result = await response.json();
+      setData(result.data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [baseUrl]);
 
   useEffect(() => {
     fetchData();

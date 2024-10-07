@@ -7,8 +7,12 @@ import { UserMenu } from "./../UserMenu";
 import { SearchBox } from "./../SearchBox";
 
 export const AdminHead: React.FC = () => {
-  const userType = "admin";
-  //const userType = "member";
+   
+  //***********************
+  // tipo de usuario harcodeado
+  let userType = true ? "admin" : "member";
+  //**********************************
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
       <Container>
@@ -18,7 +22,7 @@ export const AdminHead: React.FC = () => {
           <Nav className="me-auto">
             <NavDropdown title="Courses" id="course-dropdown">
               <NavDropdown.Item href="/course/list">View All</NavDropdown.Item>
-              {userType === "admin" ? (
+              {userType == "admin" ? (
                 <NavDropdown.Item href="/course/create">
                   Add New
                 </NavDropdown.Item>
@@ -30,31 +34,39 @@ export const AdminHead: React.FC = () => {
             </NavDropdown>
 
             {userType === "admin" && (
-              <NavDropdown title="Topics" id="topics-dropdown">
-                <NavDropdown.Item href="/topic/list">View All</NavDropdown.Item>
-                <NavDropdown.Item href="/topic/create">
-                  Add New
-                </NavDropdown.Item>
-              </NavDropdown>
-            )}
-            {userType === "admin" && (
-              <NavDropdown title="Pruchases" id="purchaces-dropdown">
-                <NavDropdown.Item href="/purchase/courses">
-                  Purchase of Courses
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/purchase/subcriptions">
-                  Purchase of Subscriptions
-                </NavDropdown.Item>
-              </NavDropdown>
+              <>
+                <NavDropdown title="Topics" id="topics-dropdown">
+                  <NavDropdown.Item href="/topic/list">
+                    View All
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/topic/create">
+                    Add New
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown title="Pruchases" id="purchaces-dropdown">
+                  <NavDropdown.Item href="/coursePurchaseRecords">
+                    Purchases of Courses
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/subsPurchaseRecords">
+                    Purchases of Subscriptions
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
             )}
 
             <NavDropdown title="Subscriptions" id="subscriptions-dropdown">
               <NavDropdown.Item href="/subscription/list">
                 View All
               </NavDropdown.Item>
-              <NavDropdown.Item href="/subscription/create">
-                Add New
-              </NavDropdown.Item>
+              {userType == "admin" ? (
+                <NavDropdown.Item href="/subscription/create">
+                  Add New
+                </NavDropdown.Item>
+              ) : (
+                <NavDropdown.Item href="/inDevelopment/My Subscriptions">
+                  My Subscriptions
+                </NavDropdown.Item>
+              )}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
