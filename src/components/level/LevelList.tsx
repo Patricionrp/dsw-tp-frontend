@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useGet } from "./../hooks/useGet";
+import { useGet } from "../hooks/useGet.ts";
 import { Level } from "./../types";
 import "./../../index.css";
 import Container from "react-bootstrap/Container";

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useGet } from "../hooks/useGet";
+import { useGet } from "../hooks/useGet.ts";
 import { Level, Unit } from "./../types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

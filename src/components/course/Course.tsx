@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { useGet } from "../hooks/useGet";
+import { useGet } from "../hooks/useGet.ts";
 import { Course, Level, Topic } from "../types";
 import "./../../index.css";
-import { LevelPreview } from "../level/LevelFindOne";
-import { DateComponent } from "../date";
+//import { LevelPreview } from "../level/LevelFindOne";
+import { DateComponent } from "../Utils/date.tsx";
 import { NavigationButton } from "../Buttons/NavigationButton.tsx";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -11,16 +11,17 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import { useParams } from "react-router-dom";
 import { Topics } from "../topic/Topics.tsx";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
-//el add topic y add level por ahi lo tendriamos que poner solo en el edit
+interface CourseGetOneProps {
+  id: number;
+}
 
-export const CourseGetOne: React.FC = () => { 
+export const CourseGetOne: React.FC<CourseGetOneProps> = ({ id }) => {
   //***********************
   // tipo de usuario harcodeado
-  let userType = true ? "admin" : "member";
+  const userType = true ? "admin" : "member";
   //**********************************
-  const { id } = useParams<{ id: string }>();
   const {
     data: course,
     loading,
@@ -28,23 +29,20 @@ export const CourseGetOne: React.FC = () => {
     fetchData,
   } = useGet<Course>(`/api/courses/${id}`);
 
- 
-
   useEffect(() => {
     fetchData();
   }, [fetchData, id]);
 
-  if (loading)
-    return (
-      <Spinner animation="border" role="status">
-        <span className="sr-only"></span>
-      </Spinner>
-    );
+  if (loading) return <Spinner animation="border" role="status" />;
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
   return (
-    <>
-      <Card className="my-4">
-        <Card.Header as="h3">{course?.title}</Card.Header>
+    <Container>
+      <br></br>
+      <Card>
+        <Card>
+          <Card.Header as="h3">{course?.title}</Card.Header>
+        </Card>
+
         <Card.Body>
           <Card.Text style={{ textAlign: "left" }}>
             <strong>Created at:</strong>{" "}
@@ -69,42 +67,28 @@ export const CourseGetOne: React.FC = () => {
               {Array.isArray(course?.levels) && course?.levels.length > 0 ? (
                 course?.levels.map((level: Level, index: number) => (
                   <ListGroup.Item key={level.id}>
-                    <LevelPreview id={level.id} />
+                    {index + 1} - {level.title}
                   </ListGroup.Item>
                 ))
               ) : (
                 <p>No levels available</p>
               )}
             </ListGroup>
-            <br />
-            {userType === "admin" && (
-              <NavigationButton
-                to={`/level/create/${course?.title}/${course?.id}`}
-                label="Add Level"
-              />
-            )}
           </Card>
           <br />
-          {userType === "admin" ? (
-            <NavigationButton
-              to={`/course/update/${course?.id}`}
-              label="Edit"
-            />
-          ) : (
-            <NavigationButton
-              to={`/inDevelopment/Purchase Course`}
-              label="Purchase Course"
-              variant="success"
-            />
-          )}
-          <br />
+          <NavigationButton
+            to={`/inDevelopment/Purchase Course`}
+            label="Purchase Course"
+            variant="success"
+          />
         </Card.Body>
-      </Card>{" "}
+      </Card>
+      <br></br>
       <NavigationButton
         style={{ backgroundColor: "#000", color: "#fff" }}
         to={`/course/list`}
         label="Back to courses"
       />
-    </>
+    </Container>
   );
 };

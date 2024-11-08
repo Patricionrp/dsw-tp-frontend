@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { porturl } from "../route";
+import { porturl } from "../Utils/route";
 
 export function usePost<T>(baseUrl: string) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   baseUrl = porturl + baseUrl;
-  const create = async (item: T): Promise<T | null | number> => {
+  const create = async (item: T): Promise<T | undefined | number> => {
     setLoading(true);
     try {
       const response = await fetch(baseUrl, {
@@ -23,9 +23,12 @@ export function usePost<T>(baseUrl: string) {
 
       console.log(returnedData);
       return returnedData;
-    } catch (err: any) {
-      setError(err.message);
-      return null;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unexpected error occurred");
+      }
     } finally {
       setLoading(false);
     }

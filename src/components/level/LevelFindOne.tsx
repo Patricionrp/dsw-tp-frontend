@@ -8,7 +8,7 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useGet } from "./../hooks/useGet";
+import { useGet } from "../hooks/useGet.ts";
 import { Level, Unit, Course } from "./../types";
 import "./../../index.css";
 import { UnitPreview } from "./../unit/UnitFindOne";

@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
+import { PageBody } from "../Layouts/Body";
+import { AdminHead } from "../Layouts/Admin/Head";
 import { MemberHead } from "../Layouts/Member/Head";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Card } from "react-bootstrap";
 
-export const MainPage: React.FC = () => {
+import { userType } from "../Utils/userType.ts";
+export function MainPage() {
+  const role = userType();
   return (
-    <div className="layout">
+    <Container>
+      {role === "admin" ? <AdminHead /> : <MemberHead />}
       <MemberHead />
-
-      <footer></footer>
-    </div>
+      <Card className="mt-5">
+        <PageBody />
+      </Card>
+    </Container>
   );
-};
+}

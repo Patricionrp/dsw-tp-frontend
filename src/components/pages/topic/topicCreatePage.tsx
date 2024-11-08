@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { usePost } from "./../hooks";
-import { Topic } from "./../types";
-import { NavigationButton } from "../Buttons/NavigationButton";
+import { usePost } from "./../../hooks";
+import { Topic } from "./../../types";
+import { NavigationButton } from "../../Buttons/NavigationButton";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
-export const TopicCreate = () => {
+export const TopicCreatePage = () => {
   const { loading, error, create } = usePost<Topic>("/api/topics");
   const [description, setDescription] = React.useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);

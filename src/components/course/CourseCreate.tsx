@@ -1,7 +1,7 @@
 //<button onClick={handleClick}>Create</button>
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { usePost } from "../hooks/usePost";
+import { usePost } from "./../hooks";
 import { Course, Topic } from "../types";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -39,7 +39,9 @@ export const CourseCreate = () => {
   }, [loading, error]);
 
   const handleClick = () => {
-    const confirmed = window.confirm(`¿Desea crear el curso: "${title}"?`);
+    const confirmed = window.confirm(
+      `Do you want to create the course: "${title}"?`
+    );
     if (confirmed) {
       const newCourse: Course = {
         title: title,
@@ -139,20 +141,10 @@ export const CourseCreate = () => {
           selectedTopics={selectedTopics}
           onSelectTopic={handleSelectTopic}
         />
-
         <Button variant="primary" onClick={handleClick} className="mt-4">
           Create Course
         </Button>
       </Card>
-
-      <Row className="justify-content-center">
-        <Col xs="auto">
-          <NavigationButton to={`/course/list`} label={`Back to Courses`} />
-        </Col>
-        <Col xs="auto">
-          <NavigationButton to={`/`} label={`Back to Mainpage`} />
-        </Col>
-      </Row>
     </Container>
   );
 };

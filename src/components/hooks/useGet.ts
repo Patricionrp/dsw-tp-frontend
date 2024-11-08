@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { porturl } from "./route.tsx";
+import { porturl } from "../Utils/route";
 
 export function useGet<T>(baseUrl: string) {
   const [data, setData] = useState<T[] | null>(null);

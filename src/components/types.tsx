@@ -27,6 +27,7 @@ export interface Unit {
 export interface Course {
   id?: number;
   isActive?: boolean;
+  isPublic?: boolean;
   title: string;
   createAt?: Date;
   price: number;
@@ -42,18 +43,33 @@ export interface Subscription {
   price: number;
   subsPurchaseRecords?: number[] | SubsPurchaseRecord[];
 }
-
-export interface CoursePurchaseRecord {
+export interface PurchaseRecord {
+  id?: number;
+  totalAmount: number;
+  purchaseAt?: Date;
+  member: number;
+}
+export interface CoursePurchaseRecord extends PurchaseRecord {
   id?: number;
   totalAmount: number;
   purchaseAt?: Date;
   course: number | Course;
   member: number;
 }
-export interface SubsPurchaseRecord {
+export interface SubsPurchaseRecord extends PurchaseRecord {
   id?: number;
   totalAmount: number;
   purchaseAt?: Date;
   subscription: number | Subscription;
   member: number;
+}
+export interface User {
+  id?: number;
+  dni?: string;
+  name?: string;
+  surname?: string;
+  email?: string;
+  password?: string;
+  admin?: boolean;
+  purchaseRecords?: number[] | PurchaseRecord[];
 }
