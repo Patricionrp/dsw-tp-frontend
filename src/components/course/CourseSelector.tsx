@@ -21,19 +21,19 @@ export const CourseSelector = ({ view, setView }) => {
   const updateView = (newFinished, newUnfinished) => {
     if (newFinished && newUnfinished) {
       setAllSelected(true);
-      setView(3); // Both selected, set to 'All courses selected'
+      setView(3);
     } else if (!newFinished && !newUnfinished) {
       setAllSelected(false);
-      setView(3); // Both deselected, set to 'All courses selected'
+      setView(3);
     } else if (newFinished) {
       setAllSelected(false);
-      setView(1); // Only finished courses selected
+      setView(1);
     } else if (newUnfinished) {
       setAllSelected(false);
-      setView(2); // Only unfinished courses selected
+      setView(2);
     } else {
       setAllSelected(false);
-      setView(null); // No view selected
+      setView(null);
     }
   };
 
@@ -50,6 +50,7 @@ export const CourseSelector = ({ view, setView }) => {
               className="ms-0"
             />
           </Col>
+          {view}
           <Col xs={12} md={4} className="d-flex justify-content-center mb-3">
             <Form.Check
               type="checkbox"

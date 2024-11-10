@@ -7,7 +7,7 @@ interface userData {
   password: string;
 }
 export async function createUser(userData: userData) {
-  const url = porturl + "api/users";
+  const url = porturl + "/api/users";
   try {
     const response = await fetch(url, {
       method: "POST",

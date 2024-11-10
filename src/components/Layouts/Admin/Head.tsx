@@ -10,13 +10,14 @@ import { Col } from "react-bootstrap";
 export const AdminHead: React.FC = () => {
   return (
     <Navbar
-      className="py-4 fs-5"
+      className="py-3 fs-5"
       bg="dark"
       variant="dark"
       expand="lg"
       fixed="top"
+      max-width="100%"
     >
-      <Container fluid>
+      <Container>
         <Navbar.Brand href="/">My App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Container className="d-flex justify-content-center">

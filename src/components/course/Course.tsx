@@ -18,10 +18,6 @@ interface CourseGetOneProps {
 }
 
 export const CourseGetOne: React.FC<CourseGetOneProps> = ({ id }) => {
-  //***********************
-  // tipo de usuario harcodeado
-  const userType = true ? "admin" : "member";
-  //**********************************
   const {
     data: course,
     loading,

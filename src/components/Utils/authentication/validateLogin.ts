@@ -1,6 +1,6 @@
 import { porturl } from "./../route";
 export async function validateLogin(email: string, password: string) {
-  const url = porturl + "api/login";
+  const url = porturl + "/api/login";
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -12,7 +12,7 @@ export async function validateLogin(email: string, password: string) {
 
     if (response.ok) {
       const res = await response.json();
-      const user = res.data.user;
+      const user = res.data;
       localStorage.setItem("user", JSON.stringify(user));
       console.log(user, " successfully logged");
       return user;

@@ -6,7 +6,7 @@ import { NavigationButton } from "../../Buttons/NavigationButton.tsx";
 
 export const CourseCreatePage = () => {
   return (
-    <Container>
+    <Container fluid>
       <CourseCreate />
       <Row className="justify-content-center">
         <Col xs="auto">

@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, FormControl, Button } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
-import "./../../index.css";
 
 export const SearchBox: React.FC = () => {
   return (
@@ -11,9 +10,10 @@ export const SearchBox: React.FC = () => {
         placeholder="Buscar"
         className="search-input"
         aria-label="Buscar"
+        style={{ fontSize: "20px" }}
       />
       <Button variant="outline-light" className="search-button">
-        <FaSearch size={23} />
+        <FaSearch size={25} />
       </Button>
     </Form>
   );

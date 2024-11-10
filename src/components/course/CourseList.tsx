@@ -7,9 +7,6 @@ import { Course } from "../types.tsx";
 import { Col, Container, Row } from "react-bootstrap";
 interface CourseListProps {
   view: number;
-  // view = 1 => List public courses
-  // view = 2 => List not public courses
-  // view = 3 => List all courses
 }
 
 export const CourseList: React.FC<CourseListProps> = ({ view }) => {
@@ -23,16 +20,13 @@ export const CourseList: React.FC<CourseListProps> = ({ view }) => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  let isPublic: boolean | undefined;
+  let isActive: boolean;
   switch (view) {
     case 1:
-      isPublic = true;
+      isActive = true;
       break;
     case 2:
-      isPublic = false;
-      break;
-    case 3:
-      isPublic = undefined;
+      isActive = false;
       break;
   }
   if (loading) return <Spinner animation="border" role="status" />;
@@ -43,10 +37,7 @@ export const CourseList: React.FC<CourseListProps> = ({ view }) => {
         <Table>
           <tbody>
             {courses
-              .filter(
-                (course) =>
-                  isPublic === undefined || course.isPublic === isPublic
-              )
+              .filter((course) => view === 3 || course.isActive === isActive)
               .reduce((acc, course, index) => {
                 if (index % 3 === 0) acc.push([]);
                 acc[acc.length - 1].push(course);

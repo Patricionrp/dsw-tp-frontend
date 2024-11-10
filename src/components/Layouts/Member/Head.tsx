@@ -8,7 +8,13 @@ import { SearchBox } from "../SearchBox";
 
 export const MemberHead: React.FC = () => {
   return (
-    <Navbar className=" fs-5" bg="dark" variant="dark" fixed="top">
+    <Navbar
+      className="py-3 fs-5"
+      bg="dark"
+      variant="dark"
+      expand="lg"
+      fixed="top"
+    >
       <Container fluid>
         <Navbar.Brand href="/">My App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

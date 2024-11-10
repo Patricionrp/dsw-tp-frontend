@@ -10,10 +10,10 @@ import { userType } from "../Utils/userType.ts";
 export function MainPage() {
   const role = userType();
   return (
-    <Container>
+    <Container style={{ paddingTop: "70px" }}>
       {role === "admin" ? <AdminHead /> : <MemberHead />}
-      <MemberHead />
-      <Card className="mt-5">
+
+      <Card className="mt-6" style={{ marginTop: "70px" }}>
         <PageBody />
       </Card>
     </Container>

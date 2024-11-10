@@ -25,7 +25,7 @@ export const CoursePreview: React.FC<CoursePreviewProps> = ({ id, view }) => {
     error,
     fetchData,
   } = useGet<Course>(`/api/courses/${id}`);
-
+  
   useEffect(() => {
     fetchData();
   }, [fetchData, id]);

@@ -2,14 +2,21 @@ import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ element }: { element: JSX.Element }) => {
   const storedUser = localStorage.getItem("user");
-  const user = storedUser ? JSON.parse(storedUser) : null;
+  let user = null;
 
-  // Si no está logueado, redirigir a /login
+  try {
+    user = storedUser ? JSON.parse(storedUser) : null;
+  } catch (error) {
+    console.error("Error parsing user data from localStorage:", error);
+    user = null;
+  }
+
+  // Verificamos si el usuario existe
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Si está logueado, renderizar el componente solicitado
+  // Si el usuario existe, renderizamos el componente privado
   return element;
 };
 

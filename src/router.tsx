@@ -26,26 +26,26 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <App />,
+    element: <PrivateRoute element={<App />} />,
     children: [
       {
-        path: "topic/list",
+        path: "/topic/list",
         element: <PrivateRoute element={<TopicListPage />} />,
       },
       {
-        path: "topic/create",
+        path: "/topic/create",
         element: <PrivateRoute element={<TopicCreatePage />} />,
       },
       {
-        path: "course/list",
+        path: "/course/list",
         element: <PrivateRoute element={<CourseListPage />} />,
       },
       {
-        path: "course/create",
+        path: "/course/create",
         element: <PrivateRoute element={<CourseCreatePage />} />,
       },
       {
-        path: "course/:id",
+        path: "/course/:id",
         element: <PrivateRoute element={<CoursePage />} />,
       },
       {

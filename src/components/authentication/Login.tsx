@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import  Form from "react-bootstrap/Form";
-import  Button from "react-bootstrap/Button";
-import  Container from "react-bootstrap/Container";
-import  Card  from "react-bootstrap/Card";
-import  Row from "react-bootstrap/Row";
-import  Col  from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { validateLogin } from "../Utils/authentication/validateLogin";
 import { useNavigate } from "react-router-dom";
 export function LoginForm() {
@@ -14,13 +14,16 @@ export function LoginForm() {
   const handleRegister = () => {
     navigate("/register");
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateLogin(email, password) !== null) {
+    const user = await validateLogin(email, password);
+    if (user) {
       navigate("/");
+    } else {
+      alert("Login failed. Please check your credentials.");
     }
   };
-  //const handleRegister = () => {navigate("/register")};
+
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Card

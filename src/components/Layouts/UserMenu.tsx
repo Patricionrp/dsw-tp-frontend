@@ -9,7 +9,7 @@ export const UserMenu: React.FC = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
       localStorage.removeItem("user");
-      navigate("/login");
+      window.location.reload();
     }
   };
 
