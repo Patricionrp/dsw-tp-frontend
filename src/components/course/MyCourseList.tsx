@@ -1,43 +1,21 @@
 import { CoursePreview } from "./CoursePreview.tsx";
-import { useGet } from "./../hooks";
+import { useGet } from "../hooks/useGet.ts";
 import { useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
-import { Course } from "../types.tsx";
+import { User } from "../types.tsx";
 import { Col, Container, Row } from "react-bootstrap";
-interface CourseListProps {
-  view: number;
+interface MyCourseListProps {
+  id: number;
 }
 
-export const CourseList: React.FC<CourseListProps> = ({ view }) => {
-  const {
-    data: courses,
-    error,
-    loading,
-    fetchData,
-  } = useGet<Course>(`/api/courses`);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-  let isActive: boolean;
-  switch (view) {
-    case 1:
-      isActive = true;
-      break;
-    case 2:
-      isActive = false;
-      break;
-  }
-  if (loading) return <Spinner animation="border" role="status" />;
-  if (error) return <p>Error: {error}</p>;
+export const MyCourseList: React.FC<MyCourseListProps> = ({ id }) => {
   return (
     <Container fluid>
       {Array.isArray(courses) && courses.length > 0 ? (
         <Table>
           <tbody>
             {courses
-              .filter((course) => view === 3 || course.isActive === isActive)
               .reduce((acc, course, index) => {
                 if (index % 3 === 0) acc.push([]);
                 acc[acc.length - 1].push(course);
@@ -55,11 +33,7 @@ export const CourseList: React.FC<CourseListProps> = ({ view }) => {
                       className="d-flex justify-content-center"
                     >
                       <div className="p-2 border rounded">
-                        {view === 1 ? (
-                          <CoursePreview id={course.id} view={1} />
-                        ) : view === 2 ? (
-                          <CoursePreview id={course.id} view={2} />
-                        ) : null}
+                        <CoursePreview id={course.id} view={3} />
                       </div>
                     </Col>
                   ))}

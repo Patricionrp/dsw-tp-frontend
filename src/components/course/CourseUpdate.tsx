@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate  } from "react-router-dom";
-import { usePut} from "../hooks/usePut";
+import { usePut} from "../hooks";
 import { Course } from  "../types";
 import "./../../index.css";
 import { useParams, useSearchParams } from 'react-router-dom';
 
-
-export const CourseUpdate = () => {
+interface CourseUpdateProps{
+    id: number;
+}
+export const CourseUpdate: React.FC<CourseUpdateProps> = ({ id }) => {
     const { loading, error, update } = usePut<Course>(`/api/courses`);
     const [newTitle, setTitle] = React.useState<string>("");
-    const { id} = useParams();
     const [searchParams] = useSearchParams(); // Para obtener los query strings
     const title = searchParams.get("title") || "";
     const navigate = useNavigate();

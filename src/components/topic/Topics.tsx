@@ -1,12 +1,13 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useGet } from "./../hooks/useGet";
+
+import { useGet } from "../hooks/useGet";
 import { Topic } from "./../types";
 import "./../../index.css";
+import ListGroup from "react-bootstrap/ListGroup";
 
 interface TopicsProps {
   selectedTopics: Topic[];
-  onSelectTopic: (topic: Topic) => void;
+  onSelectTopic?: (topic: Topic) => void;
 }
 export const Topics: React.FC<TopicsProps> = ({
   selectedTopics,
@@ -14,9 +15,11 @@ export const Topics: React.FC<TopicsProps> = ({
 }) => {
   const { data: topics, error, fetchData } = useGet<Topic>(`/api/topics`);
 
-  const availableTopics = topics?.filter(
-    (topic) => !selectedTopics.some((selected) => selected.id === topic.id)
-  );
+  const availableTopics = onSelectTopic
+    ? topics?.filter(
+        (topic) => !selectedTopics.some((selected) => selected.id === topic.id)
+      )
+    : selectedTopics;
 
   useEffect(() => {
     fetchData();
@@ -26,21 +29,30 @@ export const Topics: React.FC<TopicsProps> = ({
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="topic-list">
-      <ul>
+    <div className="d-flex flex-wrap">
+      <ListGroup horizontal>
         {availableTopics && availableTopics.length > 0 ? (
-          availableTopics?.map((topic) => (
-            <li key={topic.id}>
-              <button onClick={() => onSelectTopic(topic)}>
-                {topic.description}
-              </button>
-            </li>
+          availableTopics.map((topic) => (
+            <ListGroup.Item
+              key={topic.id}
+              style={{
+                backgroundColor: "#F0F0F0",
+                borderRadius: "20px",
+                padding: "0px 5px",
+                cursor: onSelectTopic ? "pointer" : "default", // Solo hacer clickable si onSelectTopic está definido
+                marginRight: "5px",
+                marginBottom: "5px",
+                color: "#000",
+              }}
+              onClick={() => onSelectTopic && onSelectTopic(topic)} // Solo ejecutar onClick si onSelectTopic está definido
+            >
+              {topic.description}
+            </ListGroup.Item>
           ))
         ) : (
-          <p>No topics available</p>
+          <p>No more topics available</p>
         )}
-        <Link to="/topic/create">Create Topic</Link>
-      </ul>
+      </ListGroup>
     </div>
   );
 };

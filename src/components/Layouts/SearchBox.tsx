@@ -1,22 +1,20 @@
 import React from "react";
 import { Form, FormControl, Button } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa";
 
 export const SearchBox: React.FC = () => {
   return (
-    <Form className="d-flex">
+    <Form className="search-box">
       <FormControl
         type="search"
         placeholder="Buscar"
-        className="me-2"
+        className="search-input"
         aria-label="Buscar"
-        style={{
-          backgroundColor: "#6c757d",
-          color: "white",
-          border: "1px solid #6c757d",
-        }} // Gris oscuro
+        style={{ fontSize: "20px" }}
       />
-      <Button variant="outline-light">Buscar</Button>{" "}
-      {/* Botón con borde blanco */}
+      <Button variant="outline-light" className="search-button">
+        <FaSearch size={25} />
+      </Button>
     </Form>
   );
 };

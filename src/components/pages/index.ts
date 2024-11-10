@@ -1,0 +1,9 @@
+export { CourseListPage } from "./course/courseListPage";
+export { CoursePage } from "./course/coursePage";
+export { CourseCreatePage } from "./course/courseCreatePage";
+export { TopicCreatePage } from "./topic/topicCreatePage";
+export { TopicListPage } from "./topic/topicListPage";
+export { InDevelopmentPage } from "./inDevelopment";
+export { LoginPage } from "./loginPage";
+export { RegisterPage } from "./registerPage";
+export { MainPage } from "./MainPage";

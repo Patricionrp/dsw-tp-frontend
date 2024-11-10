@@ -22,14 +22,14 @@ export const UnitUpdate = () => {
     }, [loading, error]);
 
     const handleClick = () => {
-        const confirmed = window.confirm(`¿Desea crear el unit: ${name}?`);
+        const confirmed = window.confirm(`¿Desea crear el ${tipo}: ${name}?`);
         if (confirmed) {
             handleCreate();
-            console.log(`El unit ${name} fue creado.`);
-            navigate('/unit');
+            console.log(`El ${tipo} ${name} fue creado.`);
+            navigate(`/${tipo}`);
           // Aquí puedes agregar la lógica para crear el unit
         } else {
-            console.log(`Creación del unit ${name} cancelada.`);
+            console.log(`Creación del ${tipo} ${name} cancelada.`);
         }
       };
     const handleCreate = async () => {
