@@ -9,7 +9,7 @@ export interface Level {
   name?: string;
   description?: string;
   course?: number | Course;
-  units?: number[] | Unit[];
+  units?: Unit[] 
 }
 export interface File {
   id?: number;
@@ -21,13 +21,13 @@ export interface Unit {
   id?: number;
   order?: number;
   name?: string;
-  level: number | Level;
+  level?: number | Level;
+  content: string;
   files?: number[];
 }
 export interface Course {
   id?: number;
   isActive?: boolean;
-  isPublic?: boolean;
   title: string;
   createAt?: Date;
   price: number;

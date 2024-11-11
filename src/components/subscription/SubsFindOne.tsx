@@ -7,8 +7,8 @@ import { useEffect } from "react";
 import { useGet } from "../hooks/useGet.ts";
 import { Subscription, Unit } from "./../types";
 import "./../../index.css";
-import { UnitPreview } from "./../unit/UnitFindOne";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
+import { UnitPreview } from "../unit/Unit.tsx";
+import { NavigationButton } from "../buttons/NavigationButton.tsx";
 import { Card } from "react-bootstrap";
 
 interface SubscriptionPreviewProps {

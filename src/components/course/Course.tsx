@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
 import { useGet } from "../hooks/useGet.ts";
-import { Course, Level, Topic } from "../types";
-import "./../../index.css";
-//import { LevelPreview } from "../level/LevelFindOne";
+import { Course, Level } from "../types";
 import { DateComponent } from "../Utils/date.tsx";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
-import { useParams } from "react-router-dom";
+import { NavigationButton } from "../buttons/NavigationButton.tsx";
 import { Topics } from "../topic/Topics.tsx";
+import { LevelList } from "../level/LevelList.tsx";
+import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
-
+import { userType } from "../Utils/userType.ts";
+import { Loading, Error } from "./../common";
 interface CourseGetOneProps {
-  id: number;
+  id: string | undefined;
 }
 
 export const CourseGetOne: React.FC<CourseGetOneProps> = ({ id }) => {
@@ -24,67 +20,53 @@ export const CourseGetOne: React.FC<CourseGetOneProps> = ({ id }) => {
     error,
     fetchData,
   } = useGet<Course>(`/api/courses/${id}`);
+  const levelsIds = Array.isArray(course?.levels)
+    ? course.levels.map((level: Level) => level.id)
+    : [];
 
   useEffect(() => {
     fetchData();
   }, [fetchData, id]);
 
-  if (loading) return <Spinner animation="border" role="status" />;
-  if (error) return <Alert variant="danger">Error: {error}</Alert>;
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
+  const user = userType() ? userType() : "member";
   return (
     <Container>
-      <br></br>
+      <br />
       <Card>
-        <Card>
-          <Card.Header as="h3">{course?.title}</Card.Header>
-        </Card>
-
+        <Card.Header as="h3">{course?.title}</Card.Header>
         <Card.Body>
-          <Card.Text style={{ textAlign: "left" }}>
-            <strong>Created at:</strong>{" "}
-            <DateComponent
-              style={{ display: "inline-block" }}
-              date={course?.createdAt}
-            />
-          </Card.Text>
-          <Card.Text style={{ textAlign: "left" }}>
-            <strong>Price:</strong> ${course?.price}
-          </Card.Text>
-          <Card.Text style={{ textAlign: "left" }}>
-            <strong>Topics:</strong>
-            <br />
-            <br />
+          <div style={{ textAlign: "left" }}>
+            <Card.Text className="fs-4">
+              <strong>Created at:</strong>{" "}
+              <DateComponent
+                style={{ display: "inline-block" }}
+                date={course?.createdAt}
+              />
+            </Card.Text>
+            <Card.Text className="fs-4">
+              <strong>Price:</strong> ${course?.price}
+            </Card.Text>
+            <Card.Text className="fs-4">
+              <strong>Topics:</strong>
+            </Card.Text>
             <Topics selectedTopics={course?.topics} />
-          </Card.Text>
-          <Card>
-            <h3 style={{ textAlign: "left" }}>Levels:</h3>
-            <br />
-            <ListGroup>
-              {Array.isArray(course?.levels) && course?.levels.length > 0 ? (
-                course?.levels.map((level: Level, index: number) => (
-                  <ListGroup.Item key={level.id}>
-                    {index + 1} - {level.title}
-                  </ListGroup.Item>
-                ))
-              ) : (
-                <p>No levels available</p>
-              )}
-            </ListGroup>
-          </Card>
-          <br />
-          <NavigationButton
-            to={`/inDevelopment/Purchase Course`}
-            label="Purchase Course"
-            variant="success"
-          />
+            <Card.Text className="fs-4">
+              <strong>Levels:</strong>
+            </Card.Text>
+            <LevelList levels={levelsIds} course={id} />
+          </div>
+          {user === "admin" && (
+            <NavigationButton
+              className="d-flex justify-content-center"
+              to={`/course/update/${id}`}
+              label="Edit"
+              style={{ marginTop: "2rem" }}
+            />
+          )}
         </Card.Body>
       </Card>
-      <br></br>
-      <NavigationButton
-        style={{ backgroundColor: "#000", color: "#fff" }}
-        to={`/course/list`}
-        label="Back to courses"
-      />
     </Container>
   );
 };

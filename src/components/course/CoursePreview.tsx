@@ -1,39 +1,68 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useGet } from "../hooks/useGet.ts";
-import { Course, Level, Topic } from "../types";
-import "./../../index.css";
-//import { LevelPreview } from "../level/LevelFindOne";
+import { Course, User } from "../types";
+
 import { DateComponent } from "../Utils/date.tsx";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
+import { NavigationButton } from "../buttons/NavigationButton.tsx";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
-import { useParams } from "react-router-dom";
+
 import { Topics } from "../topic/Topics.tsx";
-import Container from "react-bootstrap/Container";
+import { getUser } from "../Utils/getUser.ts";
+import { checkPurchase } from "../Utils/authentication/checkPurchase.ts";
+import { Loading, Error } from "./../common";
+import { PurchaseButton } from "../buttons/purchaseCourseButton.tsx";
 
 interface CoursePreviewProps {
   id: number;
-  view?: number;
 }
 
-export const CoursePreview: React.FC<CoursePreviewProps> = ({ id, view }) => {
+export const CoursePreview: React.FC<CoursePreviewProps> = ({ id }) => {
   const {
     data: course,
     loading,
     error,
     fetchData,
   } = useGet<Course>(`/api/courses/${id}`);
-  
+  const [button, setButton] = useState<number>(2);
+
+  async function determineView(user: User, id: number): Promise<number> {
+    let view = 1;
+    if (user) {
+      console.log("User is:", user);
+      if (user.admin) {
+        view = 1;
+      } else {
+        const purchaseStatus = await checkPurchase(user.id, id);
+        console.log("Purchase status:", purchaseStatus);
+        view = purchaseStatus ? 2 : 3;
+      }
+    }
+
+    return view;
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = getUser();
+      console.log("User:", user);
+      if (user) {
+        const currentButton = await determineView(user, id);
+        setButton(currentButton);
+      } else {
+        console.log("User is not defined.");
+        setButton(3);
+      }
+    };
+
+    fetchData();
+  }, [id]);
   useEffect(() => {
     fetchData();
   }, [fetchData, id]);
 
-  if (loading) return <Spinner animation="border" role="status" />;
-  if (error) return <Alert variant="danger">Error: {error}</Alert>;
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
   return (
-    <Container>
+    <Card style={{ width: "18rem" }}>
       <Card.Header as="h5">{course?.title}</Card.Header>
       <Card.Body>
         <Card.Text style={{ textAlign: "left" }}>
@@ -53,23 +82,24 @@ export const CoursePreview: React.FC<CoursePreviewProps> = ({ id, view }) => {
           <Topics selectedTopics={course?.topics} />
         </Card.Text>
         <br />
-        {view === 1 ? (
-          <NavigationButton to={`/course/update/${course?.id}`} label="Edit" />
-        ) : view === 2 ? (
-          <NavigationButton
-            to={`/inDevelopment/Purchase Course`}
-            label="Purchase Course"
-            variant="success"
-          />
-        ) : view === 3 ? (
-          <NavigationButton
-            to={`/inDevelopment/Course`}
-            label="View"
-            variant="success"
-          />
-        ) : null}
+        <div className="d-flex justify-content-center">
+          {button === 1 ? (
+            <NavigationButton
+              to={`/course/update/${course?.id}`}
+              label="Edit"
+            />
+          ) : button === 3 ? (
+            <PurchaseButton courseId={id} />
+          ) : button === 2 ? (
+            <NavigationButton
+              to={`/Course/${course?.id}`}
+              label="View"
+              variant="success"
+            />
+          ) : null}
+        </div>
         <br />
       </Card.Body>
-    </Container>
+    </Card>
   );
 };

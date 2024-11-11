@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { usePost } from "../hooks/usePost"; // Asegúrate de que la ruta esté correcta
-import { Button } from "react-bootstrap"; // O cualquier librería de UI que estés usando
+import { usePost } from "../hooks/usePost";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 
 interface PurchaseButtonProps {
   courseId: number;
@@ -10,17 +11,17 @@ export function PurchaseButton({ courseId }: PurchaseButtonProps) {
   const [isConfirming, setIsConfirming] = useState<boolean>(false);
   const { create, loading, error } = usePost<{ course: number; user: number }>(
     "/purchase"
-  ); 
+  );
 
   const handlePurchase = () => {
     const storedUser = localStorage.getItem("user");
     const userId = storedUser ? JSON.parse(storedUser).id : null;
     if (!userId) {
-      alert("Debes iniciar sesión para realizar una compra.");
+      alert("You must log in to make a purchase.");
       return;
     }
     const confirmPurchase = window.confirm(
-      "¿Estás seguro que deseas comprar este curso?"
+      "Are you sure you want to purchase this course?"
     );
     if (confirmPurchase) {
       setIsConfirming(true);
@@ -32,9 +33,9 @@ export function PurchaseButton({ courseId }: PurchaseButtonProps) {
       create(purchaseData)
         .then((response) => {
           if (response) {
-            alert("Compra realizada con éxito!");
+            alert("Purchase successful!");
           } else {
-            alert("Hubo un error al procesar la compra.");
+            alert("There was an error processing the purchase.");
           }
         })
         .finally(() => {
@@ -44,12 +45,14 @@ export function PurchaseButton({ courseId }: PurchaseButtonProps) {
   };
 
   return (
-    <Button
-      variant="primary"
-      onClick={handlePurchase}
-      disabled={loading || isConfirming}
-    >
-      {loading || isConfirming ? "Procesando..." : "Comprar Curso"}
-    </Button>
+    <Container className="d-flex justify-content-center" style={{ marginBottom: "1rem", marginTop: "1rem" }}>
+      <Button
+        variant="success"
+        onClick={handlePurchase}
+        disabled={loading || isConfirming}
+      >
+        {loading || isConfirming ? "Processing..." : "Buy Course"}
+      </Button>
+    </Container>
   );
 }

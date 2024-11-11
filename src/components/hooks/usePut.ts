@@ -6,11 +6,11 @@ export function usePut<T>(baseUrl: string) {
   const [error, setError] = useState<string | null>(null);
   baseUrl = porturl + baseUrl;
 
-  const update = async (id: number, item: T) => {
+  const update = async (id: string | undefined, item: T) => {
     setLoading(true);
     try {
       const response = await fetch(`${baseUrl}/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },

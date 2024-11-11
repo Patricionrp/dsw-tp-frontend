@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useGet } from "../../hooks/useGet.ts";
-import Table from "react-bootstrap/Table";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
-import Spinner from "react-bootstrap/Spinner";
 import { CourseList, CourseSelector } from "../../course";
-import { Course } from "../../types.tsx";
-import { NavigationButton } from "../../Buttons/NavigationButton.tsx";
+import { NavigationButton } from "../../buttons/NavigationButton.tsx";
 import { Card } from "react-bootstrap";
+import { userType } from "../../Utils/userType.ts";
 
 export const CourseListPage = () => {
   const [view, setView] = useState(3);
-
+  const isAdmin = userType() === "admin";
   return (
     <Container style={{ width: "100%" }}>
       <h2>Courses</h2>
-      <CourseSelector view={view} setView={setView} />
+      {isAdmin && <CourseSelector view={view} setView={setView} />}
       <Card>
-        <CourseList view={view} />
+        <CourseList view={isAdmin ? view : 1} />
       </Card>
       <Container
         fluid

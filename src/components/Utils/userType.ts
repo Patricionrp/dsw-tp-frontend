@@ -1,6 +1,5 @@
 export function userType() {
   const storedUser = localStorage.getItem("user");
-  //return "admin";
   if (storedUser && storedUser !== "undefined") {
     try {
       const parsedUser = JSON.parse(storedUser);

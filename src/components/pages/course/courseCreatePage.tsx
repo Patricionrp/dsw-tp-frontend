@@ -2,7 +2,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { CourseCreate } from "../../course/index.ts";
-import { NavigationButton } from "../../Buttons/NavigationButton.tsx";
+import { NavigationButton } from "../../buttons/NavigationButton.tsx";
 
 export const CourseCreatePage = () => {
   return (

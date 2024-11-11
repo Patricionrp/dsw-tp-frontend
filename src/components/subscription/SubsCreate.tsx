@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
+import { NavigationButton } from "../buttons/NavigationButton.tsx";
 
 export const SubsCreate = () => {
   const { loading, error, create } = usePost<Subscription>(

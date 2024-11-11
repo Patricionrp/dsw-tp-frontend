@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
+import { NavigationButton } from "../buttons/NavigationButton.tsx";
 
 export const InDevelopmentPage = () => {
   const { title } = useParams();

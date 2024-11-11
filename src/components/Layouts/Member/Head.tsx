@@ -25,7 +25,7 @@ export const MemberHead: React.FC = () => {
                 <NavDropdown.Item href="/course/list">
                   View All
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/inDevelopment/My Courses">
+                <NavDropdown.Item href="/myCourses">
                   My Courses
                 </NavDropdown.Item>
               </NavDropdown>

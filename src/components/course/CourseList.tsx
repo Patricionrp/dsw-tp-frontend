@@ -1,10 +1,13 @@
 import { CoursePreview } from "./CoursePreview.tsx";
 import { useGet } from "./../hooks";
 import { useEffect } from "react";
-import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 import { Course } from "../types.tsx";
-import { Col, Container, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import { Loading, Error } from "./../common";
+
 interface CourseListProps {
   view: number;
 }
@@ -20,6 +23,9 @@ export const CourseList: React.FC<CourseListProps> = ({ view }) => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
   let isActive: boolean;
   switch (view) {
     case 1:
@@ -29,10 +35,9 @@ export const CourseList: React.FC<CourseListProps> = ({ view }) => {
       isActive = false;
       break;
   }
-  if (loading) return <Spinner animation="border" role="status" />;
-  if (error) return <p>Error: {error}</p>;
+
   return (
-    <Container fluid>
+    <Container fluid style={{ marginTop: "2rem" }}>
       {Array.isArray(courses) && courses.length > 0 ? (
         <Table>
           <tbody>
@@ -54,13 +59,7 @@ export const CourseList: React.FC<CourseListProps> = ({ view }) => {
                       lg={4}
                       className="d-flex justify-content-center"
                     >
-                      <div className="p-2 border rounded">
-                        {view === 1 ? (
-                          <CoursePreview id={course.id} view={1} />
-                        ) : view === 2 ? (
-                          <CoursePreview id={course.id} view={2} />
-                        ) : null}
-                      </div>
+                      <CoursePreview id={course.id} />
                     </Col>
                   ))}
                 </Row>

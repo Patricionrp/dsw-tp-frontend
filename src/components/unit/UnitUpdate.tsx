@@ -1,58 +1,121 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate  } from "react-router-dom";
-import { usePut} from "../hooks/usePut";
-import { Unit } from  "../types";
-import "./unit.css";
+import { useRef, useEffect } from "react";
+import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
+import { useUnitEdit, deleteUnit } from "./hooks";
+import { useNavigate } from "react-router-dom";
 
+interface UnitUpdateProps {
+  courseId: string | undefined;
+  unitId: string | undefined;
+  id: string | undefined;
+}
 
-export const UnitUpdate = () => {
-    const { loading, error, update } = usePut<Unit>("/api/units/${id}");
-    const [name, setName] = React.useState<string>("");
-    
-    const navigate = useNavigate();
-
-    
-    useEffect(() => {
-        if (loading) {
-        console.log("loading...");
-        }
-        if (error) {
-        console.log("error...");
-        }
-    }, [loading, error]);
-
-    const handleClick = () => {
-        const confirmed = window.confirm(`¿Desea crear el ${tipo}: ${name}?`);
-        if (confirmed) {
-            handleCreate();
-            console.log(`El ${tipo} ${name} fue creado.`);
-            navigate(`/${tipo}`);
-          // Aquí puedes agregar la lógica para crear el unit
-        } else {
-            console.log(`Creación del ${tipo} ${name} cancelada.`);
-        }
-      };
-    const handleCreate = async () => {
-        const newUnit: Unit = {
-        name: name,
-        };
-        update(id, newUnit);
-    };
-    
-    return (
-        <div className="unit">
-        <h2>Create a Unit</h2>
-        <input
-            type="text"
-            placeholder="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-        />
-        <button onClick={handleClick}>Create</button>
-        <p></p>
-        <button>
-            <Link to="/unit">Back to Units</Link>
-        </button>
-        </div>    
-    );
+export const UnitUpdate: React.FC<UnitUpdateProps> = ({ id }) => {
+  const navigate = useNavigate();
+  const {
+    loading,
+    error,
+    oldUnit,
+    name,
+    content,
+    formErrors,
+    setName,
+    setContent,
+    handleSave,
+  } = useUnitEdit(id);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
+  }, []);
+
+  const handleSaveClick = async () => {
+    try {
+      await handleSave();
+      console.log(`Unit ${name} updated with.`);
+      window.location.reload();
+    } catch {
+      alert("Error updating unit.");
+    }
+  };
+  const handleRemoveClick = async () => {
+    if (confirm(`Are you sure you want to delete the unit "${name}"?`)) {
+      try {
+        await deleteUnit(id!);
+        alert("Unit removed successfully.");
+        navigate(`level/${courseId}/${levelId}`);
+        window.location.reload();
+      } catch {
+        alert("Error removing unit.");
+      }
+    }
+  };
+
+  return (
+    <Container style={{ marginTop: "1rem" }}>
+      <Card>
+        <Card.Header as="h3">Edit Unit</Card.Header>
+        <Card.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                ref={inputRef}
+                type="text"
+                placeholder={oldUnit?.name || "Unit Name"}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                isInvalid={!!formErrors.name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {formErrors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Content</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder={oldUnit?.content?.toString() || "0000.00"}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                isInvalid={!!formErrors.content}
+              />
+              <Form.Control.Feedback type="invalid">
+                {formErrors.content}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form>
+
+          <Row className="justify-content-center mt-4">
+            <Col xs={10} md={3} className="d-flex justify-content-center">
+              <Button
+                variant="success"
+                onClick={handleSaveClick}
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save Changes"}
+              </Button>
+            </Col>
+
+            <Col xs={10} md={3} className="d-flex justify-content-center">
+              {oldUnit ? (
+                <Button
+                  variant="danger"
+                  onClick={handleRemoveClick}
+                  disabled={loading}
+                >
+                  {loading ? "Deleting..." : "Delete Unit"}
+                </Button>
+              ) : (
+                <Button variant="secondary" disabled>
+                  Loading...
+                </Button>
+              )}
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
+    </Container>
+  );
+};

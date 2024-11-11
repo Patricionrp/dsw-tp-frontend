@@ -1,24 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
-import { usePost } from "./../hooks/usePost";
-import { Level, Unit } from "./../types";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
-import { UnitGetOne } from "../unit/UnitFindOne.tsx";
 
-export const LevelCreate = () => {
+import Card from "react-bootstrap/Card";
+import { usePost } from "../hooks/usePost";
+import { Level } from "../types";
+import {
+  validateLevelName,
+  validateLevelDescription,
+} from "./validations/validateLevel";
+interface LevelCreateProps {
+  course: string | undefined;
+}
+export const LevelCreate: React.FC<LevelCreateProps> = ({ course }) => {
   const { loading, error, create } = usePost<Level>("/api/levels");
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const { id, title } = useParams();
-  const courseId = parseInt(id!);
+  const courseId = parseInt(course!);
+
+  const [formErrors, setFormErrors] = useState<{
+    name?: string;
+    description?: string;
+  }>({});
 
   useEffect(() => {
     if (inputRef.current) {
@@ -31,68 +37,94 @@ export const LevelCreate = () => {
       console.log("loading...");
     }
     if (error) {
-      console.log("error...");
+      console.log(`error: ${error}`);
     }
   }, [loading, error]);
 
   const handleClick = () => {
-    const confirmed = window.confirm(`¿Desea crear el level: "${name}"?`);
+    const nameError = validateLevelName(name);
+    const descriptionError = validateLevelDescription(description);
+
+    if (nameError || descriptionError) {
+      setFormErrors({
+        name: nameError,
+        description: descriptionError,
+      });
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Do you want to create the level: "${name}"?`
+    );
     if (confirmed) {
       const newLevel: Level = {
-        name: name,
-        description: description,
+        name: name.trim(),
+        description: description.trim(),
         course: courseId,
       };
+
       create(newLevel).then((data) => {
-        if (data.createdLevel.id) {
-          console.log(`Level ${name} was created ${data.createdLevel.id}.`);
-          navigate(`/level/${courseId}/${data.createdLevel.id}`);
+        if (data.createdLevel?.id) {
+          console.log(
+            `Level "${name}" was created with ID ${data.createdLevel.id}.`
+          );
+          navigate(`/course/${courseId}`);
         } else {
-          console.log(data.createdLevel);
           console.error("Error: No ID was received for the created level.");
           alert("There was an error creating the level. Please try again.");
         }
       });
+    } else {
+      console.log(`Creation of level "${name}" was cancelled.`);
     }
   };
 
   return (
-    <Container className="mt-4">
-      <h1>Course: {title}</h1>
-      <h2>Create a Level</h2>
+    <Card body className="mb-4">
+      <Form>
+        <Form.Group className="mb-3" controlId="formLevelName">
+          <Form.Label>Level Name</Form.Label>
+          <Form.Control
+            ref={inputRef}
+            type="text"
+            placeholder="Enter level name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            isInvalid={!!formErrors.name}
+          />
+          <Form.Control.Feedback type="invalid">
+            {formErrors.name}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formLevelName">
-        <Form.Control
-          ref={inputRef}
-          type="text"
-          placeholder="Level name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </Form.Group>
-      <Form.Control
-        as="textarea"
-        rows={3}
-        placeholder={`Description`}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        style={{
-          textAlign: "left",
-          paddingTop: "10px",
-          height: "auto",
-          width: "100%",
-          resize: "vertical",
-          minHeight: "120px",
-          overflow: "hidden",
-        }}
-      />
-      <br />
-      <Button variant="success" onClick={handleClick}>
-        Create
-      </Button>
-      <br />
-      <br />
-      <NavigationButton to={`/course/${id}`} label="Back to Course" />
-    </Container>
+        <Form.Group className="mb-3" controlId="formLevelDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            placeholder="Enter level description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            isInvalid={!!formErrors.description}
+            style={{
+              textAlign: "left",
+              paddingTop: "10px",
+              resize: "vertical",
+              minHeight: "120px",
+              overflow: "hidden",
+            }}
+          />
+          <Form.Control.Feedback type="invalid">
+            {formErrors.description}
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <div className="d-flex justify-content-center">
+          <Button variant="success" onClick={handleClick} className="mt-4">
+            Create Level
+          </Button>
+        </div>
+      </Form>
+    </Card>
   );
 };

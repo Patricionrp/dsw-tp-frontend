@@ -5,7 +5,7 @@ import { Subscription } from "./../types";
 import "./../../index.css";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
+import { NavigationButton } from "../buttons/NavigationButton.tsx";
 import { SubscriptionPreview } from "./SubsFindOne.tsx";
 import { Col, Row } from "react-bootstrap";
 

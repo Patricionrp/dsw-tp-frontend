@@ -9,6 +9,7 @@ interface NavigationButtonProps {
   style?: React.CSSProperties;
   variant?: string;
   children?: React.ReactNode;
+  className?: string;
 }
 
 export const NavigationButton: React.FC<NavigationButtonProps> = ({
@@ -17,9 +18,10 @@ export const NavigationButton: React.FC<NavigationButtonProps> = ({
   style,
   variant,
   children,
+  className,
 }) => {
   return (
-    <LinkContainer to={to}>
+    <LinkContainer to={to} className={className}>
       <Nav.Link>
         <Button style={style} variant={variant}>
           {label}
