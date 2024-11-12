@@ -3,3 +3,4 @@ export { DateRangePicker } from "./dateRangePicker";
 export { Error } from "./error";
 export { Loading } from "./loading";
 export { porturl } from "./route";
+export { SearchBox } from "./searchBox";

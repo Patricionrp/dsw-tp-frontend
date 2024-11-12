@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { Col, Container, Row } from "react-bootstrap";
 import { getPurchasedCourses } from "../common/hooks/getPurchasedCourses.ts";
-import { Loading, Error } from "./../common";
+import { Loading, Error } from "./../common/utils";
 interface MyCourseListProps {
   id: number;
 }

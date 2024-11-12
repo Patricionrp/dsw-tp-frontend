@@ -4,7 +4,7 @@ import { CourseList, CourseSelector } from "../../course";
 import { NavigationButton } from "../../buttons/NavigationButton.tsx";
 import { Card } from "react-bootstrap";
 import { userType } from "../../common/authentication/userType.ts";
-import { SearchBox } from "../../Layouts/SearchBox.tsx";
+import { SearchBox } from "../../common/utils/searchBox.tsx";
 
 export const CourseListPage = () => {
   const [view, setView] = useState(3);

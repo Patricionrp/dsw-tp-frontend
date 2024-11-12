@@ -6,7 +6,7 @@ import { Card } from "react-bootstrap";
 import { MyCourseList } from "../../course/myCourseList.tsx";
 import { getUser } from "../../common/authentication/getUser.ts";
 import { useAdminRedirect } from "../../common/hooks/useAdminRedirect.ts";
-import { SearchBox } from "../../Layouts/SearchBox.tsx";
+import { SearchBox } from "../../common/utils/searchBox.tsx";
 
 export const MyCourseListPage = () => {
   useAdminRedirect("course/list");

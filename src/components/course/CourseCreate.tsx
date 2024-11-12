@@ -1,16 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePost } from "../common/hooks";
 import { Course } from "../types";
-// react-bootstrap components
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
-//
 import { Topics } from "../topic/Topics";
 import { useSelectedTopics } from "./hooks/useSelectedTopics";
 import {
@@ -18,7 +14,7 @@ import {
   validatePrice,
   validateTopics,
 } from "./validations/courseValidate";
-import { Loading, Error } from "./../common";
+import { Loading, Error } from "./../common/utils";
 
 export const CourseCreate = () => {
   const { loading, error, create } = usePost<Course>("/api/courses/");
@@ -28,7 +24,7 @@ export const CourseCreate = () => {
   const navigate = useNavigate();
 
   const { selectedTopics, selectedTopicsIds, handleSelectTopic } =
-    useSelectedTopics(); // Usa el hook para manejar los temas seleccionados
+    useSelectedTopics();
 
   const [formErrors, setFormErrors] = useState<{
     title?: string;

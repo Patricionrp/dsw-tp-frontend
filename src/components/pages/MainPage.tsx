@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
-import { PageBody } from "../Layouts/Body";
-import { AdminHead } from "../Layouts/Admin/Head";
-import { MemberHead } from "../Layouts/Member/Head";
+import { PageBody } from "../Layouts/body.tsx";
+import { AdminHead } from "../Layouts/admin/head.tsx";
+import { MemberHead } from "../Layouts/member/head.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Card } from "react-bootstrap";
 

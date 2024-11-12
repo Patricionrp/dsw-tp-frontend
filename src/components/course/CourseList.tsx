@@ -1,13 +1,12 @@
-import { CoursePreview } from "./coursePreview.tsx";
-import { useGet } from "../common/hooks/index.ts";
 import { useEffect } from "react";
-import Table from "react-bootstrap/Table";
 import { Course } from "../types.tsx";
+import Table from "react-bootstrap/Table";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { Loading, Error } from "./../common";
-
+import { Loading, Error } from "./../common/utils";
+import { CoursePreview } from "./coursePreview";
+import { useGet } from "../common/hooks/index.ts";
 interface CourseListProps {
   view: number;
   searchQuery: string;

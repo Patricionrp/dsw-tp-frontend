@@ -1,12 +1,12 @@
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
-import { NavigationButton } from "../buttons/NavigationButton.tsx";
-import { LevelPreview } from "./LevelPreview";
+import { NavigationButton } from "../common/buttons/";
 import { userType } from "../common/authentication/userType.ts";
 import { Level } from "../types.tsx";
 import { useGet } from "../common/hooks/useGet.ts";
 import { useEffect } from "react";
-import { Loading, Error } from "../common";
+import { Loading, Error } from "../common/utils";
+import { LevelPreview } from "./levelPreview";
 interface LevelListProps {
   course: string | undefined;
 }

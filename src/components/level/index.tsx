@@ -1,5 +1,4 @@
-export {LevelGetOne} from "./Level";  
-export {LevelList} from "./LevelList";
-export {LevelPreview} from "./LevelPreview";
-export {LevelCreate} from "./LevelCreate";
-export {LevelUpdate} from "./LevelUpdate";
+export { LevelGetOne } from "./level";
+export { LevelList } from "./levelList";
+export { LevelCreate } from "./levelCreate";
+export { LevelUpdate } from "./levelUpdate";

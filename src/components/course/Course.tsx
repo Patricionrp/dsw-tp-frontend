@@ -4,7 +4,7 @@ import { Course } from "../types.tsx";
 import { DateComponent } from "../common/utils/date.tsx";
 import { NavigationButton } from "../common/buttons";
 import { Topics } from "../topic/Topics.tsx";
-import { LevelList } from "../level/LevelList.tsx";
+import { LevelList } from "../level/levelList.tsx";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import { userType } from "../common/authentication/userType.ts";

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-
 import Card from "react-bootstrap/Card";
 import { usePost } from "../common/hooks/usePost";
 import { Level } from "../types";

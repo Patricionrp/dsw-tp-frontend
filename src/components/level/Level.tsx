@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { useGet } from "../common/hooks/useGet.ts";
-import { Level, Unit } from "../types";
-import { NavigationButton } from "../buttons/NavigationButton.tsx";
-import { UnitList } from "../unit/UnitList.tsx";
+import { useGet } from "../common/hooks";
+import { Level } from "../types";
+import { NavigationButton } from "../common/buttons";
+import { UnitList } from "../unit";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
-import { userType } from "../common/authentication/userType.ts";
-import { Loading, Error } from "./../common";
+import { userType } from "../common/authentication";
+import { Loading, Error } from "../common/utils";
 interface LevelGetOneProps {
   id: string | undefined;
   courseId: string | undefined;

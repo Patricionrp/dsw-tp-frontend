@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
-import { Unit } from "./../types";
-import { useLevelEdit, deleteLevel } from "./hooks";
+import { Unit } from "../types.tsx";
+import { useLevelEdit, deleteLevel } from "./hooks/index.ts";
 import { UnitList } from "../unit/UnitList.tsx";
 import { useNavigate } from "react-router-dom";
 
