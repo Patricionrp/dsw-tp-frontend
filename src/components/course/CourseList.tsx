@@ -1,5 +1,5 @@
-import { CoursePreview } from "./CoursePreview.tsx";
-import { useGet } from "./../hooks";
+import { CoursePreview } from "./coursePreview.tsx";
+import { useGet } from "../common/hooks/index.ts";
 import { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { Course } from "../types.tsx";
@@ -10,15 +10,20 @@ import { Loading, Error } from "./../common";
 
 interface CourseListProps {
   view: number;
+  searchQuery: string;
 }
 
-export const CourseList: React.FC<CourseListProps> = ({ view }) => {
+export const CourseList: React.FC<CourseListProps> = ({
+  view,
+  searchQuery,
+}) => {
+  console.log(searchQuery);
   const {
     data: courses,
     error,
     loading,
     fetchData,
-  } = useGet<Course>(`/api/courses`);
+  } = useGet<Course>(`/api/courses${searchQuery}`);
 
   useEffect(() => {
     fetchData();

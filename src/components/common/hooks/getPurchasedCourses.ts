@@ -1,4 +1,5 @@
-import { porturl } from "./route";
+import { porturl } from "../utils/route.ts";
+
 export async function getPurchasedCourses(user: number) {
   const userId = user.toString();
   const url = porturl + `/api/coursePurchaseRecords/user/${userId}/courses`;

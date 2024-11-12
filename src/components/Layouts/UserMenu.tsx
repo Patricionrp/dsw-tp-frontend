@@ -2,7 +2,7 @@ import React from "react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { userType } from "./../Utils/userType";
+import { userType } from "../common/authentication/userType";
 export const UserMenu: React.FC = () => {
   const navigate = useNavigate();
   const handleLogout = () => {

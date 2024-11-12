@@ -8,13 +8,14 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import { Topic, Level } from "./../types";
-import { useCourseEdit, deleteCourse } from "./hooks";
-import { Topics } from "./../topic/Topics";
+import { Topic } from "../types.tsx";
+import { useCourseEdit, deleteCourse } from "./hooks/index.ts";
+import { Topics } from "../topic/Topics.tsx";
 import { LevelList } from "../level/LevelList.tsx";
+import { Loading, Error } from "../common";
 
 interface CourseUpdateProps {
-  courseId: string | undefined;
+  courseId: string;
 }
 
 export const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
@@ -76,7 +77,8 @@ export const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
       }
     }
   };
-  console.log(oldCourse);
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
   return (
     <Container className="course" style={{ marginTop: "1rem" }}>
       <Card>

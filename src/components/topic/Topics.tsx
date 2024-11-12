@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useGet } from "../hooks/useGet";
+import { useGet } from "../common/hooks/useGet";
 import { Topic } from "./../types";
 import "./../../index.css";
 import ListGroup from "react-bootstrap/ListGroup";

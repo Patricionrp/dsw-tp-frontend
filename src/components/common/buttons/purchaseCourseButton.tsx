@@ -9,7 +9,7 @@ interface PurchaseButtonProps {
 
 export function PurchaseButton({ courseId }: PurchaseButtonProps) {
   const [isConfirming, setIsConfirming] = useState<boolean>(false);
-  const { create, loading, error } = usePost<{ course: number; user: number }>(
+  const { create, loading } = usePost<{ course: number; user: number }>(
     "/purchase"
   );
 
@@ -45,7 +45,10 @@ export function PurchaseButton({ courseId }: PurchaseButtonProps) {
   };
 
   return (
-    <Container className="d-flex justify-content-center" style={{ marginBottom: "1rem", marginTop: "1rem" }}>
+    <Container
+      className="d-flex justify-content-center"
+      style={{ marginBottom: "1rem", marginTop: "1rem" }}
+    >
       <Button
         variant="success"
         onClick={handlePurchase}

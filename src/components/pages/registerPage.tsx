@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import { RegisterForm } from "../authentication/Register.tsx";
+import { RegisterForm } from "../authentication/register.tsx";
 
 export function RegisterPage() {
   return (

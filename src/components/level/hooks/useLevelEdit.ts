@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { Level } from "../../types";
-import { useGet, usePut } from "../../hooks";
+import { useGet, usePut } from "../../common/hooks";
 import {
   validateLevelName,
   validateLevelDescription,
 } from "../validations/validateLevel";
 
-export const useLevelEdit = (
-  levelId: string | undefined,
-) => {
+export const useLevelEdit = (levelId: string | undefined) => {
   const {
     loading,
     error,

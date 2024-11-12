@@ -38,7 +38,7 @@ export const CourseSelector = ({ view, setView }) => {
   };
 
   return (
-    <Container>
+    <Container style={{marginTop:"1rem"}}>
       <Form>
         <Row className="d-flex justify-content-center align-items-center">
           <Col xs={12} md={4} className="d-flex justify-content-center mb-3">
@@ -50,7 +50,6 @@ export const CourseSelector = ({ view, setView }) => {
               className="ms-0"
             />
           </Col>
-          {view}
           <Col xs={12} md={4} className="d-flex justify-content-center mb-3">
             <Form.Check
               type="checkbox"

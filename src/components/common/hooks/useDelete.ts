@@ -1,4 +1,4 @@
-import { porturl } from "../Utils/route";
+import { porturl } from "../utils/route";
 
 interface RemoveOptions {
   headers?: Record<string, string>;
@@ -14,10 +14,13 @@ export const remove = async (baseUrl: string, options?: RemoveOptions) => {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorData = await response.json();
+      const errorMessage =
+        errorData?.message || `HTTP error! status: ${response.status}`;
+      throw new Error(errorMessage);
     }
 
-    return response.status; // Retornar el status o cualquier dato adicional si es necesario
+    return response.status;
   } catch (error) {
     console.error("Error in remove request:", error);
     throw error;

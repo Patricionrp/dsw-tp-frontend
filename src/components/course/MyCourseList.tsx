@@ -1,8 +1,8 @@
-import { CoursePreview } from "./CoursePreview.tsx";
+import { CoursePreview } from "./coursePreview.tsx";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { Col, Container, Row } from "react-bootstrap";
-import { getPurchasedCourses } from "../Utils/getPurchasedCourses.ts";
+import { getPurchasedCourses } from "../common/hooks/getPurchasedCourses.ts";
 import { Loading, Error } from "./../common";
 interface MyCourseListProps {
   id: number;
@@ -18,7 +18,7 @@ export const MyCourseList: React.FC<MyCourseListProps> = ({ id }) => {
   useEffect(() => {
     async function fetchCourses() {
       const result = await getPurchasedCourses(id);
-      setState(result); 
+      setState(result);
     }
 
     fetchCourses();

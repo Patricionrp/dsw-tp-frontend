@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { useGet } from "../hooks/useGet.ts";
-import { Course, Level } from "../types";
-import { DateComponent } from "../Utils/date.tsx";
-import { NavigationButton } from "../buttons/NavigationButton.tsx";
+import { useGet } from "../common/hooks/useGet.ts";
+import { Course } from "../types.tsx";
+import { DateComponent } from "../common/utils/date.tsx";
+import { NavigationButton } from "../common/buttons";
 import { Topics } from "../topic/Topics.tsx";
 import { LevelList } from "../level/LevelList.tsx";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
-import { userType } from "../Utils/userType.ts";
-import { Loading, Error } from "./../common";
+import { userType } from "../common/authentication/userType.ts";
+import { Loading, Error } from "./../common/utils";
 interface CourseGetOneProps {
   id: string | undefined;
 }

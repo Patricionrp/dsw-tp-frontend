@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { usePost } from "../hooks";
+import { usePost } from "../common/hooks";
 import { Course } from "../types";
 // react-bootstrap components
 import Form from "react-bootstrap/Form";
@@ -89,7 +89,7 @@ export const CourseCreate = () => {
       console.log(`Creación del curso ${title} cancelada.`);
     }
   };
-  
+
   if (loading) return <Loading />;
   if (error) return <Error message={error} />;
 

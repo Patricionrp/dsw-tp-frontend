@@ -1,7 +1,7 @@
 import React from "react";
 
 interface DateComponentProps {
-  date?: Date;
+  date: Date;
   style?: object | undefined;
 }
 

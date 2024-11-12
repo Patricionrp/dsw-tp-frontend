@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Container, Table } from "react-bootstrap";
-import { useGet } from "../hooks";
+import { useGet } from "../common/hooks";
 import { Loading, Error } from "../common";
 import { CoursePurchaseRecord } from "../types";
 import { useFilteredPurchases } from "./hooks/useFilteredPurchases";

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Container } from "react-bootstrap";
-import { LoginForm } from "../authentication/Login.tsx";
+import { LoginForm } from "../authentication/login.tsx";
 
 export function LoginPage() {
   return (

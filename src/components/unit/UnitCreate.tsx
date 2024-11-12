@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import Card from "react-bootstrap/Card";
-import { usePost } from "../hooks/usePost";
+import { usePost } from "../common/hooks/usePost";
 import { Unit } from "../types";
 import {
   validateUnitName,

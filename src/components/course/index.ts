@@ -1,5 +1,5 @@
-export { CourseUpdate } from "./CourseUpdate";
-export { CourseCreate } from "./CourseCreate";
-export { CourseList } from "./CourseList";
-export { CourseSelector } from "./CourseSelector";
-export { CourseGetOne } from "./Course";
+export { CourseUpdate } from "./courseUpdate";
+export { CourseCreate } from "./courseCreate";
+export { CourseList } from "./courseList";
+export { CourseSelector } from "./courseSelector";
+export { CourseGetOne } from "./course";

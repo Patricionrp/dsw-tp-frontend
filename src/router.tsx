@@ -21,8 +21,8 @@ import {
   UnitUpdatePage,
   PurchasesRecordPage,
 } from "./components/pages";
-import PrivateRoute from "./components/Utils/privateRoute.tsx";
-import { AdminRoute } from "./components/Utils/adminRoute.tsx";
+import PrivateRoute from "./components/common/authentication/privateRoute.tsx";
+import { AdminRoute } from "./components/common/authentication/adminRoute.tsx";
 
 const router = createBrowserRouter([
   {

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useGet } from "../hooks/useGet.ts";
-import { Course, User } from "../types";
+import { useGet } from "../common/hooks/useGet.ts";
+import { Course, User } from "../types.tsx";
 
-import { DateComponent } from "../Utils/date.tsx";
+import { DateComponent } from "../common/utils/date.tsx";
 import { NavigationButton } from "../buttons/NavigationButton.tsx";
 import Card from "react-bootstrap/Card";
 
 import { Topics } from "../topic/Topics.tsx";
-import { getUser } from "../Utils/getUser.ts";
-import { checkPurchase } from "../Utils/authentication/checkPurchase.ts";
+import { getUser } from "../common/authentication/getUser.ts";
+import { checkPurchase } from "../common/authentication/checkPurchase.ts";
 import { Loading, Error } from "./../common";
 import { PurchaseButton } from "../buttons/purchaseCourseButton.tsx";
 

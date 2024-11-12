@@ -16,13 +16,13 @@ export const AdminHead: React.FC = () => {
       fixed="top"
       max-width="100%"
     >
-      <Container>
-        <Navbar.Brand href="/">My App</Navbar.Brand>
+      <Container fluid>
+        <Navbar.Brand href="/" style={{marginLeft:"2rem"}}>My App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Container className="d-flex justify-content-center">
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <NavDropdown title="Courses" id="course-dropdown">
+              <NavDropdown title="Courses" id="course-dropdown" >
                 <NavDropdown.Item href="/course/list">
                   View All
                 </NavDropdown.Item>
@@ -31,13 +31,13 @@ export const AdminHead: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <NavDropdown title="Topics" id="topics-dropdown">
+              <NavDropdown title="Topics" id="topics-dropdown" style={{marginLeft:"1rem"}}>
                 <NavDropdown.Item href="/topic/list">View All</NavDropdown.Item>
                 <NavDropdown.Item href="/topic/create">
                   Add New
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="Pruchases" id="purchaces-dropdown">
+              <NavDropdown title="Pruchases" id="purchaces-dropdown" style={{marginLeft:"1rem"}}>
                 <NavDropdown.Item href="/coursePurchaseRecords">
                   Purchases of Courses
                 </NavDropdown.Item>
@@ -45,7 +45,7 @@ export const AdminHead: React.FC = () => {
                   Purchases of Subscriptions
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="Subscriptions" id="subscriptions-dropdown">
+              <NavDropdown title="Subscriptions" id="subscriptions-dropdown" style={{marginLeft:"1rem"}}>
                 <NavDropdown.Item href="/subscription/list">
                   View All
                 </NavDropdown.Item>
@@ -54,10 +54,6 @@ export const AdminHead: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-
-            <Container className="d-flex justify-content-center">
-              <SearchBox />
-            </Container>
           </Navbar.Collapse>
         </Container>
         <Nav className="ms-auto">

@@ -1,4 +1,6 @@
-import { porturl } from "./../route";
+import { porturl } from "../../common/utils/route";
+import Cookies from "js-cookie";
+
 interface userData {
   dni: string;
   name: string;
@@ -6,6 +8,7 @@ interface userData {
   email: string;
   password: string;
 }
+
 export async function createUser(userData: userData) {
   const url = porturl + "/api/users";
   try {
@@ -20,7 +23,15 @@ export async function createUser(userData: userData) {
     if (response.ok) {
       const res = await response.json();
       const user = res.data.userCreated;
-      localStorage.setItem("user", JSON.stringify(user));
+
+      // Guardamos la cookie con el objeto user
+      Cookies.set("user", JSON.stringify(user), {
+        expires: 1 / 24, // Expira en 1 hora (1/24 de un día)
+        path: "", // Hace la cookie accesible desde cualquier path
+        secure: true, // Solo se enviará sobre HTTPS
+        httpOnly: true, // Impide el acceso a la cookie desde JavaScript
+      });
+
       console.log("User successfully registered:", user);
       return user;
     } else {

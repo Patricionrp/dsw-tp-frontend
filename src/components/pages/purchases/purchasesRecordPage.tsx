@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Container } from "react-bootstrap";
-import { DateRangePicker } from "../../Utils/dateRangePicker.tsx";
+import { DateRangePicker } from "../../common/utils/dateRangePicker.tsx";
 import { PurchasesList } from "../../purchaseRecord/purchasesList.tsx";
 
 export const PurchasesRecordPage: React.FC = () => {

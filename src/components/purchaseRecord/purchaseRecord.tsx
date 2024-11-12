@@ -7,7 +7,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import { DateComponent } from "../Utils/date.tsx";
+import { DateComponent } from "../common/utils/date.tsx";
 import { Course, User } from "../types.tsx";
 interface PurchaseRecordPreviewProps {
   id: number | undefined;

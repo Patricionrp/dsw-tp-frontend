@@ -4,7 +4,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useGet } from "../hooks/useGet.ts";
+import { useGet } from "../common/hooks/useGet.ts";
 import { Subscription, Unit } from "./../types";
 import "./../../index.css";
 import { UnitPreview } from "../unit/Unit.tsx";

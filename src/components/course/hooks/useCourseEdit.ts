@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Course, Topic } from "../../types";
-import { useGet, usePut } from "../../hooks";
+import { useGet, usePut } from "../../common/hooks";
 import {
   validateTitle,
   validatePrice,

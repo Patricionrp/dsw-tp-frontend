@@ -1,4 +1,6 @@
-import { porturl } from "./../route";
+import { porturl } from "../../common/utils/route.ts";
+import Cookies from "js-cookie";
+
 export async function validateLogin(email: string, password: string) {
   const url = porturl + "/api/login";
   try {
@@ -13,7 +15,14 @@ export async function validateLogin(email: string, password: string) {
     if (response.ok) {
       const res = await response.json();
       const user = res.data;
-      localStorage.setItem("user", JSON.stringify(user));
+
+      Cookies.set("user", JSON.stringify(user), {
+        expires: 1 / 24,
+        path: "",
+        secure: true,
+        httpOnly: true,
+      });
+
       console.log(user, " successfully logged");
       return user;
     } else {

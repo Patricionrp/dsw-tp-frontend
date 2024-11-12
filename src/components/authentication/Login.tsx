@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { validateLogin } from "../Utils/authentication/validateLogin";
+import { validateLogin } from "./utils";
 import { useNavigate } from "react-router-dom";
 export function LoginForm() {
   const [email, setEmail] = useState("");

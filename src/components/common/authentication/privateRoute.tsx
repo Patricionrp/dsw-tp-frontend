@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ element }: { element: JSX.Element }) => {
+export const PrivateRoute = ({ element }: { element: JSX.Element }) => {
   const storedUser = localStorage.getItem("user");
   let user = null;
 
@@ -20,4 +20,4 @@ const PrivateRoute = ({ element }: { element: JSX.Element }) => {
   return element;
 };
 
-export default PrivateRoute;
+

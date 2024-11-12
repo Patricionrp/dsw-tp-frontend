@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { usePost } from "../hooks/usePost";
+import { usePost } from "../common/hooks/usePost.ts";
 import { Subscription } from "../types";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";

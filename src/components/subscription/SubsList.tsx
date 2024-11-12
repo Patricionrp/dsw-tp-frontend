@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useGet } from "../hooks/useGet.ts";
+import { useGet } from "../common/hooks/useGet.ts";
 import { Subscription } from "./../types";
 import "./../../index.css";
 import Container from "react-bootstrap/Container";
@@ -13,6 +13,7 @@ export const SubscriptionList = () => {
   const {
     data: subscriptions,
     error,
+    loading,
     fetchData,
   } = useGet<Subscription>(`/api/subscriptions`);
 
@@ -20,14 +21,12 @@ export const SubscriptionList = () => {
     fetchData();
   }, [fetchData]);
 
-  //if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <Container className="mt-3">
       <h2>Subscriptions</h2>
-
-      {/* Botón para agregar un nuevo nivel */}
       <NavigationButton
         to="/subscription/create"
         label="Add Subscription"

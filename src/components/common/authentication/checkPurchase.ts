@@ -1,4 +1,4 @@
-import { porturl } from "./../route";
+import { porturl } from "../utils/route";
 
 export async function checkPurchase(
   user: number,
