@@ -15,3 +15,4 @@ export { LevelUpdatePage } from "./level/levelEditPage";
 export { UnitCreatePage } from "./unit/unitCreatePage";
 export { UnitPage } from "./unit/unitPage";
 export { UnitUpdatePage } from "./unit/unitEditPage";
+export { PurchasesRecordPage } from "./purchases/purchasesRecordPage";

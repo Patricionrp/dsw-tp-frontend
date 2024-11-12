@@ -1,8 +1,8 @@
 import React from "react";
 
 interface DateComponentProps {
-  date: Date;
-  style: object | undefined;
+  date?: Date;
+  style?: object | undefined;
 }
 
 export const DateComponent: React.FC<DateComponentProps> = ({

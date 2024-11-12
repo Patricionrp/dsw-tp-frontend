@@ -77,9 +77,6 @@ export const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
     }
   };
   console.log(oldCourse);
-  const levelsIds = Array.isArray(oldCourse?.levels)
-    ? oldCourse.levels.map((level: Level) => level.id)
-    : [];
   return (
     <Container className="course" style={{ marginTop: "1rem" }}>
       <Card>
@@ -144,7 +141,7 @@ export const CourseUpdate: React.FC<CourseUpdateProps> = ({ courseId }) => {
           <Card.Title as="h5" className="mb-3">
             Levels:
           </Card.Title>
-          <LevelList levels={levelsIds} course={parseInt(courseId)} />
+          <LevelList course={courseId} />
 
           <Row className="justify-content-center mt-4">
             <Col xs={10} md={3} className="d-flex justify-content-center">

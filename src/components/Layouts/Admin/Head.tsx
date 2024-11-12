@@ -5,7 +5,6 @@ import Container from "react-bootstrap/Container";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { UserMenu } from "./../UserMenu";
 import { SearchBox } from "./../SearchBox";
-import { Col } from "react-bootstrap";
 
 export const AdminHead: React.FC = () => {
   return (
@@ -42,7 +41,7 @@ export const AdminHead: React.FC = () => {
                 <NavDropdown.Item href="/coursePurchaseRecords">
                   Purchases of Courses
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/subsPurchaseRecords">
+                <NavDropdown.Item href="/inDevelopment/Purchases of Subscriptions">
                   Purchases of Subscriptions
                 </NavDropdown.Item>
               </NavDropdown>

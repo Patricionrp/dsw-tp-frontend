@@ -3,26 +3,43 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { NavigationButton } from "../buttons/NavigationButton.tsx";
 import { UnitPreview } from "./UnitPreview";
 import { userType } from "../Utils/userType.ts";
+import { Unit } from "../types.tsx";
+import { useGet } from "../hooks";
+import { useEffect } from "react";
+import { Loading, Error } from "../common";
 interface UnitListProps {
-  units: number[] | undefined;
   level: string | undefined;
   course: string | undefined;
 }
 
-export const UnitList: React.FC<UnitListProps> = ({ units, level, course }) => {
+export const UnitList: React.FC<UnitListProps> = ({ level, course }) => {
+  const {
+    data: units,
+    error,
+    loading,
+    fetchData,
+  } = useGet<Unit>(`/api/units?level=${level}`);
+  console.log(units);
+  console.log(level);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
   const user = userType() ? userType() : "member";
   return (
     <Container>
       <ListGroup style={{ marginBottom: "1rem" }}>
         {Array.isArray(units) ? (
           units.map((unit) => (
-            <ListGroup.Item key={unit}>
+            <ListGroup.Item key={unit.id}>
               <NavigationButton
-                to={`/unit/${course}/${level}/${unit}`}
+                to={`/unit/${course}/${level}/${unit.id}`}
                 style={{ width: "100%" }}
                 variant="light"
               >
-                <UnitPreview id={unit} />
+                <UnitPreview id={unit.id} />
               </NavigationButton>
             </ListGroup.Item>
           ))

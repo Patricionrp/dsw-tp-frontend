@@ -3,25 +3,40 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { NavigationButton } from "../buttons/NavigationButton.tsx";
 import { LevelPreview } from "./LevelPreview";
 import { userType } from "../Utils/userType.ts";
+import { Level } from "../types.tsx";
+import { useGet } from "../hooks/useGet.ts";
+import { useEffect } from "react";
+import { Loading, Error } from "../common";
 interface LevelListProps {
-  levels: number[] | undefined;
   course: string | undefined;
 }
 
-export const LevelList: React.FC<LevelListProps> = ({ levels, course }) => {
+export const LevelList: React.FC<LevelListProps> = ({ course }) => {
+  const {
+    data: levels,
+    error,
+    loading,
+    fetchData,
+  } = useGet<Level>(`/api/levels?course=${course}`);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
   const user = userType() ? userType() : "member";
   return (
     <Container>
       <ListGroup style={{ marginBottom: "1rem" }}>
         {Array.isArray(levels) ? (
           levels.map((level) => (
-            <ListGroup.Item key={level}>
+            <ListGroup.Item key={level.id}>
               <NavigationButton
-                to={`/level/${course}/${level}`}
+                to={`/level/${course}/${level.id}`}
                 style={{ width: "100%" }}
                 variant="light"
               >
-                <LevelPreview id={level} />
+                <LevelPreview id={level.id} />
               </NavigationButton>
             </ListGroup.Item>
           ))

@@ -13,14 +13,13 @@ interface LevelGetOneProps {
 }
 
 export const LevelGetOne: React.FC<LevelGetOneProps> = ({ id, courseId }) => {
-  const { data, loading, error, fetchData } = useGet<Level>(
-    `/api/levels/${id}`
-  );
-  const level = Array.isArray(data) ? data[0] : data;
-  const unitsIds = Array.isArray(level?.units)
-    ? level.units.map((unit: Unit) => unit.id)
-    : [];
-  console.log(unitsIds);
+  const {
+    data: level,
+    loading,
+    error,
+    fetchData,
+  } = useGet<Level>(`/api/levels/${id}`);
+  console.log(level);
 
   useEffect(() => {
     fetchData();
@@ -44,7 +43,7 @@ export const LevelGetOne: React.FC<LevelGetOneProps> = ({ id, courseId }) => {
             <Card.Text className="fs-4">
               <strong>Units:</strong>
             </Card.Text>
-            <UnitList units={unitsIds} level={id} course={courseId} />
+            <UnitList level={id} course={courseId} />
           </div>
           {user === "admin" && (
             <NavigationButton

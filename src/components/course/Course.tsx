@@ -20,9 +20,6 @@ export const CourseGetOne: React.FC<CourseGetOneProps> = ({ id }) => {
     error,
     fetchData,
   } = useGet<Course>(`/api/courses/${id}`);
-  const levelsIds = Array.isArray(course?.levels)
-    ? course.levels.map((level: Level) => level.id)
-    : [];
 
   useEffect(() => {
     fetchData();
@@ -55,7 +52,7 @@ export const CourseGetOne: React.FC<CourseGetOneProps> = ({ id }) => {
             <Card.Text className="fs-4">
               <strong>Levels:</strong>
             </Card.Text>
-            <LevelList levels={levelsIds} course={id} />
+            <LevelList course={id} />
           </div>
           {user === "admin" && (
             <NavigationButton

@@ -19,6 +19,7 @@ import {
   UnitCreatePage,
   UnitPage,
   UnitUpdatePage,
+  PurchasesRecordPage,
 } from "./components/pages";
 import PrivateRoute from "./components/Utils/privateRoute.tsx";
 import { AdminRoute } from "./components/Utils/adminRoute.tsx";
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: "unit/update/:courseId/:levelId/:id",
         element: <AdminRoute element={<UnitUpdatePage />} />,
+      },
+      {
+        path: "coursePurchaseRecords",
+        element: <AdminRoute element={<PurchasesRecordPage />} />,
       },
       {
         path: "inDevelopment/:title",

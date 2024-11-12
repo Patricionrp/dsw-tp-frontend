@@ -9,7 +9,7 @@ export interface Level {
   name?: string;
   description?: string;
   course?: number | Course;
-  units?: Unit[] 
+  units?: Unit[];
 }
 export interface File {
   id?: number;
@@ -43,25 +43,20 @@ export interface Subscription {
   price: number;
   subsPurchaseRecords?: number[] | SubsPurchaseRecord[];
 }
-export interface PurchaseRecord {
+
+export interface CoursePurchaseRecord {
   id?: number;
   totalAmount: number;
   purchaseAt?: Date;
-  member: number;
-}
-export interface CoursePurchaseRecord extends PurchaseRecord {
-  id?: number;
-  totalAmount: number;
-  purchaseAt?: Date;
+  user: number | User;
   course: number | Course;
-  member: number;
 }
-export interface SubsPurchaseRecord extends PurchaseRecord {
+export interface SubsPurchaseRecord {
   id?: number;
   totalAmount: number;
   purchaseAt?: Date;
   subscription: number | Subscription;
-  member: number;
+  user: number;
 }
 export interface User {
   id?: number;
