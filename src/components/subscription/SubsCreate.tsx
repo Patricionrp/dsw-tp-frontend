@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { usePost } from "../hooks/usePost";
-import { Subscription } from "../types";
+import { useNavigate } from "react-router-dom";
+import { usePost } from "../common/hooks/usePost.ts";
+import { Subscription } from "../types.tsx";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
+import { Loading, Error } from "../common/utils";
+import {
+  validateDescription,
+  validatePrice,
+  validateDuration,
+} from "./validations/subsValidate.ts";
 
-export const SubsCreate = () => {
+export const SubscriptionCreate = () => {
   const { loading, error, create } = usePost<Subscription>(
     "/api/subscriptions/"
   );
@@ -20,24 +22,34 @@ export const SubsCreate = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
+  const [formErrors, setFormErrors] = useState<{
+    description?: string;
+    price?: string;
+    duration?: string;
+  }>({});
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
 
-  useEffect(() => {
-    if (loading) {
-      console.log("loading...");
-    }
-    if (error) {
-      console.log(`error ${error}`);
-    }
-  }, [loading, error]);
-
   const handleClick = () => {
+    const descriptionError = validateDescription(description);
+    const priceError = validatePrice(price);
+    const durationError = validateDuration(duration);
+
+    if (descriptionError || priceError || durationError) {
+      setFormErrors({
+        description: descriptionError,
+        price: priceError,
+        duration: durationError,
+      });
+      return;
+    }
+
     const confirmed = window.confirm(
-      `¿Desea crear el curso: "${description}"?`
+      `Do you want to create the subscription: "${description}"?`
     );
     if (confirmed) {
       const newSubscription: Subscription = {
@@ -46,13 +58,12 @@ export const SubsCreate = () => {
         duration: parseInt(duration),
       };
       create(newSubscription).then((data) => {
-        if (data.courseCreated.id) {
+        if (data) {
           console.log(
-            `Subscription  ${description} was created whit id ${data.subscriptionCreated.id}.`
+            `Subscription ${description} was created with ID ${data.id}.`
           );
-          navigate(`/course/${data.subscriptionCreated.id}`);
+          navigate(`/subscription/list`);
         } else {
-          console.log(data.subscriptionCreated);
           console.error(
             "Error: No ID was received for the created subscription."
           );
@@ -62,25 +73,31 @@ export const SubsCreate = () => {
         }
       });
     } else {
-      console.log(`Subscription creation  ${description} canceled.`);
+      console.log(`Creación del curso ${description} cancelada.`);
     }
   };
 
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
+
   return (
-    <Container className="course">
-      <h2>Create a Subscription</h2>
-      <hr></hr>
-      <Card body className="mb-4">
+    <Card body className="mb-4" style={{ marginTop: "1rem" }}>
+      <Card.Header as="h2">Create a Subscription</Card.Header>
+      <Card.Body>
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Description</Form.Label>
             <Form.Control
               ref={inputRef}
               type="text"
-              placeholder="Description"
+              placeholder="Subscription Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              isInvalid={!!formErrors.description}
             />
+            <Form.Control.Feedback type="invalid">
+              {formErrors.description}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Price</Form.Label>
@@ -89,36 +106,32 @@ export const SubsCreate = () => {
               placeholder="0000.00"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              isInvalid={!!formErrors.price}
             />
+            <Form.Control.Feedback type="invalid">
+              {formErrors.price}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Duration {"(days)"}</Form.Label>
+            <Form.Label>Duration "(days)"</Form.Label>
             <Form.Control
-              ref={inputRef}
               type="text"
               placeholder="00"
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
+              isInvalid={!!formErrors.duration}
             />
+            <Form.Control.Feedback type="invalid">
+              {formErrors.duration}
+            </Form.Control.Feedback>
           </Form.Group>
         </Form>
-
-        <Button variant="primary" onClick={handleClick} className="mt-4">
+      </Card.Body>
+      <Card.Body className="d-flex justify-content-center">
+        <Button variant="success" onClick={handleClick} className="mt-4">
           Create Subscription
         </Button>
-      </Card>
-
-      <Row className="justify-content-center">
-        <Col xs="auto">
-          <NavigationButton
-            to={`/subscription/list`}
-            label={`Back to Subscriptions`}
-          />
-        </Col>
-        <Col xs="auto">
-          <NavigationButton to={`/`} label={`Back to Mainpage`} />
-        </Col>
-      </Row>
-    </Container>
+      </Card.Body>
+    </Card>
   );
 };

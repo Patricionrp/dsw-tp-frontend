@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Card, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { validateRegister } from "../Utils/authentication/validateRegister";
-import { createUser } from "../Utils/authentication/createUser";
+import { validateRegister } from "./utils/validateRegister";
+import { createUser } from "./utils/createUser";
 
 export function RegisterForm() {
   const [dni, setDni] = useState("");

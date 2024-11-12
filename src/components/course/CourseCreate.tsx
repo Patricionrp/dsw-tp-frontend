@@ -1,28 +1,37 @@
-//<button onClick={handleClick}>Create</button>
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { usePost } from "./../hooks";
-import { Course, Topic } from "../types";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { usePost } from "../common/hooks";
+import { Course } from "../types";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Badge from "react-bootstrap/Badge";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
-import { Topics } from "../topic/Topics";
+import { Topics } from "../topic/topics";
+import { useSelectedTopics } from "./hooks/useSelectedTopics";
+import {
+  validateTitle,
+  validatePrice,
+  validateTopics,
+} from "./validations/courseValidate";
+import { Loading, Error } from "./../common/utils";
 
 export const CourseCreate = () => {
   const { loading, error, create } = usePost<Course>("/api/courses/");
-  const [title, setTitle] = React.useState<string>("");
-  const [price, setPrice] = React.useState<string>("");
-  //const [courseId, setCourseId] = useState<number | null>(null); // Para manejar el ID del curso creado
+  const [title, setTitle] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  let topics: Topic[];
-  // Para poner el cursor sobre el input
+
+  const { selectedTopics, selectedTopicsIds, handleSelectTopic } =
+    useSelectedTopics();
+
+  const [formErrors, setFormErrors] = useState<{
+    title?: string;
+    price?: string;
+    topics?: string;
+  }>({});
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -39,6 +48,19 @@ export const CourseCreate = () => {
   }, [loading, error]);
 
   const handleClick = () => {
+    const titleError = validateTitle(title);
+    const priceError = validatePrice(price);
+    const topicsError = validateTopics(selectedTopics);
+
+    if (titleError || priceError || topicsError) {
+      setFormErrors({
+        title: titleError,
+        price: priceError,
+        topics: topicsError,
+      });
+      return;
+    }
+
     const confirmed = window.confirm(
       `Do you want to create the course: "${title}"?`
     );
@@ -51,41 +73,26 @@ export const CourseCreate = () => {
       create(newCourse).then((data) => {
         if (data.courseCreated.id) {
           console.log(
-            `Course ${title} was created whit ID ${data.courseCreated.id}.`
+            `Course ${title} was created with ID ${data.courseCreated.id}.`
           );
           navigate(`/course/${data.courseCreated.id}`);
         } else {
-          console.log(data.courseCreated);
           console.error("Error: No ID was received for the created course.");
           alert("There was an error creating the course. Please try again.");
         }
-        //console.log(`El curso ${title} fue creado con ID ${createdCourse?.id}.`);
-        //navigate(`/course/${createdCourse.id}`);
       });
     } else {
       console.log(`Creación del curso ${title} cancelada.`);
     }
   };
 
-  // Manejo de topics
-  const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
-  const [selectedTopicsIds, setSelectedTopicsIds] = useState<number[]>([]);
-
-  const handleSelectTopic = (topic: Topic) => {
-    if (selectedTopics.some((t) => t.id === topic.id)) {
-      setSelectedTopics(selectedTopics.filter((t) => t.id !== topic.id));
-      setSelectedTopicsIds(selectedTopicsIds.filter((id) => id !== topic.id));
-    } else {
-      setSelectedTopics([...selectedTopics, topic]);
-      setSelectedTopicsIds([...selectedTopicsIds, topic.id]);
-    }
-  };
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
 
   return (
-    <Container className="course">
-      <h2>Create a Course</h2>
-      <hr></hr>
-      <Card body className="mb-4">
+    <Card body className="mb-4" style={{ marginTop: "1rem" }}>
+      <Card.Header as="h2">Create a Course</Card.Header>
+      <Card.Body>
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>
@@ -95,8 +102,13 @@ export const CourseCreate = () => {
               placeholder="Course Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              isInvalid={!!formErrors.title}
             />
+            <Form.Control.Feedback type="invalid">
+              {formErrors.title}
+            </Form.Control.Feedback>
           </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Price</Form.Label>
             <Form.Control
@@ -104,47 +116,49 @@ export const CourseCreate = () => {
               placeholder="0000.00"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              isInvalid={!!formErrors.price}
             />
+            <Form.Control.Feedback type="invalid">
+              {formErrors.price}
+            </Form.Control.Feedback>
           </Form.Group>
         </Form>
+      </Card.Body>
+      <Card.Title as="h5" style={{ textAlign: "left" }}>
+        Selected Topics:
+      </Card.Title>
+      <Card.Body className="d-flex flex-wrap mb-4">
+        {selectedTopics.map((topic) => (
+          <Badge
+            key={topic.id}
+            pill
+            bg="primary"
+            text="white"
+            className="me-2 mb-2"
+            style={{
+              cursor: "pointer",
+              borderRadius: "20px",
+              padding: "10px 15px",
+            }}
+            onClick={() => handleSelectTopic(topic)}
+          >
+            {topic.description}
+          </Badge>
+        ))}
+      </Card.Body>
+      <Card.Title as="h5" style={{ textAlign: "left" }}>
+        Available Topics:
+      </Card.Title>
 
-        <h5 className="mb-3" style={{ textAlign: "left" }}>
-          Selected Topics:
-        </h5>
-
-        {/* Topics seleccionados */}
-        <div className="d-flex flex-wrap mb-4">
-          {selectedTopics.map((topic) => (
-            <Badge
-              key={topic.id}
-              pill
-              bg="primary"
-              text="white"
-              className="me-2 mb-2"
-              style={{
-                cursor: "pointer",
-                borderRadius: "20px",
-                padding: "10px 15px",
-              }}
-              onClick={() => handleSelectTopic(topic)}
-            >
-              {topic.description}
-            </Badge>
-          ))}
-        </div>
-
-        <h5 className="mb-3" style={{ textAlign: "left" }}>
-          Available Topics:
-        </h5>
-        {/* Sección Topics */}
-        <Topics
-          selectedTopics={selectedTopics}
-          onSelectTopic={handleSelectTopic}
-        />
-        <Button variant="primary" onClick={handleClick} className="mt-4">
+      <Topics
+        selectedTopics={selectedTopics}
+        onSelectTopic={handleSelectTopic}
+      />
+      <Card.Body className="d-flex justify-content-center">
+        <Button variant="success" onClick={handleClick} className="mt-4">
           Create Course
         </Button>
-      </Card>
-    </Container>
+      </Card.Body>
+    </Card>
   );
 };

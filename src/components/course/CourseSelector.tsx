@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { Container, Form, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export const CourseSelector = ({ view, setView }) => {
   const [finished, setFinished] = useState(true);
@@ -38,7 +41,7 @@ export const CourseSelector = ({ view, setView }) => {
   };
 
   return (
-    <Container>
+    <Container style={{ marginTop: "1rem" }}>
       <Form>
         <Row className="d-flex justify-content-center align-items-center">
           <Col xs={12} md={4} className="d-flex justify-content-center mb-3">
@@ -50,7 +53,6 @@ export const CourseSelector = ({ view, setView }) => {
               className="ms-0"
             />
           </Col>
-          {view}
           <Col xs={12} md={4} className="d-flex justify-content-center mb-3">
             <Form.Check
               type="checkbox"

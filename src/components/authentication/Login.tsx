@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { validateLogin } from "../Utils/authentication/validateLogin";
+import { validateLogin } from "./utils";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../common/authentication/getUser.ts";
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +24,7 @@ export function LoginForm() {
       alert("Login failed. Please check your credentials.");
     }
   };
-
+  console.log(getUser())
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Card

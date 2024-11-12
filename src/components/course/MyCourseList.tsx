@@ -1,15 +1,33 @@
-import { CoursePreview } from "./CoursePreview.tsx";
-import { useGet } from "../hooks/useGet.ts";
-import { useEffect } from "react";
-import Spinner from "react-bootstrap/Spinner";
+import { CoursePreview } from "./coursePreview.tsx";
+import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { User } from "../types.tsx";
 import { Col, Container, Row } from "react-bootstrap";
+import { getPurchasedCourses } from "../common/hooks/getPurchasedCourses.ts";
+import { Loading, Error } from "./../common/utils";
 interface MyCourseListProps {
   id: number;
 }
 
 export const MyCourseList: React.FC<MyCourseListProps> = ({ id }) => {
+  const [state, setState] = useState({
+    loading: true,
+    error: null as string | null,
+    courses: [] as any[],
+  });
+
+  useEffect(() => {
+    async function fetchCourses() {
+      const result = await getPurchasedCourses(id);
+      setState(result);
+    }
+
+    fetchCourses();
+  }, [id]);
+
+  const { loading, error, courses } = state;
+
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
   return (
     <Container fluid>
       {Array.isArray(courses) && courses.length > 0 ? (
@@ -32,9 +50,7 @@ export const MyCourseList: React.FC<MyCourseListProps> = ({ id }) => {
                       lg={4}
                       className="d-flex justify-content-center"
                     >
-                      <div className="p-2 border rounded">
-                        <CoursePreview id={course.id} view={3} />
-                      </div>
+                      <CoursePreview id={course.id} />
                     </Col>
                   ))}
                 </Row>

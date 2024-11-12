@@ -3,17 +3,29 @@ import { createBrowserRouter } from "react-router-dom";
 import { App } from "./App";
 
 import {
-  CourseListPage,
   CoursePage,
+  CourseListPage,
   CourseCreatePage,
-  TopicCreatePage,
+  CourseUpdatePage,
+  MyCourseListPage,
+  LevelPage,
+  LevelCreatePage,
+  LevelUpdatePage,
+  UnitPage,
+  UnitCreatePage,
+  UnitUpdatePage,
   TopicListPage,
-  InDevelopmentPage,
+  TopicCreatePage,
   LoginPage,
-  //MainPage,
   RegisterPage,
+  SubscriptionListPage,
+  SubscriptionCreatePage,
+  SubscriptionUpdatePage,
+  PurchasesRecordPage,
+  MyPurchasesPage,
+  InDevelopmentPage,
 } from "./components/pages";
-import PrivateRoute from "./components/Utils/privateRoute.tsx";
+import { PrivateRoute, AdminRoute } from "./components/common/authentication";
 
 const router = createBrowserRouter([
   {
@@ -29,27 +41,80 @@ const router = createBrowserRouter([
     element: <PrivateRoute element={<App />} />,
     children: [
       {
-        path: "/topic/list",
-        element: <PrivateRoute element={<TopicListPage />} />,
+        path: "topic/list",
+        element: <AdminRoute element={<TopicListPage />} />,
       },
       {
-        path: "/topic/create",
-        element: <PrivateRoute element={<TopicCreatePage />} />,
+        path: "topic/create",
+        element: <AdminRoute element={<TopicCreatePage />} />,
       },
       {
-        path: "/course/list",
+        path: "course/list",
         element: <PrivateRoute element={<CourseListPage />} />,
       },
       {
-        path: "/course/create",
-        element: <PrivateRoute element={<CourseCreatePage />} />,
+        path: "course/create",
+        element: <AdminRoute element={<CourseCreatePage />} />,
       },
       {
-        path: "/course/:id",
+        path: "course/:id",
         element: <PrivateRoute element={<CoursePage />} />,
       },
+
       {
-        path: "/inDevelopment/:title",
+        path: "course/update/:id",
+        element: <PrivateRoute element={<CourseUpdatePage />} />,
+      },
+      {
+        path: "myCourses",
+        element: <PrivateRoute element={<MyCourseListPage />} />,
+      },
+      {
+        path: "level/:courseId/:id",
+        element: <PrivateRoute element={<LevelPage />} />,
+      },
+      {
+        path: "level/create/:courseId",
+        element: <AdminRoute element={<LevelCreatePage />} />,
+      },
+      {
+        path: "level/update/:courseId/:id",
+        element: <AdminRoute element={<LevelUpdatePage />} />,
+      },
+      {
+        path: "unit/:courseId/:levelId/:id",
+        element: <PrivateRoute element={<UnitPage />} />,
+      },
+      {
+        path: "unit/create/:courseId/:levelId",
+        element: <AdminRoute element={<UnitCreatePage />} />,
+      },
+      {
+        path: "unit/update/:courseId/:levelId/:id",
+        element: <AdminRoute element={<UnitUpdatePage />} />,
+      },
+      {
+        path: "coursePurchaseRecords",
+        element: <AdminRoute element={<PurchasesRecordPage />} />,
+      },
+      {
+        path: "myPurchases",
+        element: <PrivateRoute element={<MyPurchasesPage />} />,
+      },
+      {
+        path: "subscription/list",
+        element: <PrivateRoute element={<SubscriptionListPage />} />,
+      },
+      {
+        path: "subscription/create",
+        element: <AdminRoute element={<SubscriptionCreatePage />} />,
+      },
+      {
+        path: "subscription/update/:id",
+        element: <AdminRoute element={<SubscriptionUpdatePage />} />,
+      },
+      {
+        path: "inDevelopment/:title",
         element: <PrivateRoute element={<InDevelopmentPage />} />,
       },
     ],

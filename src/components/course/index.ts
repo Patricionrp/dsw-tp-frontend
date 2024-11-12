@@ -1,5 +1,6 @@
-export { CourseUpdate } from "./CourseUpdate";
-export { CourseCreate } from "./CourseCreate";
-export { CourseList } from "./CourseList";
-export { CourseSelector } from "./CourseSelector";
-export { CourseGetOne } from "./Course";
+export { CourseUpdate } from "./courseUpdate.tsx";
+export { CourseCreate } from "./courseCreate";
+export { CourseList } from "./courseList";
+export { CourseSelector } from "./courseSelector";
+export { CourseGetOne } from "./course";
+export { MyCourseList } from "./myCourseList";

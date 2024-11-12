@@ -1,57 +1,130 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate  } from "react-router-dom";
-import { usePut} from "../hooks/usePut";
-import { Level } from  "./../types";
-import "./../../index.css";
+import { useRef, useEffect } from "react";
+import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
+import { useLevelEdit, deleteLevel } from "./hooks/index.ts";
+import { UnitList } from "../unit/unitList.tsx";
+import { useNavigate } from "react-router-dom";
+import { Loading, Error } from "../common/utils";
 
+interface LevelUpdateProps {
+  courseId: string | undefined;
+  levelId: string | undefined;
+}
 
-export const LevelUpdate = () => {
-    const { loading, error, update } = usePut<Level>("/api/levels/${id}");
-    const [name, setName] = React.useState<string>("");
-    const navigate = useNavigate();
-
-    
-    useEffect(() => {
-        if (loading) {
-        console.log("loading...");
-        }
-        if (error) {
-        console.log("error...");
-        }
-    }, [loading, error]);
-
-    const handleClick = () => {
-        const confirmed = window.confirm(`¿Desea crear el level: ${name}?`);
-        if (confirmed) {
-            handleCreate();
-            console.log(`El level ${name} fue creado.`);
-            navigate('/level');
-          // Aquí puedes agregar la lógica para crear el level
-        } else {
-            console.log(`Creación del level ${name} cancelada.`);
-        }
-      };
-    const handleCreate = async () => {
-        const newLevel: Level = {
-        name: name,
-        };
-        update(id, newLevel); // Use the constant id
-    };
-    
-    return (
-        <div className="level">
-        <h2>Create a Level</h2>
-        <input
-            type="text"
-            placeholder="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-        />
-        <button onClick={handleClick}>Create</button>
-        <p></p>
-        <button>
-            <Link to="/level">Back to Levels</Link>
-        </button>
-        </div>    
-    );
+export const LevelUpdate: React.FC<LevelUpdateProps> = ({
+  courseId,
+  levelId,
+}) => {
+  const navigate = useNavigate();
+  const {
+    loading,
+    error,
+    oldLevel,
+    name,
+    description,
+    formErrors,
+    setName,
+    setDescription,
+    handleSave,
+  } = useLevelEdit(levelId);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
+  }, []);
+
+  const handleSaveClick = async () => {
+    try {
+      await handleSave();
+      console.log(`Level ${name} updated with.`);
+      window.location.reload();
+    } catch {
+      alert("Error updating level.");
+    }
+  };
+  const handleRemoveClick = async () => {
+    if (confirm(`Are you sure you want to delete the level "${name}"?`)) {
+      try {
+        await deleteLevel(levelId!);
+        alert("Level removed successfully.");
+        navigate(`course/${courseId}`);
+        window.location.reload();
+      } catch {
+        alert("Error removing level.");
+      }
+    }
+  };
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
+  return (
+    <Container className="level" style={{ marginTop: "1rem" }}>
+      <Card>
+        <Card.Header as="h3">Edit Level</Card.Header>
+        <Card.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                ref={inputRef}
+                type="text"
+                placeholder={oldLevel?.name || "Level Name"}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                isInvalid={!!formErrors.name}
+              />
+              <Form.Control.Feedback type="invalid">
+                {formErrors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder={oldLevel?.description?.toString() || "0000.00"}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                isInvalid={!!formErrors.description}
+              />
+              <Form.Control.Feedback type="invalid">
+                {formErrors.description}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form>
+          <Card.Title as="h5" className="mb-3">
+            Units:
+          </Card.Title>
+          <UnitList level={levelId} course={courseId} />
+
+          <Row className="justify-content-center mt-4">
+            <Col xs={10} md={3} className="d-flex justify-content-center">
+              <Button
+                variant="success"
+                onClick={handleSaveClick}
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save Changes"}
+              </Button>
+            </Col>
+
+            <Col xs={10} md={3} className="d-flex justify-content-center">
+              {oldLevel ? (
+                <Button
+                  variant="danger"
+                  onClick={handleRemoveClick}
+                  disabled={loading}
+                >
+                  {loading ? "Deleting..." : "Delete Level"}
+                </Button>
+              ) : (
+                <Button variant="secondary" disabled>
+                  Loading...
+                </Button>
+              )}
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
+    </Container>
+  );
+};

@@ -1,18 +1,19 @@
 import { useEffect } from "react";
 
-import { useGet } from "../hooks/useGet.ts";
-import { Subscription } from "./../types";
-import "./../../index.css";
+import { useGet } from "../common/hooks/useGet.ts";
+import { Subscription } from "../types.tsx";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
-import { NavigationButton } from "../Buttons/NavigationButton.tsx";
-import { SubscriptionPreview } from "./SubsFindOne.tsx";
-import { Col, Row } from "react-bootstrap";
+import { NavigationButton } from "../common/buttons/index.ts";
+import { SubscriptionPreview } from "./subscriptionPreview.tsx";
+import { Alert, Card, Col, Row } from "react-bootstrap";
+import { Loading, Error } from "../common/utils";
 
 export const SubscriptionList = () => {
   const {
     data: subscriptions,
     error,
+    loading,
     fetchData,
   } = useGet<Subscription>(`/api/subscriptions`);
 
@@ -20,31 +21,24 @@ export const SubscriptionList = () => {
     fetchData();
   }, [fetchData]);
 
-  //if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
 
   return (
-    <Container className="mt-3">
-      <h2>Subscriptions</h2>
-
-      {/* Botón para agregar un nuevo nivel */}
-      <NavigationButton
-        to="/subscription/create"
-        label="Add Subscription"
-        style={{ marginBottom: "1rem" }}
-      />
-
-      <Row>
-        {Array.isArray(subscriptions) ? (
+    <Container>
+      <Row className="gy-4">
+        {Array.isArray(subscriptions) && subscriptions.length > 0 ? (
           subscriptions.map((subscription) => (
-            <Col key={subscription.id} md={3}>
-              <ListGroup.Item>
-                <SubscriptionPreview id={subscription.id} />
-              </ListGroup.Item>
+            <Col key={subscription.id} md={4} lg={3}>
+              <SubscriptionPreview id={subscription.id} />
             </Col>
           ))
         ) : (
-          <p>No subscriptions available</p>
+          <Col>
+            <Alert variant="info" className="text-center">
+              No subscriptions available
+            </Alert>
+          </Col>
         )}
       </Row>
     </Container>

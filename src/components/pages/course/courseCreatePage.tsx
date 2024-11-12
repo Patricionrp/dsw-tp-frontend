@@ -1,21 +1,18 @@
-import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import { CourseCreate } from "../../course/index.ts";
-import { NavigationButton } from "../../Buttons/NavigationButton.tsx";
+import { CourseCreate } from "../../course";
+import { NavigationButton } from "../../common/buttons";
 
 export const CourseCreatePage = () => {
   return (
     <Container fluid>
       <CourseCreate />
-      <Row className="justify-content-center">
-        <Col xs="auto">
-          <NavigationButton to={`/course/list`} label={`Back to Courses`} />
-        </Col>
-        <Col xs="auto">
-          <NavigationButton to={`/`} label={`Back to Mainpage`} />
-        </Col>
-      </Row>
+      <Container
+        fluid
+        className="d-flex justify-content-center"
+        style={{ marginBottom: "1rem" }}
+      >
+        <NavigationButton to={`/course/list`} label={`Back to Courses`} />
+      </Container>
     </Container>
   );
 };

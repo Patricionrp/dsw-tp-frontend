@@ -1,42 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useGet } from "../../hooks/useGet.ts";
-import Table from "react-bootstrap/Table";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
-import Spinner from "react-bootstrap/Spinner";
 import { CourseList, CourseSelector } from "../../course";
-import { Course } from "../../types.tsx";
-import { NavigationButton } from "../../Buttons/NavigationButton.tsx";
+import { NavigationButton } from "../../common/buttons";
 import { Card } from "react-bootstrap";
+import { userType } from "../../common/authentication";
+import { SearchBox } from "../../common/utils";
 
 export const CourseListPage = () => {
   const [view, setView] = useState(3);
+  const [searchQuery, setSearchQuery] = useState(""); // Estado para la búsqueda
+  const role = userType();
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   return (
-    <Container style={{ width: "100%" }}>
-      <h2>Courses</h2>
-      <CourseSelector view={view} setView={setView} />
-      <Card>
-        <CourseList view={view} />
-      </Card>
-      <Container
-        fluid
-        className="bg-light text-center p-3"
-        style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-        }}
+    <Container
+      style={{ marginTop: "1rem", minHeight: "100vh", paddingBottom: "70px" }}
+    >
+      <Card.Title
+        style={{ fontSize: "30px", fontWeight: "bold", marginLeft: "1.5rem" }}
       >
-        <NavigationButton
-          to={`/course/create`}
-          label="Add Course"
-          variant="success"
+        Courses
+      </Card.Title>
+      <Card.Body>
+        <SearchBox onSearch={handleSearch} />
+      </Card.Body>
+      {role === "admin" && <CourseSelector view={view} setView={setView} />}
+      <Card>
+        <CourseList
+          view={role === "admin" ? view : 1}
+          searchQuery={searchQuery}
         />
-        <br />
-        <NavigationButton to={`/`} label="Back to Mainpage" />
-      </Container>
+      </Card>
+      {role === "admin" && (
+        <Card.Body className="bg-light text-center p-3">
+          <NavigationButton
+            to={`/course/create`}
+            label="Add Course"
+            variant="success"
+          />
+        </Card.Body>
+      )}
+      <Card.Body className="bg-light text-center p-3">
+        <NavigationButton
+          to={`/`}
+          label="Back to Mainpage"
+          variant="secondary"
+        />
+      </Card.Body>
     </Container>
   );
 };

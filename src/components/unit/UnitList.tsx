@@ -1,42 +1,61 @@
+import Container from "react-bootstrap/Container";
+import ListGroup from "react-bootstrap/ListGroup";
+import { NavigationButton } from "../common/buttons";
+import { UnitPreview } from "./unitPreview.tsx";
+import { userType } from "../common/authentication/userType.ts";
+import { Unit } from "../types.tsx";
+import { useGet } from "../common/hooks/index.ts";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useGet } from "../hooks/useGet";
-import { Unit } from  "../types";
-import "./unit.css";
+import { Loading, Error } from "../common/utils";
+interface UnitListProps {
+  level: string | undefined;
+  course: string | undefined;
+}
 
+export const UnitList: React.FC<UnitListProps> = ({ level, course }) => {
+  const {
+    data: units,
+    error,
+    loading,
+    fetchData,
+  } = useGet<Unit>(`/api/units?level=${level}`);
+  console.log(units);
+  console.log(level);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
-export const UnitList = () => {
-  
-    const { data: unities, error, fetchData } = useGet<Unit>(`/api/unities`);
-
-    useEffect(() => {
-      fetchData();
-    }, [fetchData]);
-
-
-    //if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-
-    return (
-      <div className="unit-list">
-        <h2>Units</h2>
-        <button className="add-button">
-          <Link to="/unit/create">Add Unit</Link>
-        </button>
-        <ul>
-          {Array.isArray(unities) ? (
-            unities.map((unit) => (
-              <li key={unit.id}>
-                  <button >
-                      <Link to={`/unit/${unit.id}`}>{unit.id} - {unit.name}</Link>
-                  </button>
-              </li>
-            ))
-          ) : (
-            <p>No unities available</p>
-          )}
-        </ul>
-      </div>
-    );
- 
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
+  const user = userType() ? userType() : "member";
+  return (
+    <Container>
+      <ListGroup style={{ marginBottom: "1rem" }}>
+        {Array.isArray(units) ? (
+          units.map((unit) => (
+            <ListGroup.Item key={unit.id}>
+              <NavigationButton
+                to={`/unit/${course}/${level}/${unit.id}`}
+                style={{ width: "100%" }}
+                variant="light"
+              >
+                <UnitPreview id={unit.id} />
+              </NavigationButton>
+            </ListGroup.Item>
+          ))
+        ) : (
+          <p>No units available</p>
+        )}
+      </ListGroup>
+      {user === "admin" && (
+        <Container className="d-flex justify-content-center">
+          <NavigationButton
+            to={`/unit/create/${course}/${level}`}
+            label="Add Unit"
+            variant="success"
+          />
+        </Container>
+      )}
+    </Container>
+  );
 };

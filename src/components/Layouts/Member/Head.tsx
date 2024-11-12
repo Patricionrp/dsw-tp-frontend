@@ -3,8 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { UserMenu } from "../UserMenu";
-import { SearchBox } from "../SearchBox";
+import { UserMenu } from "../userMenu";
 
 export const MemberHead: React.FC = () => {
   return (
@@ -16,7 +15,9 @@ export const MemberHead: React.FC = () => {
       fixed="top"
     >
       <Container fluid>
-        <Navbar.Brand href="/">My App</Navbar.Brand>
+        <Navbar.Brand href="/" style={{ marginLeft: "2rem" }}>
+          My App
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Container className="d-flex justify-content-center">
           <Navbar.Collapse id="basic-navbar-nav">
@@ -25,11 +26,15 @@ export const MemberHead: React.FC = () => {
                 <NavDropdown.Item href="/course/list">
                   View All
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/inDevelopment/My Courses">
+                <NavDropdown.Item href="/myCourses">
                   My Courses
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="Subscriptions" id="subscriptions-dropdown">
+              <NavDropdown
+                title="Subscriptions"
+                id="subscriptions-dropdown"
+                style={{ marginLeft: "2.5rem" }}
+              >
                 <NavDropdown.Item href="/subscription/list">
                   View All
                 </NavDropdown.Item>
@@ -38,9 +43,6 @@ export const MemberHead: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Container className="d-flex justify-content-center">
-              <SearchBox />
-            </Container>
           </Navbar.Collapse>
         </Container>
         <Nav className="ms-auto">
