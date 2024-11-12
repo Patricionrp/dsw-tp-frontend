@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { validateLogin } from "./utils";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../common/authentication/getUser.ts";
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +24,7 @@ export function LoginForm() {
       alert("Login failed. Please check your credentials.");
     }
   };
-
+  console.log(getUser())
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Card

@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import { Loading, Error } from "./../common/utils";
 import { CoursePreview } from "./coursePreview";
 import { useGet } from "../common/hooks/index.ts";
+import { Card } from "react-bootstrap";
 interface CourseListProps {
   view: number;
   searchQuery: string;
@@ -16,7 +17,6 @@ export const CourseList: React.FC<CourseListProps> = ({
   view,
   searchQuery,
 }) => {
-  console.log(searchQuery);
   const {
     data: courses,
     error,
@@ -71,7 +71,7 @@ export const CourseList: React.FC<CourseListProps> = ({
           </tbody>
         </Table>
       ) : (
-        <p>No courses available</p>
+        <Card>No courses available</Card>
       )}
     </Container>
   );

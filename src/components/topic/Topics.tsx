@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-
 import { useGet } from "../common/hooks/useGet";
-import { Topic } from "./../types";
-import "./../../index.css";
+import { Topic } from "../types";
 import ListGroup from "react-bootstrap/ListGroup";
-
+import { Loading, Error } from "../common/utils";
 interface TopicsProps {
   selectedTopics: Topic[];
   onSelectTopic?: (topic: Topic) => void;
@@ -13,7 +11,12 @@ export const Topics: React.FC<TopicsProps> = ({
   selectedTopics,
   onSelectTopic,
 }) => {
-  const { data: topics, error, fetchData } = useGet<Topic>(`/api/topics`);
+  const {
+    data: topics,
+    error,
+    loading,
+    fetchData,
+  } = useGet<Topic>(`/api/topics`);
 
   const availableTopics = onSelectTopic
     ? topics?.filter(
@@ -25,8 +28,8 @@ export const Topics: React.FC<TopicsProps> = ({
     fetchData();
   }, [fetchData]);
 
-  //if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
 
   return (
     <div className="d-flex flex-wrap">

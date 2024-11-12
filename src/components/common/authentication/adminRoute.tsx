@@ -6,7 +6,7 @@ export const AdminRoute = ({ element }: { element: JSX.Element }) => {
   try {
     user = storedUser ? storedUser : null;
   } catch (error) {
-    console.error("Error parsing user data from localStorage:", error);
+    console.error(error);
     user = null;
   }
   if (user !== "admin") {

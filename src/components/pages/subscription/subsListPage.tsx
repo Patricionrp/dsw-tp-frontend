@@ -1,19 +1,12 @@
-import { useState } from "react";
 import Container from "react-bootstrap/Container";
+import { SubscriptionList } from "../../subscription";
 import { NavigationButton } from "../../common/buttons";
 import { Card } from "react-bootstrap";
-import { MyCourseList } from "../../course";
-import { getUser } from "../../common/authentication";
-import { useAdminRedirect } from "../../common/hooks";
-import { SearchBox } from "../../common/utils";
+import { userType } from "../../common/authentication";
 
-export const MyCourseListPage = () => {
-  useAdminRedirect("/course/list");
-  const user = getUser();
-  const [searchQuery, setSearchQuery] = useState("");
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-  };
+export const SubscriptionListPage = () => {
+  const role = userType();
+
   return (
     <Container
       style={{ marginTop: "1rem", minHeight: "100vh", paddingBottom: "70px" }}
@@ -21,13 +14,19 @@ export const MyCourseListPage = () => {
       <Card.Title
         style={{ fontSize: "30px", fontWeight: "bold", marginLeft: "1.5rem" }}
       >
-        My Courses
+        Subscriptions
       </Card.Title>
-      <Card.Body>
-        <SearchBox onSearch={handleSearch} />
-      </Card.Body>
       <Card>
-        <MyCourseList id={user.id} />
+        <SubscriptionList />{" "}
+        {role === "admin" && (
+          <Card.Body className="bg-light text-center p-3">
+            <NavigationButton
+              to={`/subscription/create`}
+              label="Add Subscription"
+              variant="success"
+            />
+          </Card.Body>
+        )}
       </Card>
       <Card.Body className="bg-light text-center p-3">
         <NavigationButton

@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
-import { Topics } from "../topic/Topics";
+import { Topics } from "../topic/topics";
 import { useSelectedTopics } from "./hooks/useSelectedTopics";
 import {
   validateTitle,
@@ -90,10 +90,9 @@ export const CourseCreate = () => {
   if (error) return <Error message={error} />;
 
   return (
-    <Container className="course">
-      <h2>Create a Course</h2>
-      <hr />
-      <Card body className="mb-4">
+    <Card body className="mb-4" style={{ marginTop: "1rem" }}>
+      <Card.Header as="h2">Create a Course</Card.Header>
+      <Card.Body>
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>
@@ -124,43 +123,42 @@ export const CourseCreate = () => {
             </Form.Control.Feedback>
           </Form.Group>
         </Form>
+      </Card.Body>
+      <Card.Title as="h5" style={{ textAlign: "left" }}>
+        Selected Topics:
+      </Card.Title>
+      <Card.Body className="d-flex flex-wrap mb-4">
+        {selectedTopics.map((topic) => (
+          <Badge
+            key={topic.id}
+            pill
+            bg="primary"
+            text="white"
+            className="me-2 mb-2"
+            style={{
+              cursor: "pointer",
+              borderRadius: "20px",
+              padding: "10px 15px",
+            }}
+            onClick={() => handleSelectTopic(topic)}
+          >
+            {topic.description}
+          </Badge>
+        ))}
+      </Card.Body>
+      <Card.Title as="h5" style={{ textAlign: "left" }}>
+        Available Topics:
+      </Card.Title>
 
-        <h5 className="mb-3" style={{ textAlign: "left" }}>
-          Selected Topics:
-        </h5>
-        <div className="d-flex flex-wrap mb-4">
-          {selectedTopics.map((topic) => (
-            <Badge
-              key={topic.id}
-              pill
-              bg="primary"
-              text="white"
-              className="me-2 mb-2"
-              style={{
-                cursor: "pointer",
-                borderRadius: "20px",
-                padding: "10px 15px",
-              }}
-              onClick={() => handleSelectTopic(topic)}
-            >
-              {topic.description}
-            </Badge>
-          ))}
-        </div>
-
-        <h5 className="mb-3" style={{ textAlign: "left" }}>
-          Available Topics:
-        </h5>
-        <Topics
-          selectedTopics={selectedTopics}
-          onSelectTopic={handleSelectTopic}
-        />
-        <div className="d-flex justify-content-center">
-          <Button variant="success" onClick={handleClick} className="mt-4">
-            Create Course
-          </Button>
-        </div>
-      </Card>
-    </Container>
+      <Topics
+        selectedTopics={selectedTopics}
+        onSelectTopic={handleSelectTopic}
+      />
+      <Card.Body className="d-flex justify-content-center">
+        <Button variant="success" onClick={handleClick} className="mt-4">
+          Create Course
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };

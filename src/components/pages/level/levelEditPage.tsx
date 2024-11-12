@@ -2,7 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { NavigationButton } from "../../buttons/NavigationButton.tsx";
+import { NavigationButton } from "../../common/buttons";
 import { LevelUpdate } from "../../level";
 
 export const LevelUpdatePage: React.FC = () => {

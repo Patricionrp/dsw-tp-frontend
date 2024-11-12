@@ -2,9 +2,11 @@ import React, { useState } from "react";
 
 import { Container } from "react-bootstrap";
 import { DateRangePicker } from "../../common/utils";
-import { PurchasesList } from "../../purchaseRecord";
+import { MyPurchasesList } from "../../purchaseRecord";
+import { useAdminRedirect } from "../../common/hooks/useAdminRedirect.ts";
 
-export const PurchasesRecordPage: React.FC = () => {
+export const MyPurchasesPage: React.FC = () => {
+  useAdminRedirect("/coursePurchaseRecords");
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
@@ -17,7 +19,7 @@ export const PurchasesRecordPage: React.FC = () => {
         endDate={endDate}
         setEndDate={setEndDate}
       />
-      <PurchasesList
+      <MyPurchasesList
         startDate={startDate || undefined}
         endDate={endDate || undefined}
       />

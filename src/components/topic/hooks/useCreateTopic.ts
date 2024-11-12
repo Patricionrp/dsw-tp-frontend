@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { usePost } from "../../common/hooks/usePost.ts";
 import { Topic } from "../../types.tsx";
-// Asegúrate de importar correctamente el tipo Topic
 
 export const useCreateTopic = (fetchData: () => void) => {
   const [newTopicDescription, setNewTopicDescription] = useState<string>("");

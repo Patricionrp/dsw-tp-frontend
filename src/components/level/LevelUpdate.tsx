@@ -1,9 +1,9 @@
 import { useRef, useEffect } from "react";
 import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
-import { Unit } from "../types.tsx";
 import { useLevelEdit, deleteLevel } from "./hooks/index.ts";
-import { UnitList } from "../unit/UnitList.tsx";
+import { UnitList } from "../unit/unitList.tsx";
 import { useNavigate } from "react-router-dom";
+import { Loading, Error } from "../common/utils";
 
 interface LevelUpdateProps {
   courseId: string | undefined;
@@ -54,7 +54,8 @@ export const LevelUpdate: React.FC<LevelUpdateProps> = ({
       }
     }
   };
-
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
   return (
     <Container className="level" style={{ marginTop: "1rem" }}>
       <Card>

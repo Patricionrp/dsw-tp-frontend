@@ -18,6 +18,5 @@ export const DateComponent: React.FC<DateComponentProps> = ({
         day: "numeric",
       })
     : "Date not available";
-  console.log(formattedDate);
   return <span style={style}>{formattedDate}</span>;
 };

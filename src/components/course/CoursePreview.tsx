@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Course, User } from "../types.tsx";
 import Card from "react-bootstrap/Card";
-import { Topics } from "../topic/Topics.tsx";
+import { Topics } from "../topic/topics.tsx";
 import { useGet } from "../common/hooks/useGet.ts";
 import { checkPurchase, getUser } from "../common/authentication";
 import { Loading, Error, DateComponent } from "./../common/utils";
@@ -23,12 +23,10 @@ export const CoursePreview: React.FC<CoursePreviewProps> = ({ id }) => {
   async function determineView(user: User, id: number): Promise<number> {
     let view = 1;
     if (user) {
-      console.log("User is:", user);
       if (user.admin) {
         view = 1;
       } else {
         const purchaseStatus = await checkPurchase(user.id, id);
-        console.log("Purchase status:", purchaseStatus);
         view = purchaseStatus ? 2 : 3;
       }
     }
@@ -38,7 +36,6 @@ export const CoursePreview: React.FC<CoursePreviewProps> = ({ id }) => {
   useEffect(() => {
     const fetchData = async () => {
       const user = getUser();
-      console.log("User:", user);
       if (user) {
         const currentButton = await determineView(user, id);
         setButton(currentButton);
@@ -72,28 +69,21 @@ export const CoursePreview: React.FC<CoursePreviewProps> = ({ id }) => {
         </Card.Text>
         <Card.Text style={{ textAlign: "left" }}>
           <strong>Topics:</strong>
-          <br />
-          <br />
-          <Topics selectedTopics={course?.topics} />
         </Card.Text>
-        <br />
-        <div className="d-flex justify-content-center">
-          {button === 1 ? (
-            <NavigationButton
-              to={`/course/update/${course?.id}`}
-              label="Edit"
-            />
-          ) : button === 3 ? (
-            <PurchaseButton courseId={id} />
-          ) : button === 2 ? (
-            <NavigationButton
-              to={`/Course/${course?.id}`}
-              label="View"
-              variant="success"
-            />
-          ) : null}
-        </div>
-        <br />
+        <Topics selectedTopics={course?.topics} />
+      </Card.Body>
+      <Card.Body className="d-flex justify-content-center align-items-end">
+        {button === 1 ? (
+          <NavigationButton to={`/course/update/${course?.id}`} label="Edit" />
+        ) : button === 3 ? (
+          <PurchaseButton courseId={id} />
+        ) : button === 2 ? (
+          <NavigationButton
+            to={`/Course/${course?.id}`}
+            label="View"
+            variant="secondary"
+          />
+        ) : null}
       </Card.Body>
     </Card>
   );

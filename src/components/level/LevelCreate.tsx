@@ -9,6 +9,7 @@ import {
   validateLevelName,
   validateLevelDescription,
 } from "./validations/validateLevel";
+import { Loading, Error } from "../common/utils";
 interface LevelCreateProps {
   course: string | undefined;
 }
@@ -77,7 +78,8 @@ export const LevelCreate: React.FC<LevelCreateProps> = ({ course }) => {
       console.log(`Creation of level "${name}" was cancelled.`);
     }
   };
-
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
   return (
     <Card body className="mb-4">
       <Form>

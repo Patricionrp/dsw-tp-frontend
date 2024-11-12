@@ -1,26 +1,27 @@
 import { useEffect } from "react";
 import { Container, Table } from "react-bootstrap";
-import { useGet } from "../common/hooks";
-import { Loading, Error } from "../common/utils";
-import { CoursePurchaseRecord } from "../types";
-import { useFilteredPurchases } from "./hooks/useFilteredPurchases";
+import { useGet } from "../common/hooks/index.ts";
+import { Loading, Error } from "../common/utils/index.ts";
+import { CoursePurchaseRecord } from "../types.tsx";
+import { useFilteredPurchases } from "./hooks/useFilteredPurchases.ts";
+import { getUser } from "../common/authentication/getUser.ts";
 import { NavigationButton } from "../common/buttons";
-
-interface PurchasesListProps {
+interface MyPurchasesListProps {
   startDate?: Date;
   endDate?: Date;
 }
-
-export const PurchasesList: React.FC<PurchasesListProps> = ({
+export const MyPurchasesList: React.FC<MyPurchasesListProps> = ({
   startDate,
   endDate,
 }) => {
+  const user = getUser();
+  const queryString = user ? `?user=${user.id}` : "";
   const {
     data: response,
     error,
     loading,
     fetchData,
-  } = useGet<CoursePurchaseRecord>("/api/CoursePurchaseRecords");
+  } = useGet<CoursePurchaseRecord>(`/api/CoursePurchaseRecords${queryString}`);
 
   useEffect(() => {
     fetchData();
@@ -58,7 +59,11 @@ export const PurchasesList: React.FC<PurchasesListProps> = ({
                   to={`/course/${record.course?.id}`}
                   label={record.course?.title || "N/A"}
                   variant="link"
-                  style={{ padding: 0, color: "inherit", textDecoration: "none" }}
+                  style={{
+                    padding: 0,
+                    color: "inherit",
+                    textDecoration: "none",
+                  }}
                 />
               </td>
               <td>

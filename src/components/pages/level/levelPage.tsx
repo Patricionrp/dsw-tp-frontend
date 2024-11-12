@@ -2,7 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { NavigationButton } from "../../buttons/NavigationButton.tsx";
+import { NavigationButton } from "../../common/buttons";
 import { LevelGetOne } from "../../level";
 
 export const LevelPage: React.FC = () => {
@@ -10,7 +10,7 @@ export const LevelPage: React.FC = () => {
 
   return (
     <Card>
-      <LevelGetOne id={id} courseId={courseId}/>
+      <LevelGetOne id={id} courseId={courseId} />
       <Container
         className="d-flex justify-content-center"
         style={{ marginBottom: "1rem", marginTop: "1rem" }}

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button, Card, ListGroup, Form } from "react-bootstrap";
 import { FaTrash, FaCheck } from "react-icons/fa";
-import { Loading, Error } from "./../common";
+import { Loading, Error } from "../common/utils/index.ts";
 import { Topic } from "../types.tsx";
 import { useGet } from "../common/hooks/index.ts";
-import { useDeleteTopic, useCreateTopic } from "./hooks";
+import { useDeleteTopic, useCreateTopic } from "./hooks/index.ts";
 
 export const TopicList = () => {
   const {

@@ -18,9 +18,8 @@ export async function validateLogin(email: string, password: string) {
 
       Cookies.set("user", JSON.stringify(user), {
         expires: 1 / 24,
-        path: "",
+        path: "/",
         secure: true,
-        httpOnly: true,
       });
 
       console.log(user, " successfully logged");

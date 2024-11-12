@@ -2,14 +2,9 @@ import React from "react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaUserCircle } from "react-icons/fa";
 import { userType } from "../common/authentication/userType";
+import { useLogout } from "../common/hooks";
 export const UserMenu: React.FC = () => {
-  const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      localStorage.removeItem("user");
-      window.location.reload();
-    }
-  };
+  const { handleLogout } = useLogout();
 
   const role = userType();
 
@@ -27,9 +22,7 @@ export const UserMenu: React.FC = () => {
 
       {role === "member" && (
         <>
-          <NavDropdown.Item href="/inDevelopment/My Purchases">
-            My Purchases
-          </NavDropdown.Item>
+          <NavDropdown.Item href="/myPurchases">My Purchases</NavDropdown.Item>
         </>
       )}
       <NavDropdown.Divider />

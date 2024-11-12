@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import { CourseList, CourseSelector } from "../../course";
-import { NavigationButton } from "../../buttons/NavigationButton.tsx";
+import { NavigationButton } from "../../common/buttons";
 import { Card } from "react-bootstrap";
-import { userType } from "../../common/authentication/userType.ts";
-import { SearchBox } from "../../common/utils/searchBox.tsx";
+import { userType } from "../../common/authentication";
+import { SearchBox } from "../../common/utils";
 
 export const CourseListPage = () => {
   const [view, setView] = useState(3);
   const [searchQuery, setSearchQuery] = useState(""); // Estado para la búsqueda
-  const isAdmin = userType() === "admin";
+  const role = userType();
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -27,17 +27,22 @@ export const CourseListPage = () => {
       <Card.Body>
         <SearchBox onSearch={handleSearch} />
       </Card.Body>
-      {isAdmin && <CourseSelector view={view} setView={setView} />}
+      {role === "admin" && <CourseSelector view={view} setView={setView} />}
       <Card>
-        <CourseList view={isAdmin ? view : 1} searchQuery={searchQuery} />{" "}
-      </Card>
-      <Card.Body className="bg-light text-center p-3">
-        <NavigationButton
-          to={`/course/create`}
-          label="Add Course"
-          variant="success"
+        <CourseList
+          view={role === "admin" ? view : 1}
+          searchQuery={searchQuery}
         />
-      </Card.Body>{" "}
+      </Card>
+      {role === "admin" && (
+        <Card.Body className="bg-light text-center p-3">
+          <NavigationButton
+            to={`/course/create`}
+            label="Add Course"
+            variant="success"
+          />
+        </Card.Body>
+      )}
       <Card.Body className="bg-light text-center p-3">
         <NavigationButton
           to={`/`}

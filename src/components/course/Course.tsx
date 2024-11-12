@@ -3,7 +3,7 @@ import { useGet } from "../common/hooks/useGet.ts";
 import { Course } from "../types.tsx";
 import { DateComponent } from "../common/utils/date.tsx";
 import { NavigationButton } from "../common/buttons";
-import { Topics } from "../topic/Topics.tsx";
+import { Topics } from "../topic/topics.tsx";
 import { LevelList } from "../level/levelList.tsx";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";

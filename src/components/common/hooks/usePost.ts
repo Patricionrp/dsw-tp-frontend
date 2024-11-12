@@ -16,12 +16,15 @@ export function usePost<T>(baseUrl: string) {
         body: JSON.stringify(item),
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || `HTTP error! status: ${response.status}`
+        );
       }
       const result = await response.json();
       const returnedData = result.data;
 
-      console.log(returnedData);
+      console.log("Response data:", returnedData);
       return returnedData;
     } catch (err: unknown) {
       if (err instanceof Error) {

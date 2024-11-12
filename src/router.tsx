@@ -3,26 +3,29 @@ import { createBrowserRouter } from "react-router-dom";
 import { App } from "./App";
 
 import {
-  CourseListPage,
   CoursePage,
+  CourseListPage,
   CourseCreatePage,
   CourseUpdatePage,
   MyCourseListPage,
-  TopicCreatePage,
+  LevelPage,
+  LevelCreatePage,
+  LevelUpdatePage,
+  UnitPage,
+  UnitCreatePage,
+  UnitUpdatePage,
   TopicListPage,
-  InDevelopmentPage,
+  TopicCreatePage,
   LoginPage,
   RegisterPage,
-  LevelCreatePage,
-  LevelPage,
-  LevelUpdatePage,
-  UnitCreatePage,
-  UnitPage,
-  UnitUpdatePage,
+  SubscriptionListPage,
+  SubscriptionCreatePage,
+  SubscriptionUpdatePage,
   PurchasesRecordPage,
+  MyPurchasesPage,
+  InDevelopmentPage,
 } from "./components/pages";
-import PrivateRoute from "./components/common/authentication/privateRoute.tsx";
-import { AdminRoute } from "./components/common/authentication/adminRoute.tsx";
+import { PrivateRoute, AdminRoute } from "./components/common/authentication";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +96,22 @@ const router = createBrowserRouter([
       {
         path: "coursePurchaseRecords",
         element: <AdminRoute element={<PurchasesRecordPage />} />,
+      },
+      {
+        path: "myPurchases",
+        element: <PrivateRoute element={<MyPurchasesPage />} />,
+      },
+      {
+        path: "subscription/list",
+        element: <PrivateRoute element={<SubscriptionListPage />} />,
+      },
+      {
+        path: "subscription/create",
+        element: <AdminRoute element={<SubscriptionCreatePage />} />,
+      },
+      {
+        path: "subscription/update/:id",
+        element: <AdminRoute element={<SubscriptionUpdatePage />} />,
       },
       {
         path: "inDevelopment/:title",

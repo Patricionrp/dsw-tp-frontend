@@ -22,25 +22,22 @@ export async function createUser(userData: userData) {
 
     if (response.ok) {
       const res = await response.json();
-      const user = res.data.userCreated;
+      const user = res.data;
 
-      // Guardamos la cookie con el objeto user
       Cookies.set("user", JSON.stringify(user), {
-        expires: 1 / 24, // Expira en 1 hora (1/24 de un día)
-        path: "", // Hace la cookie accesible desde cualquier path
-        secure: true, // Solo se enviará sobre HTTPS
-        httpOnly: true, // Impide el acceso a la cookie desde JavaScript
+        expires: 1 / 24,
+        path: "/",
+        secure: true,
       });
 
-      console.log("User successfully registered:", user);
       return user;
     } else {
       const errorData = await response.json();
       console.log("Registration failed:", errorData.message);
-      return null; // Return null or error data if registration failed
+      return null;
     }
   } catch (error) {
     console.error("Error during registration:", error);
-    return null; // Handle unexpected errors
+    return null;
   }
 }

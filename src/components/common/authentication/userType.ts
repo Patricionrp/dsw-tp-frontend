@@ -1,11 +1,8 @@
-import Cookies from "js-cookie";
+import { getUser } from "./getUser.ts";
 export function userType() {
-  const storedUser = Cookies.get("user");
-
-  if (storedUser) {
+  const user = getUser();
+  if (user) {
     try {
-      const user = JSON.parse(storedUser);
-
       if (user.admin === true) {
         return "admin";
       } else {

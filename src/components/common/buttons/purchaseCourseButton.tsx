@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePost } from "../hooks/usePost";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import { getUser } from "../authentication/getUser.ts";
 
 interface PurchaseButtonProps {
   courseId: number;
@@ -10,16 +11,17 @@ interface PurchaseButtonProps {
 export function PurchaseButton({ courseId }: PurchaseButtonProps) {
   const [isConfirming, setIsConfirming] = useState<boolean>(false);
   const { create, loading } = usePost<{ course: number; user: number }>(
-    "/purchase"
+    "/api/coursePurchaseRecords"
   );
 
   const handlePurchase = () => {
-    const storedUser = localStorage.getItem("user");
-    const userId = storedUser ? JSON.parse(storedUser).id : null;
+    const user = getUser();
+    const userId = user ? user.id : null;
     if (!userId) {
       alert("You must log in to make a purchase.");
       return;
     }
+    console.log("User ID:", userId, "Course ID:", courseId);
     const confirmPurchase = window.confirm(
       "Are you sure you want to purchase this course?"
     );
@@ -29,14 +31,17 @@ export function PurchaseButton({ courseId }: PurchaseButtonProps) {
         course: courseId,
         user: userId,
       };
-
       create(purchaseData)
         .then((response) => {
           if (response) {
             alert("Purchase successful!");
+            window.location.reload();
           } else {
             alert("There was an error processing the purchase.");
           }
+        })
+        .catch((error) => {
+          alert(error);
         })
         .finally(() => {
           setIsConfirming(false);
@@ -45,17 +50,12 @@ export function PurchaseButton({ courseId }: PurchaseButtonProps) {
   };
 
   return (
-    <Container
-      className="d-flex justify-content-center"
-      style={{ marginBottom: "1rem", marginTop: "1rem" }}
+    <Button
+      variant="success"
+      onClick={handlePurchase}
+      disabled={loading || isConfirming}
     >
-      <Button
-        variant="success"
-        onClick={handlePurchase}
-        disabled={loading || isConfirming}
-      >
-        {loading || isConfirming ? "Processing..." : "Buy Course"}
-      </Button>
-    </Container>
+      {loading || isConfirming ? "Processing..." : "Buy Course"}
+    </Button>
   );
 }

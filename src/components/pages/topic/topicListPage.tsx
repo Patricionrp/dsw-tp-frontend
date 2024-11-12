@@ -1,6 +1,5 @@
-import { Button, ListGroup, Spinner, Card, Container } from "react-bootstrap";
-
-import { TopicList } from "../../topic/TopicList.tsx";
+import { Card, Container } from "react-bootstrap";
+import { TopicList } from "../../topic";
 
 export const TopicListPage = () => {
   return (

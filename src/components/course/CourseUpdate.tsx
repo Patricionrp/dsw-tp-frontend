@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { Topic } from "../types.tsx";
 import { useCourseEdit, deleteCourse } from "./hooks";
-import { Topics } from "../topic/Topics";
+import { Topics } from "../topic/topics.tsx";
 import { LevelList } from "../level/levelList.tsx";
 import { Loading, Error } from "../common/utils";
 

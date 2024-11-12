@@ -12,12 +12,10 @@ export function useGet<T>(baseUrl: string) {
     try {
       const url = baseUrl;
       const response = await fetch(url);
-      console.log(url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
-      console.log(result);
       setData(result.data);
     } catch (err: any) {
       setError(err.message);
